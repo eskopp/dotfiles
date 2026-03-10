@@ -13,7 +13,7 @@ main() {
   bash "${REPO_DIR}/scripts/install_core.sh"
   bash "${REPO_DIR}/scripts/install_hyprland.sh"
   bash "${REPO_DIR}/scripts/install_waybar.sh"
-  bash "${REPO_DIR}/scripts/install_kitty.sh"
+  bash "${REPO_DIR}/scripts/install_alacritty.sh"
   bash "${REPO_DIR}/scripts/install_dunst.sh"
   bash "${REPO_DIR}/scripts/install_rofi.sh"
   bash "${REPO_DIR}/scripts/install_thunar.sh"
