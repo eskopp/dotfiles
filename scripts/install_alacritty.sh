@@ -4,8 +4,8 @@ set -euo pipefail
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common.sh"
 
 main() {
-  install_pacman_packages kitty
-  link_dir "${REPO_DIR}/config/kitty" "${HOME}/.config/kitty"
+  install_pacman_packages alacritty
+  link_dir "${REPO_DIR}/config/alacritty" "${HOME}/.config/alacritty"
 }
 
 main "$@"

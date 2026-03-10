@@ -7,7 +7,7 @@ Basic Wayland / Hyprland dotfiles for Arch Linux.
 - Hyprpaper
 - Hyprlock
 - Waybar
-- Kitty
+- Alacritty
 - Dunst
 - Rofi
 - Thunar
