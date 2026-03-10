@@ -79,3 +79,22 @@ make_executable() {
   chmod +x "$file"
   info "Marked executable: ${file}"
 }
+
+
+start_sudo_keepalive() {
+  sudo -v
+  (
+    while true; do
+      sudo -n true
+      sleep 60
+    done
+  ) >/dev/null 2>&1 &
+  SUDO_KEEPALIVE_PID=$!
+  export SUDO_KEEPALIVE_PID
+}
+
+stop_sudo_keepalive() {
+  if [[ -n "${SUDO_KEEPALIVE_PID:-}" ]]; then
+    kill "${SUDO_KEEPALIVE_PID}" >/dev/null 2>&1 || true
+  fi
+}

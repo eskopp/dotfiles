@@ -8,6 +8,8 @@ source "${REPO_DIR}/scripts/common.sh"
 main() {
   require_arch
   require_sudo
+  start_sudo_keepalive
+  trap stop_sudo_keepalive EXIT
   ensure_base_dirs
 
   bash "${REPO_DIR}/scripts/install_core.sh"
