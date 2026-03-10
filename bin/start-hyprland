@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ "${XDG_VTNR:-}" = "1" || -z "${DISPLAY:-}" ]]; then
+  exec dbus-run-session Hyprland
+else
+  echo "Start this from a TTY."
+fi

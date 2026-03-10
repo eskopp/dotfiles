@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+pgrep -f "wl-paste --type text --watch cliphist store" >/dev/null 2>&1 || \
+  wl-paste --type text --watch cliphist store >/dev/null 2>&1 &
+pgrep -f "wl-paste --type image --watch cliphist store" >/dev/null 2>&1 || \
+  wl-paste --type image --watch cliphist store >/dev/null 2>&1 &
