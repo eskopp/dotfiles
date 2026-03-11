@@ -32,3 +32,7 @@ main() {
 }
 
 main "$@"
+
+if [[ -x "${SCRIPT_DIR}/scripts/install_zsh.sh" ]]; then
+	bash "${SCRIPT_DIR}/scripts/install_zsh.sh"
+fi
