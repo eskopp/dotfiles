@@ -11,3 +11,9 @@ PS1='[\u@\h \W]\$ '
 
 
 alias cls="clear"
+
+# Add user-local binaries (e.g. pip --user installs)
+case ":$PATH:" in
+  *":$HOME/.local/bin:"*) ;;
+  *) export PATH="$HOME/.local/bin:$PATH" ;;
+esac
