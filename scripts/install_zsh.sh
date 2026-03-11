@@ -44,20 +44,6 @@ ensure_pkg() {
 	fi
 }
 
-backup_if_regular_file() {
-	local target="$1"
-
-	if [[ -L "${target}" ]]; then
-		return
-	fi
-
-	if [[ -e "${target}" ]]; then
-		local backup="${target}.bak.$(date +%Y%m%d-%H%M%S)"
-		info "Backing up ${target} to ${backup}"
-		mv "${target}" "${backup}"
-	fi
-}
-
 clone_or_update() {
 	local repo_url="$1"
 	local target_dir="$2"
@@ -72,11 +58,68 @@ clone_or_update() {
 	fi
 }
 
+backup_if_regular_file() {
+	local target="$1"
+
+	if [[ -L "${target}" ]]; then
+		return
+	fi
+
+	if [[ -e "${target}" ]]; then
+		local backup="${target}.bak.$(date +%Y%m%d-%H%M%S)"
+		info "Backing up ${target} to ${backup}"
+		mv "${target}" "${backup}"
+	fi
+}
+
+ensure_repo_file() {
+	local home_file="$1"
+	local repo_file="$2"
+	local file_type="$3"
+
+	if [[ -f "${repo_file}" ]]; then
+		info "Repo ${file_type} already exists: ${repo_file}"
+		return
+	fi
+
+	if [[ -f "${home_file}" && ! -L "${home_file}" ]]; then
+		info "Adopting existing ${home_file} into repo"
+		cp "${home_file}" "${repo_file}"
+		return
+	fi
+
+	info "Creating default ${file_type} in repo: ${repo_file}"
+
+	if [[ "${file_type}" == ".zshrc" ]]; then
+		cat > "${repo_file}" <<'EORC'
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="robbyrussell"
+
+plugins=(
+	git
+	python
+	docker
+	zsh-autocomplete
+)
+
+source $ZSH/oh-my-zsh.sh
+EORC
+	elif [[ "${file_type}" == ".zprofile" ]]; then
+		cat > "${repo_file}" <<'EOPF'
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/share/pipx/bin:$PATH"
+EOPF
+	else
+		die "Unknown file type: ${file_type}"
+	fi
+}
+
 main() {
 	local ohmyzsh_dir="${HOME}/.oh-my-zsh"
 	local zsh_custom="${ohmyzsh_dir}/custom"
-	local repo_zshrc="${REPO_ROOT}/zsh/.zshrc"
-	local repo_zprofile="${REPO_ROOT}/zsh/.zprofile"
+	local repo_zsh_dir="${REPO_ROOT}/zsh"
+	local repo_zshrc="${repo_zsh_dir}/.zshrc"
+	local repo_zprofile="${repo_zsh_dir}/.zprofile"
 	local target_zshrc="${HOME}/.zshrc"
 	local target_zprofile="${HOME}/.zprofile"
 	local zsh_bin
@@ -102,21 +145,22 @@ main() {
 	[[ -d "${ohmyzsh_dir}" ]] || die "Oh My Zsh installation failed"
 
 	mkdir -p "${zsh_custom}/plugins"
+	mkdir -p "${repo_zsh_dir}"
 
 	clone_or_update \
 		"https://github.com/marlonrichert/zsh-autocomplete" \
 		"${zsh_custom}/plugins/zsh-autocomplete"
 
-	[[ -f "${repo_zshrc}" ]] || die "Missing repo file: ${repo_zshrc}"
-	[[ -f "${repo_zprofile}" ]] || die "Missing repo file: ${repo_zprofile}"
+	ensure_repo_file "${target_zshrc}" "${repo_zshrc}" ".zshrc"
+	ensure_repo_file "${target_zprofile}" "${repo_zprofile}" ".zprofile"
 
 	backup_if_regular_file "${target_zshrc}"
 	backup_if_regular_file "${target_zprofile}"
 
-	info "Linking .zshrc"
+	info "Linking ${target_zshrc} -> ${repo_zshrc}"
 	ln -sfn "${repo_zshrc}" "${target_zshrc}"
 
-	info "Linking .zprofile"
+	info "Linking ${target_zprofile} -> ${repo_zprofile}"
 	ln -sfn "${repo_zprofile}" "${target_zprofile}"
 
 	zsh_bin="$(command -v zsh)"
@@ -129,6 +173,10 @@ main() {
 	fi
 
 	info "Zsh setup finished"
+	info "Verify with:"
+	info "  ls -l ~/.zshrc ~/.zprofile"
+	info "  readlink -f ~/.zshrc"
+	info "  readlink -f ~/.zprofile"
 }
 
 main "$@"
