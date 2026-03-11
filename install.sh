@@ -36,3 +36,6 @@ main "$@"
 if [[ -x "${SCRIPT_DIR}/scripts/install_zsh.sh" ]]; then
 	bash "${SCRIPT_DIR}/scripts/install_zsh.sh"
 fi
+
+# Screenshot setup
+bash "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/scripts/install-screenshots.sh"
