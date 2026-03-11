@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mode="${1:-}"
+dir="${XDG_SCREENSHOTS_DIR:-$HOME/Pictures/Screenshots}"
+mkdir -p "$dir"
+
+timestamp="$(date +%Y-%m-%d_%H-%M-%S)"
+
+slugify() {
+    printf '%s' "${1:-}" \
+        | tr '[:upper:]' '[:lower:]' \
+        | sed -E 's/[^a-z0-9._-]+/_/g; s/^_+//; s/_+$//; s/_+/_/g'
+}
+
+notify_saved() {
+    local outfile="$1"
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send "Screenshot gespeichert" "$(basename "$outfile")" -i "$outfile"
+    fi
+}
+
+save_and_copy() {
+    local outfile="$1"
+    tee "$outfile" | wl-copy --type image/png >/dev/null
+    notify_saved "$outfile"
+    printf '%s\n' "$outfile"
+}
+
+case "$mode" in
+    full)
+        outfile="$dir/screenshot_full_${timestamp}.png"
+        grim - | save_and_copy "$outfile"
+        ;;
+    active)
+        win_json="$(hyprctl -j activewindow)"
+        geom="$(printf '%s' "$win_json" | jq -r 'if (.at and .size) then "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])" else empty end')"
+        class="$(printf '%s' "$win_json" | jq -r '.class // "window"' | sed -E 's/[^a-zA-Z0-9._-]+/_/g')"
+        title="$(printf '%s' "$win_json" | jq -r '.title // "untitled"' | sed -E 's/[^a-zA-Z0-9._-]+/_/g')"
+
+        [ -n "$geom" ] || {
+            echo "No active window found." >&2
+            exit 1
+        }
+
+        class="$(slugify "$class")"
+        title="$(slugify "$title")"
+        outfile="$dir/screenshot_active_${class}_${title}_${timestamp}.png"
+        grim -g "$geom" - | save_and_copy "$outfile"
+        ;;
+    area)
+        geom="$(slurp)" || exit 0
+        outfile="$dir/screenshot_area_${timestamp}.png"
+        grim -g "$geom" - | save_and_copy "$outfile"
+        ;;
+    *)
+        echo "Usage: $(basename "$0") {full|active|area}" >&2
+        exit 2
+        ;;
+esac
