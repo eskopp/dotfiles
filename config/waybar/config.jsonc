@@ -33,8 +33,8 @@
   },
 
   "pulseaudio": {
-    "format": "{icon}  {volume}%",
-    "format-muted": "{icon}  mute",
+    "format": "{icon} {volume}%",
+    "format-muted": "{icon} mute",
     "format-icons": {
       "default": ["", "", ""]
     },
@@ -46,9 +46,9 @@
   },
 
   "network": {
-    "format-wifi": "  {essid}",
-    "format-ethernet": "󰈀  {ifname}",
-    "format-disconnected": "󰖪  offline"
+    "format-wifi": " {essid}",
+    "format-ethernet": "󰈀 {ifname}",
+    "format-disconnected": "󰖪 offline"
   },
 
   "battery": {
@@ -56,7 +56,7 @@
       "warning": 30,
       "critical": 15
     },
-    "format": "{icon}  {capacity}%",
+    "format": "{icon} {capacity}%",
     "format-charging": " {capacity}%",
     "format-icons": ["", "", "", "", ""]
   },
