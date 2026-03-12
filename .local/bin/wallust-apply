@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+IMG="${1:-}"
+
+if [ -z "$IMG" ]; then
+    echo "Usage: wallust-apply /absolute/path/to/image" >&2
+    exit 1
+fi
+
+if [ ! -f "$IMG" ]; then
+    echo "Image not found: $IMG" >&2
+    exit 1
+fi
+
+if command -v wallust >/dev/null 2>&1; then
+    WALLUST_BIN="$(command -v wallust)"
+elif [ -x /home/erik/.cargo/bin/wallust ]; then
+    WALLUST_BIN="/home/erik/.cargo/bin/wallust"
+else
+    echo "wallust is not installed or not in PATH." >&2
+    exit 1
+fi
+
+"$WALLUST_BIN" run "$IMG"
