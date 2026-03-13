@@ -129,6 +129,7 @@ main() {
 	ensure_pkg zsh
 	ensure_pkg git
 	ensure_pkg curl
+        ensure_pkg zoxide
 
 	command -v zsh >/dev/null 2>&1 || die "zsh is not available after installation"
 	command -v git >/dev/null 2>&1 || die "git is not available after installation"
