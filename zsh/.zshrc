@@ -37,3 +37,5 @@ ipv6_on() {
 }
 
 alias cls="clear"
+export PATH="$HOME/.cargo/bin:$PATH"
+eval "$(zoxide init zsh)"
