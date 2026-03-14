@@ -49,11 +49,11 @@ button:hover {
 }
 
 .modules-left > widget:first-child > #workspaces {
-    margin-left: 6px;
+    margin-left: 10px;
 }
 
 .modules-right > widget:last-child > #custom-power {
-    margin-right: 6px;
+    margin-right: 10px;
 }
 
 #workspaces {
