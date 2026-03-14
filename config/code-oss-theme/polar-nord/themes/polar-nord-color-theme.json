@@ -1,0 +1,94 @@
+{
+  "name": "Polar Nord",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#2E3440",
+    "editor.foreground": "#D8DEE9",
+    "editorLineNumber.foreground": "#4C566A",
+    "editorLineNumber.activeForeground": "#81A1C1",
+    "editorCursor.foreground": "#88C0D0",
+    "editor.selectionBackground": "#434C5ECC",
+    "editor.inactiveSelectionBackground": "#3B425299",
+    "editorIndentGuide.background1": "#3B4252",
+    "editorIndentGuide.activeBackground1": "#4C566A",
+    "sideBar.background": "#2B303B",
+    "sideBar.foreground": "#D8DEE9",
+    "activityBar.background": "#242933",
+    "activityBar.foreground": "#ECEFF4",
+    "titleBar.activeBackground": "#242933",
+    "titleBar.activeForeground": "#ECEFF4",
+    "statusBar.background": "#242933",
+    "statusBar.foreground": "#D8DEE9",
+    "tab.activeBackground": "#2E3440",
+    "tab.inactiveBackground": "#242933",
+    "tab.activeForeground": "#ECEFF4",
+    "tab.inactiveForeground": "#A7B1C2",
+    "panel.background": "#2B303B",
+    "terminal.background": "#2E3440"
+  },
+  "tokenColors": [
+    {
+      "scope": [
+        "comment",
+        "punctuation.definition.comment"
+      ],
+      "settings": {
+        "foreground": "#616E88",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "scope": [
+        "keyword",
+        "storage"
+      ],
+      "settings": {
+        "foreground": "#81A1C1"
+      }
+    },
+    {
+      "scope": [
+        "string"
+      ],
+      "settings": {
+        "foreground": "#A3BE8C"
+      }
+    },
+    {
+      "scope": [
+        "constant.numeric",
+        "constant.language"
+      ],
+      "settings": {
+        "foreground": "#B48EAD"
+      }
+    },
+    {
+      "scope": [
+        "entity.name.function",
+        "support.function"
+      ],
+      "settings": {
+        "foreground": "#88C0D0"
+      }
+    },
+    {
+      "scope": [
+        "variable",
+        "identifier"
+      ],
+      "settings": {
+        "foreground": "#D8DEE9"
+      }
+    },
+    {
+      "scope": [
+        "entity.name.type",
+        "entity.name.class"
+      ],
+      "settings": {
+        "foreground": "#8FBCBB"
+      }
+    }
+  ]
+}
