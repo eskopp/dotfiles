@@ -5,9 +5,15 @@
 }
 
 window#waybar {
-    background: rgba(17, 23, 33, 0.96);
+    background: linear-gradient(
+        90deg,
+        rgba(46, 52, 64, 0.98) 0%,
+        rgba(59, 66, 82, 0.98) 35%,
+        rgba(67, 76, 94, 0.98) 65%,
+        rgba(76, 86, 106, 0.98) 100%
+    );
     color: #eceff4;
-    border-bottom: 1px solid rgba(129, 161, 193, 0.28);
+    border-bottom: 1px solid rgba(129, 161, 193, 0.35);
 }
 
 window#waybar.hidden {
@@ -16,7 +22,6 @@ window#waybar.hidden {
 
 label {
     color: #eceff4;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
 }
 
 button {
@@ -44,12 +49,17 @@ button:hover {
     padding: 0 14px;
     border-radius: 14px;
     border: 1px solid rgba(129, 161, 193, 0.30);
-    background: rgba(46, 52, 64, 0.98);
     color: #eceff4;
 }
 
+/* Workspaces: dark gradient like the desktop pill */
 #workspaces {
     padding: 0 6px;
+    background: linear-gradient(
+        180deg,
+        rgba(67, 76, 94, 0.98) 0%,
+        rgba(59, 66, 82, 0.98) 100%
+    );
 }
 
 #workspaces button {
@@ -62,90 +72,160 @@ button:hover {
 }
 
 #workspaces button:hover {
-    background: rgba(129, 161, 193, 0.22);
+    background: rgba(129, 161, 193, 0.20);
     color: #ffffff;
 }
 
 #workspaces button.focused,
 #workspaces button.active {
-    background: rgba(129, 161, 193, 0.42);
+    background: linear-gradient(
+        180deg,
+        rgba(94, 129, 172, 0.95) 0%,
+        rgba(76, 86, 106, 0.95) 100%
+    );
     color: #ffffff;
 }
 
 #workspaces button.urgent {
-    background: rgba(191, 97, 106, 0.95);
+    background: linear-gradient(
+        180deg,
+        rgba(191, 97, 106, 0.98) 0%,
+        rgba(163, 70, 80, 0.98) 100%
+    );
     color: #ffffff;
 }
 
+/* Window title */
 #window {
     min-width: 320px;
     font-weight: 600;
+    background: linear-gradient(
+        180deg,
+        rgba(94, 129, 172, 0.28) 0%,
+        rgba(59, 66, 82, 0.96) 100%
+    );
     color: #eceff4;
-    background: rgba(59, 66, 82, 0.98);
 }
 
+/* Clock */
 #clock {
-    background: rgba(94, 129, 172, 0.98);
+    background: linear-gradient(
+        180deg,
+        rgba(129, 161, 193, 0.98) 0%,
+        rgba(94, 129, 172, 0.98) 100%
+    );
     color: #ffffff;
     font-weight: 700;
 }
 
+/* Clipboard */
 #custom-clipboard {
-    background: rgba(76, 86, 106, 0.98);
-    color: #eceff4;
+    background: linear-gradient(
+        180deg,
+        rgba(136, 192, 208, 0.92) 0%,
+        rgba(94, 129, 172, 0.92) 100%
+    );
+    color: #ffffff;
     padding: 0 16px;
 }
 
+/* Audio */
 #pulseaudio {
-    background: rgba(67, 76, 94, 0.98);
-    color: #eceff4;
+    background: linear-gradient(
+        180deg,
+        rgba(143, 188, 187, 0.95) 0%,
+        rgba(94, 129, 172, 0.95) 100%
+    );
+    color: #ffffff;
 }
 
 #pulseaudio.muted {
-    background: rgba(76, 86, 106, 0.98);
+    background: linear-gradient(
+        180deg,
+        rgba(76, 86, 106, 0.98) 0%,
+        rgba(59, 66, 82, 0.98) 100%
+    );
     color: #d8dee9;
 }
 
+/* Brightness */
 #backlight {
-    background: rgba(82, 94, 119, 0.98);
-    color: #ffffff;
+    background: linear-gradient(
+        180deg,
+        rgba(235, 203, 139, 0.96) 0%,
+        rgba(208, 135, 112, 0.96) 100%
+    );
+    color: #2e3440;
     min-width: 92px;
+    font-weight: 600;
 }
 
+/* Network */
 #network {
-    background: rgba(72, 88, 116, 0.98);
+    background: linear-gradient(
+        180deg,
+        rgba(129, 161, 193, 0.96) 0%,
+        rgba(94, 129, 172, 0.96) 100%
+    );
     color: #ffffff;
 }
 
 #network.disconnected {
-    background: rgba(191, 97, 106, 0.98);
+    background: linear-gradient(
+        180deg,
+        rgba(191, 97, 106, 0.98) 0%,
+        rgba(163, 70, 80, 0.98) 100%
+    );
     color: #ffffff;
 }
 
+/* Battery */
 #battery {
-    background: rgba(94, 129, 172, 0.98);
-    color: #ffffff;
+    background: linear-gradient(
+        180deg,
+        rgba(163, 190, 140, 0.96) 0%,
+        rgba(143, 188, 187, 0.96) 100%
+    );
+    color: #2e3440;
+    font-weight: 600;
 }
 
 #battery.warning:not(.charging) {
-    background: rgba(208, 135, 112, 0.98);
-    color: #ffffff;
+    background: linear-gradient(
+        180deg,
+        rgba(235, 203, 139, 0.98) 0%,
+        rgba(208, 135, 112, 0.98) 100%
+    );
+    color: #2e3440;
 }
 
 #battery.critical:not(.charging) {
-    background: rgba(191, 97, 106, 0.98);
+    background: linear-gradient(
+        180deg,
+        rgba(191, 97, 106, 0.98) 0%,
+        rgba(163, 70, 80, 0.98) 100%
+    );
     color: #ffffff;
 }
 
 #battery.charging,
 #battery.plugged {
-    background: rgba(163, 190, 140, 0.98);
-    color: #2e3440;
+    background: linear-gradient(
+        180deg,
+        rgba(163, 190, 140, 0.98) 0%,
+        rgba(94, 129, 172, 0.92) 100%
+    );
+    color: #ffffff;
 }
 
+/* Tray */
 #tray {
     padding: 0 12px;
-    background: rgba(59, 66, 82, 0.98);
+    background: linear-gradient(
+        180deg,
+        rgba(76, 86, 106, 0.98) 0%,
+        rgba(59, 66, 82, 0.98) 100%
+    );
 }
 
 #tray > .passive {
@@ -153,23 +233,28 @@ button:hover {
 }
 
 #tray > .needs-attention {
-    background: rgba(191, 97, 106, 0.98);
+    background: rgba(191, 97, 106, 0.95);
     border-radius: 8px;
 }
 
+/* Power */
 #custom-power {
-    background: rgba(191, 97, 106, 0.98);
+    background: linear-gradient(
+        180deg,
+        rgba(191, 97, 106, 0.98) 0%,
+        rgba(129, 50, 60, 0.98) 100%
+    );
     color: #ffffff;
     padding: 0 16px;
+    font-weight: 700;
 }
 
 tooltip {
-    background: rgba(34, 40, 49, 0.99);
+    background: rgba(46, 52, 64, 0.99);
     border: 1px solid rgba(129, 161, 193, 0.35);
     border-radius: 12px;
 }
 
 tooltip label {
     color: #eceff4;
-    text-shadow: none;
 }
