@@ -5,12 +5,9 @@
 }
 
 window#waybar {
-    background: linear-gradient(90deg, #2e3440 0%, #3b4252 50%, #434c5e 100%);
+    background: linear-gradient(90deg, #2e3440 0%, #3b4252 55%, #434c5e 100%);
     color: #eceff4;
     border-bottom: 1px solid #4c566a;
-
-    padding-left: 6px;
-    padding-right: 6px;
 }
 
 window#waybar.hidden {
@@ -34,9 +31,12 @@ button:hover {
 
 #workspaces,
 #clock,
+#idle_inhibitor,
 #pulseaudio,
+#bluetooth,
 #network,
 #cpu,
+#temperature,
 #battery,
 #tray,
 #custom-power {
@@ -59,6 +59,7 @@ button:hover {
 
 #workspaces {
     padding: 0 4px;
+    background: #3b4252;
 }
 
 #workspaces button {
@@ -93,6 +94,17 @@ button:hover {
     font-weight: 700;
 }
 
+#idle_inhibitor {
+    min-width: 18px;
+    padding: 0 9px;
+}
+
+#idle_inhibitor.activated {
+    background: #a3be8c;
+    color: #2e3440;
+    font-weight: 700;
+}
+
 #pulseaudio.muted {
     background: #4c566a;
     color: #d8dee9;
@@ -103,6 +115,17 @@ button:hover {
     color: #ffffff;
 }
 
+#temperature.warning {
+    background: #d08770;
+    color: #ffffff;
+}
+
+#temperature.critical {
+    background: #bf616a;
+    color: #ffffff;
+    font-weight: 700;
+}
+
 #battery.warning:not(.charging) {
     background: #d08770;
     color: #ffffff;
@@ -111,6 +134,7 @@ button:hover {
 #battery.critical:not(.charging) {
     background: #bf616a;
     color: #ffffff;
+    font-weight: 700;
 }
 
 #battery.charging,
@@ -148,9 +172,4 @@ tooltip {
 
 tooltip label {
     color: #eceff4;
-}
-
-
-#cpu {
-    font-weight: 600;
 }
