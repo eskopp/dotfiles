@@ -36,6 +36,7 @@ button:hover {
 #clock,
 #pulseaudio,
 #network,
+#cpu,
 #battery,
 #tray,
 #custom-power {
@@ -147,4 +148,9 @@ tooltip {
 
 tooltip label {
     color: #eceff4;
+}
+
+
+#cpu {
+    font-weight: 600;
 }
