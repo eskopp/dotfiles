@@ -5,8 +5,12 @@
 }
 
 window#waybar {
-    background: transparent;
+    background: linear-gradient(90deg, #2e3440 0%, #3b4252 50%, #434c5e 100%);
     color: #eceff4;
+    border-bottom: 1px solid #4c566a;
+
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
 window#waybar.hidden {
@@ -45,11 +49,11 @@ button:hover {
 }
 
 .modules-left > widget:first-child > #workspaces {
-    margin-left: 0;
+    margin-left: 6px;
 }
 
 .modules-right > widget:last-child > #custom-power {
-    margin-right: 0;
+    margin-right: 6px;
 }
 
 #workspaces {
