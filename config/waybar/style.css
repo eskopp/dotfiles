@@ -1,13 +1,12 @@
 * {
     font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     min-height: 0;
 }
 
 window#waybar {
-    background: #2e3440;
+    background: transparent;
     color: #eceff4;
-    border-bottom: 1px solid #4c566a;
 }
 
 window#waybar.hidden {
@@ -30,35 +29,40 @@ button:hover {
 }
 
 #workspaces,
-#window,
 #clock,
-#battery,
-#backlight,
-#network,
 #pulseaudio,
+#network,
+#battery,
 #tray,
-#custom-clipboard,
 #custom-power {
-    margin: 4px 6px;
-    padding: 0 14px;
+    margin: 4px 4px;
+    padding: 0 10px;
+    min-height: 24px;
     border-radius: 12px;
     border: 1px solid #4c566a;
     background: #3b4252;
     color: #eceff4;
 }
 
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+.modules-right > widget:last-child > #custom-power {
+    margin-right: 0;
+}
+
 #workspaces {
-    padding: 0 6px;
-    background: #3b4252;
+    padding: 0 4px;
 }
 
 #workspaces button {
-    padding: 0 12px;
-    margin: 4px 2px;
-    min-width: 28px;
+    padding: 0 10px;
+    margin: 3px 2px;
+    min-width: 24px;
+    border-radius: 9px;
     background: transparent;
     color: #d8dee9;
-    border-radius: 8px;
 }
 
 #workspaces button:hover {
@@ -77,59 +81,21 @@ button:hover {
     color: #ffffff;
 }
 
-#window {
-    min-width: 320px;
-    background: #434c5e;
-    color: #eceff4;
-    font-weight: 600;
-}
-
 #clock {
+    padding: 0 14px;
     background: #5e81ac;
     color: #ffffff;
     font-weight: 700;
 }
 
-#custom-clipboard {
-    background: #88c0d0;
-    color: #2e3440;
-    padding: 0 16px;
-    font-weight: 600;
-}
-
-#pulseaudio {
-    background: #8fbcbb;
-    color: #2e3440;
-    font-weight: 600;
-}
-
 #pulseaudio.muted {
     background: #4c566a;
-    color: #eceff4;
-}
-
-#backlight {
-    background: #ebcb8b;
-    color: #2e3440;
-    min-width: 92px;
-    font-weight: 700;
-}
-
-#network {
-    background: #81a1c1;
-    color: #ffffff;
-    font-weight: 600;
+    color: #d8dee9;
 }
 
 #network.disconnected {
     background: #bf616a;
     color: #ffffff;
-}
-
-#battery {
-    background: #a3be8c;
-    color: #2e3440;
-    font-weight: 700;
 }
 
 #battery.warning:not(.charging) {
@@ -144,13 +110,13 @@ button:hover {
 
 #battery.charging,
 #battery.plugged {
-    background: #8fbcbb;
+    background: #a3be8c;
     color: #2e3440;
+    font-weight: 700;
 }
 
 #tray {
-    padding: 0 12px;
-    background: #434c5e;
+    padding: 0 8px;
 }
 
 #tray > .passive {
@@ -163,9 +129,9 @@ button:hover {
 }
 
 #custom-power {
+    padding: 0 12px;
     background: #bf616a;
     color: #ffffff;
-    padding: 0 16px;
     font-weight: 700;
 }
 
@@ -177,18 +143,4 @@ tooltip {
 
 tooltip label {
     color: #eceff4;
-}
-
-/* Edge alignment fixes */
-.modules-left > widget:first-child > #workspaces {
-    margin-left: 0;
-}
-
-.modules-center > widget:first-child > #clock {
-    margin-left: 0;
-    margin-right: 0;
-}
-
-.modules-right > widget:last-child > #custom-power {
-    margin-right: 0;
 }
