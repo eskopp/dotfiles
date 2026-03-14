@@ -1,0 +1,22 @@
+{
+  "name": "polar-nord-theme",
+  "displayName": "Polar Nord Theme",
+  "description": "A custom Nord-inspired theme for Code - OSS",
+  "version": "0.0.1",
+  "publisher": "erikskopp-local",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Polar Nord",
+        "uiTheme": "vs-dark",
+        "path": "./themes/polar-nord-color-theme.json"
+      }
+    ]
+  }
+}
