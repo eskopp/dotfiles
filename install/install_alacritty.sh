@@ -2,21 +2,30 @@
 set -euo pipefail
 
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/git/dotfiles}"
-REPO_CFG="$DOTFILES_DIR/.config/alacritty"
-LIVE_CFG="$HOME/.config/alacritty"
+REPO_DIR="$DOTFILES_DIR/.config/alacritty"
+REPO_FILE="$REPO_DIR/alacritty.toml"
+LIVE_DIR="$HOME/.config/alacritty"
+LIVE_FILE="$LIVE_DIR/alacritty.toml"
+OLD_FILE="$HOME/.config/alacritty.toml"
 TS="$(date +%F-%H%M%S)"
 
 mkdir -p "$HOME/.config"
 
-if [ ! -d "$REPO_CFG" ]; then
-    echo "Missing repo config: $REPO_CFG" >&2
+if [ ! -f "$REPO_FILE" ]; then
+    echo "Missing repo config: $REPO_FILE" >&2
     exit 1
 fi
 
-if [ -e "$LIVE_CFG" ] && [ ! -L "$LIVE_CFG" ]; then
-    mv "$LIVE_CFG" "${LIVE_CFG}.bak.${TS}"
+if [ -f "$OLD_FILE" ] && [ ! -L "$OLD_FILE" ]; then
+    mv "$OLD_FILE" "${OLD_FILE}.bak.${TS}"
 fi
 
-ln -sfn "$REPO_CFG" "$LIVE_CFG"
+if [ -e "$LIVE_DIR" ] && [ ! -L "$LIVE_DIR" ]; then
+    mv "$LIVE_DIR" "${LIVE_DIR}.bak.${TS}"
+fi
 
-echo "Linked $LIVE_CFG -> $REPO_CFG"
+mkdir -p "$REPO_DIR"
+ln -sfn "$REPO_DIR" "$LIVE_DIR"
+
+echo "Linked $LIVE_DIR -> $REPO_DIR"
+echo "Active config: $LIVE_FILE"
