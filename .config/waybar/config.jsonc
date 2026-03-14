@@ -2,23 +2,20 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 34,
-    "spacing": 8,
+    "height": 32,
+    "spacing": 6,
     "margin-top": 8,
     "margin-left": 8,
     "margin-right": 8,
 
     "modules-left": [
-        "hyprland/workspaces",
-        "hyprland/window"
+        "hyprland/workspaces"
     ],
     "modules-center": [
         "clock"
     ],
     "modules-right": [
-        "custom/clipboard",
         "pulseaudio",
-        "backlight",
         "network",
         "battery",
         "tray",
@@ -36,28 +33,16 @@
         }
     },
 
-    "hyprland/window": {
-        "separate-outputs": true,
-        "max-length": 70
-    },
-
     "clock": {
-        "format": "  {:%a %d.%m.%Y  %H:%M}",
-        "tooltip-format": "<big>{:%A, %d. %B %Y}</big>\n<tt>{calendar}</tt>",
-        "format-alt": "{:%Y-%m-%d}"
-    },
-
-    "custom/clipboard": {
-        "format": "",
-        "tooltip": false,
-        "on-click": "$HOME/.local/bin/clipboard-menu"
+        "format": "  {:%a %d.%m.%Y %H:%M}",
+        "tooltip-format": "<big>{:%A, %d. %B %Y}</big>\n<tt>{calendar}</tt>"
     },
 
     "pulseaudio": {
         "scroll-step": 5,
         "format": "{icon} {volume}%",
         "format-bluetooth": "{icon} {volume}%",
-        "format-bluetooth-muted": " {icon}",
+        "format-bluetooth-muted": " ",
         "format-muted": " muted",
         "format-icons": {
             "headphone": "",
@@ -71,19 +56,12 @@
         "on-click": "pavucontrol"
     },
 
-    "backlight": {
-        "format": " {percent}%",
-        "min-length": 7,
-        "tooltip": false
-    },
-
     "network": {
-        "format-wifi": "  {essid}",
-        "format-ethernet": "  {ifname}",
-        "format-linked": "  {ifname}",
-        "format-disconnected": "  offline",
-        "tooltip-format": "{ifname} via {gwaddr}\n{ipaddr}/{cidr}",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-wifi": "  {signalStrength}%",
+        "format-ethernet": "󰈀  LAN",
+        "format-linked": "󰈀  link",
+        "format-disconnected": "󰖪  offline",
+        "tooltip-format": "{ifname}\n{essid}\n{ipaddr}/{cidr}\nvia {gwaddr}"
     },
 
     "battery": {
@@ -92,7 +70,7 @@
             "critical": 15
         },
         "format": "{icon} {capacity}%",
-        "format-full": "  {capacity}%",
+        "format-full": " {capacity}%",
         "format-charging": " {capacity}%",
         "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
@@ -100,7 +78,7 @@
     },
 
     "tray": {
-        "spacing": 10
+        "spacing": 8
     },
 
     "custom/power": {

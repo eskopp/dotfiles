@@ -178,3 +178,17 @@ tooltip {
 tooltip label {
     color: #eceff4;
 }
+
+/* Edge alignment fixes */
+.modules-left > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+.modules-center > widget:first-child > #clock {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.modules-right > widget:last-child > #custom-power {
+    margin-right: 0;
+}
