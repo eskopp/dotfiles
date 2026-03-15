@@ -3,7 +3,7 @@ set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SYS_CODE_HOME="$HOME/.config/Code - OSS/User"
-REPO_CODE_HOME="$REPO/config/code-oss/User"
+REPO_CODE_HOME="$REPO/.config/code-oss/User"
 
 backup_item() {
   local target="$1"
