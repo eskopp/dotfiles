@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/git/wallpaper}"
 FALLBACK_WALLPAPER="${HOME}/.config/wallpapers/default.png"
+DEFAULT_WALLPAPER_DIRS=(
+  "${HOME}/.config/wallpapers"
+  "${HOME}/git/wallpaper"
+)
 
 if ! command -v hyprctl >/dev/null 2>&1; then
   echo "hyprctl not found in PATH" >&2
@@ -22,18 +25,25 @@ fi
 
 pick_wallpaper() {
   local files=()
+  local search_dirs=()
 
-  if [[ -d "$WALLPAPER_DIR" ]]; then
-    shopt -s nullglob nocaseglob
-    files=(
-      "$WALLPAPER_DIR"/*.jpg
-      "$WALLPAPER_DIR"/*.jpeg
-      "$WALLPAPER_DIR"/*.png
-      "$WALLPAPER_DIR"/*.webp
-      "$WALLPAPER_DIR"/*.bmp
-    )
-    shopt -u nullglob nocaseglob
+  if [[ -n "${WALLPAPER_DIR:-}" ]]; then
+    search_dirs+=("${WALLPAPER_DIR}")
   fi
+  search_dirs+=("${DEFAULT_WALLPAPER_DIRS[@]}")
+
+  shopt -s nullglob nocaseglob
+  for dir in "${search_dirs[@]}"; do
+    [[ -d "$dir" ]] || continue
+    files+=(
+      "$dir"/*.jpg
+      "$dir"/*.jpeg
+      "$dir"/*.png
+      "$dir"/*.webp
+      "$dir"/*.bmp
+    )
+  done
+  shopt -u nullglob nocaseglob
 
   if ((${#files[@]} > 0)); then
     printf '%s\n' "${files[RANDOM % ${#files[@]}]}"
@@ -49,7 +59,7 @@ pick_wallpaper() {
 }
 
 WALLPAPER="$(pick_wallpaper)" || {
-  echo "No wallpapers found in '$WALLPAPER_DIR' and no fallback at '$FALLBACK_WALLPAPER'." >&2
+  echo "No wallpapers found in configured directories and no fallback at '$FALLBACK_WALLPAPER'." >&2
   exit 1
 }
 
