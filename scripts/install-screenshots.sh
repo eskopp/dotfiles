@@ -5,10 +5,17 @@ source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common.sh"
 
 ensure_hyprland_source_line() {
   local hyprland_conf="${HOME}/.config/hypr/hyprland.conf"
-  local include_line='source = ~/.config/hypr/conf.d/screenshots.conf'
+  local legacy_include_line='source = ~/.config/hypr/conf.d/screenshots.conf'
+  local include_line='source = $HOME/.config/hypr/conf.d/screenshots.conf'
 
   mkdir -p "${HOME}/.config/hypr"
   touch "${hyprland_conf}"
+
+  if grep -qxF "${legacy_include_line}" "${hyprland_conf}"; then
+    sed -i "s|^${legacy_include_line}$|${include_line}|" "${hyprland_conf}"
+    info "Updated legacy screenshots include in ${hyprland_conf}"
+    return
+  fi
 
   if ! grep -qxF "${include_line}" "${hyprland_conf}"; then
     printf '\n%s\n' "${include_line}" >> "${hyprland_conf}"
