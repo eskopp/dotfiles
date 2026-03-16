@@ -117,7 +117,7 @@ EOPF
 main() {
 	local ohmyzsh_dir="${HOME}/.oh-my-zsh"
 	local zsh_custom="${ohmyzsh_dir}/custom"
-	local repo_zsh_dir="${REPO_ROOT}/zsh"
+	local repo_zsh_dir="${REPO_ROOT}/config/zsh"
 	local repo_zshrc="${repo_zsh_dir}/.zshrc"
 	local repo_zprofile="${repo_zsh_dir}/.zprofile"
 	local target_zshrc="${HOME}/.zshrc"
