@@ -29,7 +29,7 @@ REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || true)"
 [[ -n "${REPO_ROOT}" ]] || die "Current directory is not inside a git repository."
 
 HOME_BASHRC="${HOME}/.bashrc"
-REPO_BASH_DIR="${REPO_ROOT}/bash"
+REPO_BASH_DIR="${REPO_ROOT}/config/bash"
 REPO_BASHRC="${REPO_BASH_DIR}/.bashrc"
 BACKUP_DIR="${HOME}/.config/dotfiles-backups"
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
@@ -77,7 +77,7 @@ link_home_bashrc() {
 }
 
 commit_changes() {
-  git -C "${REPO_ROOT}" add "bash/.bashrc"
+  git -C "${REPO_ROOT}" add "config/bash/.bashrc"
 
   if git -C "${REPO_ROOT}" diff --cached --quiet; then
     warn "No staged changes detected. Nothing to commit."
