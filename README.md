@@ -11,6 +11,7 @@ Basic Wayland / Hyprland dotfiles for Arch Linux.
 - Dunst
 - Rofi
 - Thunar
+- Code - OSS
 
 ## Install
 ### Local
