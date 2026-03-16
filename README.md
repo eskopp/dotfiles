@@ -16,7 +16,9 @@ Basic Wayland / Hyprland dotfiles for Arch Linux.
 ## Install
 ### Local
 Run:
+```sh
 ./install.sh
+```
 
 ### Bootstrap via curl
 Run:
