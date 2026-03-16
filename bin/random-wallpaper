@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/git/wallpaper}"
+FALLBACK_WALLPAPER="${HOME}/.config/wallpapers/default.png"
+
+if ! command -v hyprctl >/dev/null 2>&1; then
+  echo "hyprctl not found in PATH" >&2
+  exit 1
+fi
+
+if ! command -v hyprpaper >/dev/null 2>&1; then
+  echo "hyprpaper not found in PATH" >&2
+  exit 1
+fi
+
+if ! pgrep -x hyprpaper >/dev/null 2>&1; then
+  hyprpaper >/dev/null 2>&1 &
+  # Give hyprpaper a moment to initialize its IPC.
+  sleep 0.3
+fi
+
+pick_wallpaper() {
+  local files=()
+
+  if [[ -d "$WALLPAPER_DIR" ]]; then
+    shopt -s nullglob nocaseglob
+    files=(
+      "$WALLPAPER_DIR"/*.jpg
+      "$WALLPAPER_DIR"/*.jpeg
+      "$WALLPAPER_DIR"/*.png
+      "$WALLPAPER_DIR"/*.webp
+      "$WALLPAPER_DIR"/*.bmp
+    )
+    shopt -u nullglob nocaseglob
+  fi
+
+  if ((${#files[@]} > 0)); then
+    printf '%s\n' "${files[RANDOM % ${#files[@]}]}"
+    return 0
+  fi
+
+  if [[ -f "$FALLBACK_WALLPAPER" ]]; then
+    printf '%s\n' "$FALLBACK_WALLPAPER"
+    return 0
+  fi
+
+  return 1
+}
+
+WALLPAPER="$(pick_wallpaper)" || {
+  echo "No wallpapers found in '$WALLPAPER_DIR' and no fallback at '$FALLBACK_WALLPAPER'." >&2
+  exit 1
+}
+
+hyprctl hyprpaper preload "$WALLPAPER" >/dev/null
+hyprctl hyprpaper wallpaper ",$WALLPAPER" >/dev/null
+hyprctl hyprpaper unload unused >/dev/null
+
+printf 'Wallpaper set: %s\n' "$WALLPAPER"
