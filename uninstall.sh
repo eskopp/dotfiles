@@ -51,13 +51,19 @@ scan_dir() {
 
 remove_screenshot_include_line() {
     local hyprland_conf="${HOME}/.config/hypr/hyprland.conf"
-    local include_line='source = ~/.config/hypr/conf.d/screenshots.conf'
+    local include_line='source = $HOME/.config/hypr/conf.d/screenshots.conf'
+    local legacy_include_line='source = ~/.config/hypr/conf.d/screenshots.conf'
 
     [[ -f "$hyprland_conf" ]] || return 0
 
     if grep -qxF "$include_line" "$hyprland_conf"; then
         msg "Removing screenshots include from ${hyprland_conf}"
         sed -i "\|^${include_line}$|d" "$hyprland_conf"
+    fi
+
+    if grep -qxF "$legacy_include_line" "$hyprland_conf"; then
+        msg "Removing legacy screenshots include from ${hyprland_conf}"
+        sed -i "\|^${legacy_include_line}$|d" "$hyprland_conf"
     fi
 }
 
