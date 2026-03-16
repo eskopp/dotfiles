@@ -44,6 +44,7 @@ install_required_packages() {
     swappy \
     brightnessctl \
     pavucontrol \
+    wtype \
     libnotify \
     zsh \
     git \
