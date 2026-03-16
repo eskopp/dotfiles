@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+require_cmd() {
+  if ! command -v "$1" >/dev/null 2>&1; then
+    echo "Missing command: $1" >&2
+    exit 1
+  fi
+}
+
+require_cmd iwctl
+require_cmd rofi
+
+notify() {
+  if command -v notify-send >/dev/null 2>&1; then
+    notify-send "Wi-Fi" "$1"
+  fi
+}
+
+get_station_iface() {
+  iwctl station list 2>/dev/null | awk '
+    /^[-[:space:]]+$/ {sep=1; next}
+    sep && NF {print $1; exit}
+  '
+}
+
+iface="$(get_station_iface)"
+if [[ -z "${iface}" ]]; then
+  echo "No Wi-Fi station interface found (is iwd running?)." >&2
+  exit 1
+fi
+
+show_status() {
+  iwctl station "${iface}" show | rofi -dmenu -i -p "wifi status (${iface})" >/dev/null || true
+}
+
+connect_network() {
+  iwctl station "${iface}" scan >/dev/null 2>&1 || true
+  sleep 1
+
+  local raw_lines
+  raw_lines="$(iwctl station "${iface}" get-networks 2>/dev/null | awk '
+    /^[-[:space:]]+$/ {sep=1; next}
+    sep && NF {
+      line=$0
+      sub(/^[[:space:]]*[>*]?[[:space:]]*/, "", line)
+      print line
+    }
+  ')"
+
+  if [[ -z "${raw_lines}" ]]; then
+    echo "No networks found." | rofi -dmenu -p "wifi"
+    return 0
+  fi
+
+  local selected ssid pass
+  selected="$(printf '%s\n' "${raw_lines}" | rofi -dmenu -i -p "connect (${iface})")"
+  [[ -z "${selected}" ]] && return 0
+
+  ssid="$(printf '%s' "${selected}" | awk -F'  +' '{print $1}')"
+  [[ -z "${ssid}" ]] && return 0
+
+  if iwctl station "${iface}" connect "${ssid}" >/dev/null 2>&1; then
+    notify "Connected to ${ssid}"
+    return 0
+  fi
+
+  pass="$(rofi -dmenu -password -p "Passphrase for ${ssid}")"
+  [[ -z "${pass}" ]] && return 0
+
+  if iwctl --passphrase "${pass}" station "${iface}" connect "${ssid}" >/dev/null 2>&1; then
+    notify "Connected to ${ssid}"
+  else
+    notify "Failed to connect to ${ssid}"
+    exit 1
+  fi
+}
+
+choice="$(printf 'connect\ndisconnect\nrescan\nstatus\n' | rofi -dmenu -p "wifi (${iface})")"
+
+case "${choice}" in
+  connect)
+    connect_network
+    ;;
+  disconnect)
+    iwctl station "${iface}" disconnect >/dev/null
+    notify "Disconnected"
+    ;;
+  rescan)
+    iwctl station "${iface}" scan >/dev/null
+    notify "Scan started"
+    ;;
+  status)
+    show_status
+    ;;
+esac
