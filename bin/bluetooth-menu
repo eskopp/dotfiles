@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if command -v blueman-manager >/dev/null 2>&1; then
+  exec blueman-manager
+fi
+
+if command -v blueberry >/dev/null 2>&1; then
+  exec blueberry
+fi
+
+if command -v rofi >/dev/null 2>&1 && command -v bluetoothctl >/dev/null 2>&1; then
+  choice="$(printf 'power on\npower off\nscan on\nscan off\nshow devices\n' | rofi -dmenu -p 'bluetooth')"
+
+  case "${choice}" in
+    "power on")
+      bluetoothctl power on >/dev/null
+      ;;
+    "power off")
+      bluetoothctl power off >/dev/null
+      ;;
+    "scan on")
+      bluetoothctl scan on >/dev/null
+      ;;
+    "scan off")
+      bluetoothctl scan off >/dev/null
+      ;;
+    "show devices")
+      bluetoothctl devices | rofi -dmenu -p 'devices' >/dev/null || true
+      ;;
+  esac
+  exit 0
+fi
+
+echo "No supported Bluetooth UI found (need blueman-manager, blueberry, or rofi+bluetoothctl)." >&2
+exit 1

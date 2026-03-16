@@ -79,7 +79,8 @@
         "format-connected": " {num_connections}",
         "tooltip-format": "Bluetooth on",
         "tooltip-format-connected": "{device_enumerate}",
-        "tooltip-format-enumerate-connected": "{device_alias}"
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "on-click": "$HOME/.local/bin/bluetooth-menu"
     },
 
     "network": {
