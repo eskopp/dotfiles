@@ -18,9 +18,10 @@ Run:
 ./install.sh
 
 ### Bootstrap via curl
-Run (replace `<user>/<repo>`):
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/<user>/<repo>/main/bootstrap.sh)" -- \
-  https://github.com/<user>/<repo>.git
+Run:
+```sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/eskopp/dotfiles/main/bootstrap.sh)"
+```
 
 Then place a wallpaper here:
 ~/.config/wallpapers/default.png
