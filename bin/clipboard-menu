@@ -1,15 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-rofi_cmd=(rofi -dmenu -i -p 'clipboard' -mesg 'Enter: kopieren  |  Alt+Enter: kopieren + einfügen' -kb-custom-1 'Alt+Return')
-selection="$(cliphist list | "${rofi_cmd[@]}")"
-rofi_status=$?
-
-# 0: normal accept (copy), 10: custom-1 (copy + paste)
-if [[ $rofi_status -ne 0 && $rofi_status -ne 10 ]]; then
-  exit 0
-fi
-
+selection="$(cliphist list | rofi -dmenu -p 'clipboard')"
 [[ -n "${selection:-}" ]] || exit 0
 
 decoded="$(cliphist decode <<<"$selection")"
