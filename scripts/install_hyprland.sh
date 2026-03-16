@@ -15,9 +15,11 @@ main() {
   link_dir "${REPO_DIR}/config/hypr" "${HOME}/.config/hypr"
   link_file "${REPO_DIR}/bin/start-hyprland" "${HOME}/.local/bin/start-hyprland"
   link_file "${REPO_DIR}/bin/hyprpaper-start" "${HOME}/.local/bin/hyprpaper-start"
+  link_file "${REPO_DIR}/bin/random-wallpaper" "${HOME}/.local/bin/random-wallpaper"
 
   make_executable "${REPO_DIR}/bin/start-hyprland"
   make_executable "${REPO_DIR}/bin/hyprpaper-start"
+  make_executable "${REPO_DIR}/bin/random-wallpaper"
 }
 
 main "$@"
