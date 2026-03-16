@@ -28,17 +28,19 @@ main() {
 
   mkdir -p \
     "${HOME}/.local/bin" \
-    "${HOME}/.config/hypr/conf.d" \
     "${HOME}/Pictures/Screenshots"
 
+  # Heal partial setups: keep ~/.config/hypr linked to the repo so conf.d and
+  # the rest of Hyprland config stay consistent.
+  link_dir "${REPO_DIR}/config/hypr" "${HOME}/.config/hypr"
+
   link_file "${REPO_DIR}/bin/polarshot" "${HOME}/.local/bin/polarshot"
+  link_file "${REPO_DIR}/bin/hyprpaper-start" "${HOME}/.local/bin/hyprpaper-start"
+  link_file "${REPO_DIR}/bin/random-wallpaper" "${HOME}/.local/bin/random-wallpaper"
+
   make_executable "${REPO_DIR}/bin/polarshot"
-
-  link_file \
-    "${REPO_DIR}/config/hypr/conf.d/screenshots.conf" \
-    "${HOME}/.config/hypr/conf.d/screenshots.conf"
-
-  ensure_hyprland_source_line
+  make_executable "${REPO_DIR}/bin/hyprpaper-start"
+  make_executable "${REPO_DIR}/bin/random-wallpaper"
 
   if command -v hyprctl >/dev/null 2>&1 && [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
     hyprctl reload
