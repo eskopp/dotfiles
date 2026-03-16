@@ -35,6 +35,7 @@ button:hover {
 #pulseaudio,
 #bluetooth,
 #network,
+#custom-net-speed,
 #cpu,
 #temperature,
 #battery,
@@ -172,4 +173,14 @@ tooltip {
 
 tooltip label {
     color: #eceff4;
+}
+
+
+#custom-net-speed {
+    padding: 0 12px;
+    min-width: 148px;
+    font-size: 13px;
+    font-weight: 700;
+    background: #88c0d0;
+    color: #2e3440;
 }

@@ -19,6 +19,7 @@
         "pulseaudio",
         "bluetooth",
         "network",
+        "custom/net-speed",
         "cpu",
         "temperature",
         "battery",
@@ -88,7 +89,15 @@
         "format-ethernet": "󰈀  LAN",
         "format-linked": "󰈀  link",
         "format-disconnected": "󰖪  offline",
-        "tooltip-format": "{ifname}\n{essid}\n{ipaddr}/{cidr}\nvia {gwaddr}"
+        "tooltip-format": "{ifname}\n{essid}\n{ipaddr}/{cidr}\nvia {gwaddr}",
+        "on-click": "$HOME/.local/bin/wifi-menu"
+    },
+
+
+    "custom/net-speed": {
+        "exec": "$HOME/.local/bin/net-speed",
+        "interval": 1,
+        "tooltip": false
     },
 
     "cpu": {
