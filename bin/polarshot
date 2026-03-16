@@ -16,7 +16,7 @@ slugify() {
 notify_saved() {
     local outfile="$1"
     if command -v notify-send >/dev/null 2>&1; then
-        notify-send "Screenshot gespeichert" "$(basename "$outfile")" -i "$outfile"
+        notify-send "Screenshot saved" "$(basename "$outfile")" -i "$outfile"
     fi
 }
 

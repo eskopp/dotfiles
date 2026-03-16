@@ -8,7 +8,7 @@ decoded="$(cliphist decode <<<"$selection")"
 printf '%s' "$decoded" | wl-copy
 
 if command -v notify-send >/dev/null 2>&1; then
-  notify-send "Clipboard" "Eintrag in Zwischenablage kopiert"
+  notify-send "Clipboard" "Entry copied to clipboard"
 fi
 
 if [[ $rofi_status -eq 10 ]]; then
@@ -18,7 +18,7 @@ if [[ $rofi_status -eq 10 ]]; then
   else
     echo "wtype not found; copied entry but cannot auto-paste." >&2
     if command -v notify-send >/dev/null 2>&1; then
-      notify-send "Clipboard" "Kopiert, aber kein Auto-Paste (wtype fehlt)"
+      notify-send "Clipboard" "Copied, but no auto-paste (wtype missing)"
     fi
   fi
 fi
