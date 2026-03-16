@@ -26,8 +26,14 @@ Run:
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/eskopp/dotfiles/main/bootstrap.sh)"
 ```
 
-Then place a wallpaper here:
+Then place a fallback wallpaper here (used when no image exists in ~/git/wallpaper):
 ~/.config/wallpapers/default.png
+
+For random wallpapers on Hyprland startup, place images in:
+~/git/wallpaper
+
+You can switch to a new random wallpaper anytime with:
+SUPER+W
 
 Start Hyprland from a TTY with:
 ~/.local/bin/start-hyprland
