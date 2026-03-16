@@ -72,6 +72,10 @@ main() {
     bash "${REPO_DIR}/scripts/install_zsh.sh"
   fi
 
+  if [[ -f "${REPO_DIR}/scripts/install_code.sh" ]]; then
+    bash "${REPO_DIR}/scripts/install_code.sh"
+  fi
+
   bash "${REPO_DIR}/scripts/install-screenshots.sh"
 
   info "All installers finished successfully."
