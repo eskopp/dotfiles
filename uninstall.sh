@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+repo_root="$(git -C "${script_dir}" rev-parse --show-toplevel 2>/dev/null || printf '%s' "${script_dir}")"
 
 msg() {
     printf '\033[1;34m[INFO]\033[0m %s\n' "$*"
@@ -13,16 +14,27 @@ warn() {
 
 remove_if_repo_link() {
     local path="$1"
-    local target
+    local link_target
+    local resolved_target
+    local candidate_target
 
     [ -L "$path" ] || return 0
 
-    target="$(readlink -f "$path" 2>/dev/null || true)"
-    [ -n "$target" ] || return 0
+    link_target="$(readlink "$path" 2>/dev/null || true)"
+    [ -n "$link_target" ] || return 0
 
-    case "$target" in
+    if [[ "$link_target" = /* ]]; then
+        candidate_target="$link_target"
+    else
+        candidate_target="$(dirname "$path")/${link_target}"
+    fi
+
+    resolved_target="$(realpath -m "$candidate_target" 2>/dev/null || true)"
+    [ -n "$resolved_target" ] || return 0
+
+    case "$resolved_target" in
         "$repo_root"/*)
-            msg "Removing symlink: $path -> $target"
+            msg "Removing symlink: $path -> $resolved_target"
             rm -f -- "$path"
             ;;
     esac
@@ -35,6 +47,18 @@ scan_dir() {
     while IFS= read -r -d '' link; do
         remove_if_repo_link "$link"
     done < <(find "$dir" -type l -print0 2>/dev/null)
+}
+
+remove_screenshot_include_line() {
+    local hyprland_conf="${HOME}/.config/hypr/hyprland.conf"
+    local include_line='source = ~/.config/hypr/conf.d/screenshots.conf'
+
+    [[ -f "$hyprland_conf" ]] || return 0
+
+    if grep -qxF "$include_line" "$hyprland_conf"; then
+        msg "Removing screenshots include from ${hyprland_conf}"
+        sed -i "\|^${include_line}$|d" "$hyprland_conf"
+    fi
 }
 
 main() {
@@ -56,6 +80,8 @@ main() {
     remove_if_repo_link "$HOME/.gitignore_global"
     remove_if_repo_link "$HOME/.tmux.conf"
     remove_if_repo_link "$HOME/.vimrc"
+
+    remove_screenshot_include_line
 
     msg "Done."
 }
