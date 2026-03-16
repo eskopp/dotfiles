@@ -11,7 +11,8 @@ main() {
     slurp \
     swappy \
     brightnessctl \
-    pavucontrol
+    pavucontrol \
+    wtype
 
   link_file "${REPO_DIR}/bin/screenshot-region" "${HOME}/.local/bin/screenshot-region"
   link_file "${REPO_DIR}/bin/power-menu" "${HOME}/.local/bin/power-menu"
