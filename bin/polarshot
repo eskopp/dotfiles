@@ -1,60 +1,65 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-mode="${1:-}"
-dir="${XDG_SCREENSHOTS_DIR:-$HOME/Pictures/Screenshots}"
-mkdir -p "$dir"
+DIR="$HOME/Pictures/Screenshots"
+mkdir -p "$DIR"
 
-timestamp="$(date +%Y-%m-%d_%H-%M-%S)"
+STAMP="$(date +'%Y-%m-%d_%H-%M-%S')"
+FILE="$DIR/$STAMP.png"
 
-slugify() {
-    printf '%s' "${1:-}" \
-        | tr '[:upper:]' '[:lower:]' \
-        | sed -E 's/[^a-z0-9._-]+/_/g; s/^_+//; s/_+$//; s/_+/_/g'
+need() {
+    command -v "$1" >/dev/null 2>&1 || {
+        echo "Missing command: $1" >&2
+        command -v notify-send >/dev/null 2>&1 && notify-send "Screenshot failed" "Missing command: $1"
+        exit 1
+    }
 }
 
-notify_saved() {
-    local outfile="$1"
-    if command -v notify-send >/dev/null 2>&1; then
-        notify-send "Screenshot saved" "$(basename "$outfile")" -i "$outfile"
-    fi
+copy_and_notify() {
+    wl-copy < "$FILE"
+    command -v notify-send >/dev/null 2>&1 && notify-send "Screenshot saved" "$FILE"
+    printf '%s\n' "$FILE"
 }
 
-save_and_copy() {
-    local outfile="$1"
-    tee "$outfile" | wl-copy --type image/png >/dev/null
-    notify_saved "$outfile"
-    printf '%s\n' "$outfile"
-}
+need grim
+need wl-copy
+need hyprctl
+need python3
+
+mode="${1:-area}"
 
 case "$mode" in
     full)
-        outfile="$dir/screenshot_full_${timestamp}.png"
-        grim - | save_and_copy "$outfile"
-        ;;
-    active)
-        win_json="$(hyprctl -j activewindow)"
-        geom="$(printf '%s' "$win_json" | jq -r 'if (.at and .size) then "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])" else empty end')"
-        class="$(printf '%s' "$win_json" | jq -r '.class // "window"' | sed -E 's/[^a-zA-Z0-9._-]+/_/g')"
-        title="$(printf '%s' "$win_json" | jq -r '.title // "untitled"' | sed -E 's/[^a-zA-Z0-9._-]+/_/g')"
-
-        [ -n "$geom" ] || {
-            echo "No active window found." >&2
-            exit 1
-        }
-
-        class="$(slugify "$class")"
-        title="$(slugify "$title")"
-        outfile="$dir/screenshot_active_${class}_${title}_${timestamp}.png"
-        grim -g "$geom" - | save_and_copy "$outfile"
+        grim "$FILE"
+        copy_and_notify
         ;;
     area)
-        geom="$(slurp)" || exit 0
-        outfile="$dir/screenshot_area_${timestamp}.png"
-        grim -g "$geom" - | save_and_copy "$outfile"
+        need slurp
+        GEOM="$(slurp)"
+        [ -n "$GEOM" ] || exit 0
+        grim -g "$GEOM" "$FILE"
+        copy_and_notify
+        ;;
+    active)
+        GEOM="$(
+            hyprctl activewindow -j | python3 -c '
+import json, sys
+data = json.load(sys.stdin)
+at = data.get("at")
+size = data.get("size")
+if not at or not size or len(at) != 2 or len(size) != 2:
+    raise SystemExit(1)
+x, y = at
+w, h = size
+print(f"{x},{y} {w}x{h}")
+'
+        )"
+        [ -n "$GEOM" ] || exit 1
+        grim -g "$GEOM" "$FILE"
+        copy_and_notify
         ;;
     *)
-        echo "Usage: $(basename "$0") {full|active|area}" >&2
-        exit 2
+        echo "Usage: polarshot {full|area|active}" >&2
+        exit 1
         ;;
 esac
