@@ -2,19 +2,17 @@
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=/dev/null
+
 source "${REPO_DIR}/scripts/common.sh"
 
 install_required_packages() {
   install_pacman_packages \
-    stow \
     qt5-wayland \
     qt6-wayland \
     qt5ct \
     qt6ct \
     networkmanager \
     network-manager-applet \
-    iwd \
     wireplumber \
     firefox \
     fastfetch \
@@ -48,13 +46,10 @@ install_required_packages() {
     pavucontrol \
     wtype \
     libnotify \
-    blueman \
     zsh \
     git \
     curl \
-    zoxide \
-    code \
-    python
+    zoxide
 }
 
 main() {
@@ -66,11 +61,26 @@ main() {
   ensure_base_dirs
   install_required_packages
 
-  bash "${REPO_DIR}/scripts/install_zsh.sh"
+  bash "${REPO_DIR}/scripts/install_core.sh"
+  bash "${REPO_DIR}/scripts/install_hyprland.sh"
+  bash "${REPO_DIR}/scripts/install_waybar.sh"
+  bash "${REPO_DIR}/scripts/install_alacritty.sh"
+  bash "${REPO_DIR}/scripts/install_dunst.sh"
+  bash "${REPO_DIR}/scripts/install_rofi.sh"
+  bash "${REPO_DIR}/scripts/install_thunar.sh"
+  bash "${REPO_DIR}/scripts/install_tools.sh"
 
-  prepare_stow_tree
-  backup_stow_targets
-  stow_packages
+  if [[ -f "${REPO_DIR}/scripts/install_zsh.sh" ]]; then
+    bash "${REPO_DIR}/scripts/install_zsh.sh"
+  fi
+
+  if [[ -f "${REPO_DIR}/scripts/install_code.sh" ]]; then
+    bash "${REPO_DIR}/scripts/install_code.sh"
+  fi
+
+  if [[ -f "${REPO_DIR}/scripts/install-screenshots.sh" ]]; then
+    bash "${REPO_DIR}/scripts/install-screenshots.sh"
+  fi
 
   info "All installers finished successfully."
   printf '\n'
@@ -78,9 +88,7 @@ main() {
   printf '  1. Put wallpapers into: %s\n' "${HOME}/git/wallpaper"
   printf '  2. Enable NetworkManager if needed:\n'
   printf '     sudo systemctl enable --now NetworkManager\n'
-  printf '  3. If you want iwctl-based Wi-Fi menus, also enable iwd if required by your setup:\n'
-  printf '     sudo systemctl enable --now iwd\n'
-  printf '  4. Start Hyprland from a TTY with:\n'
+  printf '  3. Start Hyprland from a TTY with:\n'
   printf '     %s\n' "${HOME}/.local/bin/start-hyprland"
 }
 
