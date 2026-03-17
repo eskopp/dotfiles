@@ -89,9 +89,9 @@ prepare_stow_tree() {
   [[ -d "${REPO_DIR}/config/alacritty" ]]  && link_into_package alacritty ".config/alacritty"             "${REPO_DIR}/config/alacritty"
   [[ -d "${REPO_DIR}/config/dunst" ]]      && link_into_package dunst     ".config/dunst"                 "${REPO_DIR}/config/dunst"
 
-  [[ -f "${REPO_DIR}/config/zsh/.zshrc" ]]    && link_into_package zsh   ".zshrc"                         "${REPO_DIR}/config/zsh/.zshrc"
-  [[ -f "${REPO_DIR}/config/zsh/.zprofile" ]] && link_into_package zsh   ".zprofile"                      "${REPO_DIR}/config/zsh/.zprofile"
-  [[ -f "${REPO_DIR}/config/bash/.bashrc" ]]  && link_into_package bash  ".bashrc"                        "${REPO_DIR}/config/bash/.bashrc"
+  [[ -f "${REPO_DIR}/config/zsh/.zshrc" ]]    && link_into_package zsh      ".zshrc"                         "${REPO_DIR}/config/zsh/.zshrc"
+  [[ -f "${REPO_DIR}/config/zsh/.zprofile" ]] && link_into_package zsh      ".zprofile"                      "${REPO_DIR}/config/zsh/.zprofile"
+  [[ -f "${REPO_DIR}/config/bash/.bashrc" ]]  && link_into_package bash     ".bashrc"                        "${REPO_DIR}/config/bash/.bashrc"
 
   if [[ -f "${REPO_DIR}/config/code-oss/User/settings.json" ]]; then
     link_into_package code-oss ".config/Code - OSS/User/settings.json" "${REPO_DIR}/config/code-oss/User/settings.json"
@@ -131,6 +131,7 @@ is_repo_managed_symlink() {
 
 backup_target_if_needed() {
   local target="$1"
+  local rel backup_path
 
   [[ -e "${target}" || -L "${target}" ]] || return 0
 
@@ -138,9 +139,11 @@ backup_target_if_needed() {
     return 0
   fi
 
-  mkdir -p "${BACKUP_DIR}"
-  mv "${target}" "${BACKUP_DIR}/"
-  info "Backed up conflicting target: ${target} -> ${BACKUP_DIR}/"
+  rel="${target#${HOME}/}"
+  backup_path="${BACKUP_DIR}/${rel}"
+  mkdir -p "$(dirname "${backup_path}")"
+  mv "${target}" "${backup_path}"
+  info "Backed up conflicting target: ${target} -> ${backup_path}"
 }
 
 backup_stow_targets() {
@@ -164,41 +167,38 @@ backup_stow_targets() {
     done < <(find "${REPO_DIR}/bin" -maxdepth 1 -type f -print0)
   fi
 
-  local target
   for target in "${targets[@]}"; do
     backup_target_if_needed "${target}"
   done
 }
 
+collect_stow_packages() {
+  local packages=()
+  local dir
+
+  [[ -d "${STOW_BUILD_DIR}" ]] || return 0
+
+  while IFS= read -r -d '' dir; do
+    packages+=("$(basename "${dir}")")
+  done < <(find "${STOW_BUILD_DIR}" -mindepth 1 -maxdepth 1 -type d -print0 | sort -z)
+
+  printf '%s\n' "${packages[@]}"
+}
+
 stow_packages() {
-  local packages=(
-    hypr
-    waybar
-    rofi
-    alacritty
-    dunst
-    zsh
-    bash
-    code-oss
-    local-bin
-  )
+  mapfile -t packages < <(collect_stow_packages)
+  (( ${#packages[@]} > 0 )) || {
+    warn "No stow packages found in ${STOW_BUILD_DIR}"
+    return 0
+  }
 
   info "Applying stow packages: ${packages[*]}"
   stow --no-folding --restow --dir "${STOW_BUILD_DIR}" --target "${HOME}" "${packages[@]}"
 }
 
 unstow_packages() {
-  local packages=(
-    hypr
-    waybar
-    rofi
-    alacritty
-    dunst
-    zsh
-    bash
-    code-oss
-    local-bin
-  )
+  mapfile -t packages < <(collect_stow_packages)
+  (( ${#packages[@]} > 0 )) || return 0
 
   info "Removing stow packages: ${packages[*]}"
   stow --no-folding --delete --dir "${STOW_BUILD_DIR}" --target "${HOME}" "${packages[@]}" || true

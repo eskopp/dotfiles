@@ -16,7 +16,6 @@ remove_empty_dirs() {
     "${HOME}/.local/bin"
   )
 
-  local dir
   for dir in "${dirs[@]}"; do
     while [[ "${dir}" != "${HOME}" && "${dir}" != "/" ]]; do
       if [[ -d "${dir}" && -z "$(ls -A "${dir}" 2>/dev/null)" ]]; then

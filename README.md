@@ -29,20 +29,35 @@ Run:
 Run:
 
 ```sh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/eskopp/dotfiles/main/bootstrap.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/eskopp/dotfiles/main/bootstrap.sh)" -- \
+  https://github.com/eskopp/dotfiles.git
 ```
 
-Then place a fallback wallpaper here (used when no image exists in ~/git/wallpaper):
-~/.config/wallpapers/default.png
+## Wi-Fi
+
+This setup uses `iwd` / `iwctl` and does **not** use NetworkManager.
+
+Enable Wi-Fi management with:
+
+```sh
+sudo systemctl enable --now iwd
+```
+
+## Wallpapers
+
+Put wallpapers into:
+
+```sh
+~/git/wallpaper
+```
+
+You can switch to a new random wallpaper anytime with:
+
+```text
+SUPER+W
 ```
 
 ## Start Hyprland
-
-For random wallpapers on Hyprland startup, place images in:
-~/git/wallpaper
-
-You can switch to a new random wallpaper anytime with:
-SUPER+W
 
 Start Hyprland from a TTY with:
 

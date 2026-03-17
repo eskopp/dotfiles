@@ -1,3 +1,5 @@
 *.bak
 *.bak.*
 *.save
+.backup-install-scripts/
+.stow-build/

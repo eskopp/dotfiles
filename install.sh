@@ -12,8 +12,6 @@ install_required_packages() {
     qt6-wayland \
     qt5ct \
     qt6ct \
-    networkmanager \
-    network-manager-applet \
     iwd \
     wireplumber \
     firefox \
@@ -76,11 +74,9 @@ main() {
   printf '\n'
   printf 'Next steps:\n'
   printf '  1. Put wallpapers into: %s\n' "${HOME}/git/wallpaper"
-  printf '  2. Enable NetworkManager if needed:\n'
-  printf '     sudo systemctl enable --now NetworkManager\n'
-  printf '  3. If you want iwctl-based Wi-Fi menus, also enable iwd if required by your setup:\n'
+  printf '  2. Enable Wi-Fi management if needed:\n'
   printf '     sudo systemctl enable --now iwd\n'
-  printf '  4. Start Hyprland from a TTY with:\n'
+  printf '  3. Start Hyprland from a TTY with:\n'
   printf '     %s\n' "${HOME}/.local/bin/start-hyprland"
 }
 
