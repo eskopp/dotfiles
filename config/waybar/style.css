@@ -370,3 +370,37 @@ tooltip label {
     color: #eceff4;
     border: 1px solid #4c566a;
 }
+
+
+menu {
+    background: #2e3440;
+    color: #eceff4;
+    border: 1px solid #4c566a;
+    border-radius: 12px;
+    padding: 6px;
+}
+
+menuitem {
+    background: transparent;
+    color: #eceff4;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+menuitem:hover,
+menuitem:focus {
+    background: #5e81ac;
+    color: #ffffff;
+}
+
+menu separator {
+    background: #4c566a;
+    min-height: 1px;
+    margin: 4px 0;
+}
+
+menu check,
+menu radio,
+menu arrow {
+    color: #eceff4;
+}
