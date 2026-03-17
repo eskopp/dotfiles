@@ -48,3 +48,8 @@ main() {
 }
 
 main "$@"
+
+# DOTFILES_SCREENSHOT_DEPS_BEGIN
+sudo pacman -S --needed grim slurp wl-clipboard libnotify
+echo "Screenshot dependencies installed."
+# DOTFILES_SCREENSHOT_DEPS_END

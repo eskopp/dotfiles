@@ -23,3 +23,23 @@ main() {
 }
 
 main "$@"
+
+# DOTFILES_HYPR_LINKS_BEGIN
+REPO="${REPO:-$HOME/git/dotfiles}"
+
+mkdir -p "$HOME/.config/hypr" "$HOME/.config/hypr/conf.d" "$HOME/.local/bin"
+
+# Link Hyprland config
+ln -sfn "$REPO/config/hypr/hyprland.conf" "$HOME/.config/hypr/hyprland.conf"
+ln -sfn "$REPO/config/hypr/hyprlock.conf" "$HOME/.config/hypr/hyprlock.conf"
+ln -sfn "$REPO/config/hypr/hyprpaper.conf" "$HOME/.config/hypr/hyprpaper.conf"
+
+# Link all repo-managed Hypr helper scripts
+for f in "$REPO"/bin/*; do
+    [ -f "$f" ] || continue
+    chmod +x "$f"
+    ln -sfn "$f" "$HOME/.local/bin/$(basename "$f")"
+done
+
+echo "Hyprland config and helper scripts linked."
+# DOTFILES_HYPR_LINKS_END
