@@ -1,27 +1,11 @@
-export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="frisk"
+alias cls="clear"
 
-plugins=(
-	git
-	python
-	docker
-	zsh-autocomplete
-)
-
-source $ZSH/oh-my-zsh.sh
-
-
-# VPN Starten (läuft im Hintergrund, fragt einmal nach sudo & Passwort)
+# VPN
 alias vpn-on='sudo openconnect -b vpn2x.tu-ilmenau.de'
-
-# VPN Status prüfen
 alias vpn-status='ip addr show tun0'
-
-# VPN Beenden
 alias vpn-off='sudo pkill -SIGINT openconnect'
 
-
-# IPv6 Toggle Funktionen
+# IPv6 toggle
 ipv6_off() {
     sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
     sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
@@ -36,8 +20,15 @@ ipv6_on() {
     echo "IPv6 wurde aktiviert."
 }
 
-alias cls="clear"
-export PATH="$HOME/.cargo/bin:$PATH"
-eval "$(zoxide init zsh)"
-
 alias fixscreen='hyprctl dispatch dpms off eDP-1 && sleep 1 && hyprctl dispatch dpms on eDP-1'
+
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# zoxide, if installed
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
+
+# simple prompt
+autoload -Uz colors && colors
+PROMPT='%F{cyan}%~%f %F{yellow}[%n@%m]%f %# '
