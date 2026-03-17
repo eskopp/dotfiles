@@ -1,70 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-FALLBACK_WALLPAPER="${HOME}/.config/wallpapers/default.png"
-DEFAULT_WALLPAPER_DIRS=(
-  "${HOME}/.config/wallpapers"
-  "${HOME}/git/wallpaper"
-)
+WALL_DIR="$HOME/git/wallpaper"
 
-if ! command -v hyprctl >/dev/null 2>&1; then
-  echo "hyprctl not found in PATH" >&2
-  exit 1
-fi
+FILE="$(find "$WALL_DIR" -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) | shuf -n 1)"
 
-if ! command -v hyprpaper >/dev/null 2>&1; then
-  echo "hyprpaper not found in PATH" >&2
-  exit 1
-fi
-
-if ! pgrep -x hyprpaper >/dev/null 2>&1; then
-  hyprpaper >/dev/null 2>&1 &
-  # Give hyprpaper a moment to initialize its IPC.
-  sleep 0.3
-fi
-
-pick_wallpaper() {
-  local files=()
-  local search_dirs=()
-
-  if [[ -n "${WALLPAPER_DIR:-}" ]]; then
-    search_dirs+=("${WALLPAPER_DIR}")
-  fi
-  search_dirs+=("${DEFAULT_WALLPAPER_DIRS[@]}")
-
-  shopt -s nullglob nocaseglob
-  for dir in "${search_dirs[@]}"; do
-    [[ -d "$dir" ]] || continue
-    files+=(
-      "$dir"/*.jpg
-      "$dir"/*.jpeg
-      "$dir"/*.png
-      "$dir"/*.webp
-      "$dir"/*.bmp
-    )
-  done
-  shopt -u nullglob nocaseglob
-
-  if ((${#files[@]} > 0)); then
-    printf '%s\n' "${files[RANDOM % ${#files[@]}]}"
-    return 0
-  fi
-
-  if [[ -f "$FALLBACK_WALLPAPER" ]]; then
-    printf '%s\n' "$FALLBACK_WALLPAPER"
-    return 0
-  fi
-
-  return 1
+[ -n "${FILE:-}" ] || {
+    echo "No wallpaper found in $WALL_DIR"
+    exit 1
 }
 
-WALLPAPER="$(pick_wallpaper)" || {
-  echo "No wallpapers found in configured directories and no fallback at '$FALLBACK_WALLPAPER'." >&2
-  exit 1
-}
+for MON in $(hyprctl monitors | awk '/Monitor/{print $2}'); do
+    hyprctl hyprpaper wallpaper "$MON,$FILE,cover"
+done
 
-hyprctl hyprpaper preload "$WALLPAPER" >/dev/null
-hyprctl hyprpaper wallpaper ",$WALLPAPER" >/dev/null
-hyprctl hyprpaper unload unused >/dev/null
-
-printf 'Wallpaper set: %s\n' "$WALLPAPER"
+echo "$FILE"

@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
-
-WALL="${HOME}/.config/wallpapers/default.png"
-
-pgrep -x hyprpaper >/dev/null 2>&1 && exit 0
-
-if [[ -f "$WALL" ]]; then
-  exec hyprpaper
-else
-  echo "Wallpaper not found: $WALL" >&2
-  exit 0
-fi
+pkill hyprpaper 2>/dev/null || true
+hyprpaper >/tmp/hyprpaper.log 2>&1 &
+sleep 1
+"$HOME/.local/bin/random-wallpaper"
