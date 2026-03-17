@@ -40,7 +40,7 @@
     },
 
     "clock": {
-        "format": "  {:%a %d.%m. %H:%M}",
+        "format": "   {:%a %d.%m. %H:%M}",
         "tooltip-format": "<big>{:%A, %d. %B %Y}</big>\n<tt>{calendar}</tt>"
     },
 
@@ -56,10 +56,10 @@
 
     "pulseaudio": {
         "scroll-step": 5,
-        "format": "{icon} {volume}%",
-        "format-bluetooth": "{icon} {volume}%",
-        "format-bluetooth-muted": " ",
-        "format-muted": " muted",
+        "format": "{icon}   {volume}%",
+        "format-bluetooth": "{icon}      {volume}%",
+        "format-bluetooth-muted": "   ",
+        "format-muted": "   muted",
         "format-icons": {
             "headphone": "",
             "hands-free": "",
@@ -77,7 +77,7 @@
         "format-disabled": "",
         "format-off": "",
         "format-no-controller": "",
-        "format-connected": " {num_connections}",
+        "format-connected": "   {num_connections}",
         "tooltip-format": "Bluetooth on",
         "tooltip-format-connected": "{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}",
@@ -85,14 +85,13 @@
     },
 
     "network": {
-        "format-wifi": "  {signalStrength}%",
-        "format-ethernet": "󰈀  LAN",
-        "format-linked": "󰈀  link",
-        "format-disconnected": "󰖪  offline",
+        "format-wifi": "   {signalStrength}%",
+        "format-ethernet": "󰈀   LAN",
+        "format-linked": "󰈀   link",
+        "format-disconnected": "󰖪   offline",
         "tooltip-format": "{ifname}\n{essid}\n{ipaddr}/{cidr}\nvia {gwaddr}",
         "on-click": "$HOME/.local/bin/wifi-menu"
     },
-
 
     "custom/net-speed": {
         "exec": "$HOME/.local/bin/net-speed",
@@ -102,14 +101,14 @@
 
     "cpu": {
         "interval": 5,
-        "format": " {usage}%",
+        "format": "   {usage}%",
         "tooltip": false
     },
 
     "temperature": {
         "warning-threshold": 70,
         "critical-threshold": 80,
-        "format": " {temperatureC}°C",
+        "format": "   {temperatureC}°C",
         "tooltip": false
     },
 
@@ -118,11 +117,11 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{icon} {capacity}%",
-        "format-full": " {capacity}%",
-        "format-charging": " {capacity}%",
-        "format-plugged": " {capacity}%",
-        "format-alt": "{time} {icon}",
+        "format": "{icon}   {capacity}%",
+        "format-full": "   {capacity}%",
+        "format-charging": "   {capacity}%",
+        "format-plugged": "   {capacity}%",
+        "format-alt": "{time}   {icon}",
         "format-icons": ["", "", "", "", ""]
     },
 
