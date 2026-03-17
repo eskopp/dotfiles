@@ -32,3 +32,8 @@ ipv6_on() {
 alias fixscreen='hyprctl dispatch dpms off eDP-1 && sleep 1 && hyprctl dispatch dpms on eDP-1'
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
