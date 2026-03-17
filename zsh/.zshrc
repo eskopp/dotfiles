@@ -1,3 +1,12 @@
+export ZSH="$HOME/.oh-my-zsh"
+
+source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+ZSH_THEME="frisk"
+plugins=()
+
+source $ZSH/oh-my-zsh.sh
+
 alias cls="clear"
 
 # VPN
@@ -23,12 +32,3 @@ ipv6_on() {
 alias fixscreen='hyprctl dispatch dpms off eDP-1 && sleep 1 && hyprctl dispatch dpms on eDP-1'
 
 export PATH="$HOME/.cargo/bin:$PATH"
-
-# zoxide, if installed
-if command -v zoxide >/dev/null 2>&1; then
-    eval "$(zoxide init zsh)"
-fi
-
-# simple prompt
-autoload -Uz colors && colors
-PROMPT='%F{cyan}%~%f %F{yellow}[%n@%m]%f %# '
