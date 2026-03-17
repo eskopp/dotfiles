@@ -1,55 +1,27 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/common.sh"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
-ensure_hyprland_source_line() {
-  local hyprland_conf="${HOME}/.config/hypr/hyprland.conf"
-  local legacy_include_line='source = ~/.config/hypr/conf.d/screenshots.conf'
-  local include_line='source = $HOME/.config/hypr/conf.d/screenshots.conf'
-
-  mkdir -p "${HOME}/.config/hypr"
-  touch "${hyprland_conf}"
-
-  if grep -qxF "${legacy_include_line}" "${hyprland_conf}"; then
-    sed -i "s|^${legacy_include_line}$|${include_line}|" "${hyprland_conf}"
-    info "Updated legacy screenshots include in ${hyprland_conf}"
-    return
-  fi
-
-  if ! grep -qxF "${include_line}" "${hyprland_conf}"; then
-    printf '\n%s\n' "${include_line}" >> "${hyprland_conf}"
-    info "Added screenshots include to ${hyprland_conf}"
-  fi
+info() {
+  printf '[INFO] %s\n' "$*"
 }
 
 main() {
-  install_pacman_packages grim slurp wl-clipboard jq libnotify
+  info "Finalizing screenshot setup..."
 
-  mkdir -p \
-    "${HOME}/.local/bin" \
-    "${HOME}/Pictures/Screenshots"
-
-  # Heal partial setups: keep ~/.config/hypr linked to the repo so conf.d and
-  # the rest of Hyprland config stay consistent.
-  link_dir "${REPO_DIR}/config/hypr" "${HOME}/.config/hypr"
-
-  link_file "${REPO_DIR}/bin/polarshot" "${HOME}/.local/bin/polarshot"
-  link_file "${REPO_DIR}/bin/hyprpaper-start" "${HOME}/.local/bin/hyprpaper-start"
-  link_file "${REPO_DIR}/bin/random-wallpaper" "${HOME}/.local/bin/random-wallpaper"
-
-  make_executable "${REPO_DIR}/bin/polarshot"
-  make_executable "${REPO_DIR}/bin/hyprpaper-start"
-  make_executable "${REPO_DIR}/bin/random-wallpaper"
-
-  if command -v hyprctl >/dev/null 2>&1 && [[ -n "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]]; then
-    hyprctl reload
+  if [[ -f "$REPO_DIR/bin/polarshot" ]]; then
+    chmod +x "$REPO_DIR/bin/polarshot"
   fi
+
+  if [[ -f "$REPO_DIR/bin/screenshot-region" ]]; then
+    chmod +x "$REPO_DIR/bin/screenshot-region"
+  fi
+
+  mkdir -p "$HOME/Pictures/Screenshots"
+
+  info "Screenshot setup is ready."
 }
 
 main "$@"
-
-# DOTFILES_SCREENSHOT_DEPS_BEGIN
-sudo pacman -S --needed grim slurp wl-clipboard libnotify
-echo "Screenshot dependencies installed."
-# DOTFILES_SCREENSHOT_DEPS_END

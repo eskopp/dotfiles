@@ -57,6 +57,7 @@ main() {
   require_sudo
   start_sudo_keepalive
   trap stop_sudo_keepalive EXIT
+
   ensure_base_dirs
   install_required_packages
 
@@ -77,12 +78,14 @@ main() {
     bash "${REPO_DIR}/scripts/install_code.sh"
   fi
 
-  bash "${REPO_DIR}/scripts/install-screenshots.sh"
+  if [[ -f "${REPO_DIR}/scripts/install-screenshots.sh" ]]; then
+    bash "${REPO_DIR}/scripts/install-screenshots.sh"
+  fi
 
   info "All installers finished successfully."
   printf '\n'
   printf 'Next steps:\n'
-  printf '  1. Put a wallpaper at: %s\n' "${HOME}/.config/wallpapers/default.png"
+  printf '  1. Put wallpapers into: %s\n' "${HOME}/git/wallpaper"
   printf '  2. Enable NetworkManager if needed:\n'
   printf '     sudo systemctl enable --now NetworkManager\n'
   printf '  3. Start Hyprland from a TTY with:\n'
