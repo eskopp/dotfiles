@@ -17,6 +17,7 @@ mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
 HISTSIZE=1000000
 SAVEHIST=1000000
 HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/history"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
 setopt APPEND_HISTORY
 setopt SHARE_HISTORY
