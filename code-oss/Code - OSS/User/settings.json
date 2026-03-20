@@ -44,34 +44,29 @@
     "editorBracketHighlight.foreground4": "#A3BE8C",
     "editorBracketHighlight.foreground5": "#EBCB8B",
     "editorBracketHighlight.foreground6": "#B48EAD",
-
     "sideBar.background": "#2B303B",
     "sideBar.foreground": "#D8DEE9",
     "sideBar.border": "#242933",
     "sideBarTitle.foreground": "#ECEFF4",
     "sideBarSectionHeader.background": "#242933",
     "sideBarSectionHeader.foreground": "#ECEFF4",
-
     "activityBar.background": "#242933",
     "activityBar.foreground": "#ECEFF4",
     "activityBar.inactiveForeground": "#A7B1C2",
     "activityBar.border": "#242933",
     "activityBarBadge.background": "#88C0D0",
     "activityBarBadge.foreground": "#2E3440",
-
     "titleBar.activeBackground": "#242933",
     "titleBar.activeForeground": "#ECEFF4",
     "titleBar.inactiveBackground": "#242933",
     "titleBar.inactiveForeground": "#A7B1C2",
     "window.activeBorder": "#242933",
     "window.inactiveBorder": "#242933",
-
     "statusBar.background": "#242933",
     "statusBar.foreground": "#D8DEE9",
     "statusBar.border": "#242933",
     "statusBar.debuggingBackground": "#B48EAD",
     "statusBar.debuggingForeground": "#ECEFF4",
-
     "tab.activeBackground": "#2E3440",
     "tab.activeForeground": "#ECEFF4",
     "tab.inactiveBackground": "#242933",
@@ -79,60 +74,49 @@
     "tab.border": "#242933",
     "tab.activeBorderTop": "#88C0D0",
     "tab.hoverBackground": "#303745",
-
     "panel.background": "#2B303B",
     "panel.border": "#242933",
     "panelTitle.activeForeground": "#ECEFF4",
     "panelTitle.inactiveForeground": "#A7B1C2",
     "panelTitle.activeBorder": "#88C0D0",
-
     "input.background": "#242933",
     "input.foreground": "#ECEFF4",
     "input.border": "#4C566A",
     "input.placeholderForeground": "#A7B1C2",
     "inputOption.activeBorder": "#88C0D0",
-
     "dropdown.background": "#242933",
     "dropdown.foreground": "#ECEFF4",
     "dropdown.border": "#4C566A",
-
     "button.background": "#5E81AC",
     "button.foreground": "#ECEFF4",
     "button.hoverBackground": "#81A1C1",
     "button.secondaryBackground": "#434C5E",
     "button.secondaryForeground": "#ECEFF4",
     "button.secondaryHoverBackground": "#4C566A",
-
     "list.activeSelectionBackground": "#3B4252",
     "list.activeSelectionForeground": "#ECEFF4",
     "list.inactiveSelectionBackground": "#323946",
     "list.hoverBackground": "#323946",
     "list.highlightForeground": "#88C0D0",
-
     "menu.background": "#242933",
     "menu.foreground": "#ECEFF4",
     "menu.selectionBackground": "#3B4252",
     "menu.selectionForeground": "#ECEFF4",
     "menu.border": "#4C566A",
-
     "notificationCenterHeader.background": "#242933",
     "notifications.background": "#2B303B",
     "notifications.foreground": "#ECEFF4",
     "notifications.border": "#4C566A",
-
     "peekView.border": "#88C0D0",
     "peekViewEditor.background": "#2B303B",
     "peekViewResult.background": "#242933",
     "peekViewTitle.background": "#242933",
-
     "gitDecoration.addedResourceForeground": "#A3BE8C",
     "gitDecoration.modifiedResourceForeground": "#EBCB8B",
     "gitDecoration.deletedResourceForeground": "#BF616A",
     "gitDecoration.untrackedResourceForeground": "#8FBCBB",
-
     "diffEditor.insertedTextBackground": "#A3BE8C22",
     "diffEditor.removedTextBackground": "#BF616A22",
-
     "terminal.background": "#2E3440",
     "terminal.foreground": "#D8DEE9",
     "terminal.ansiBlack": "#3B4252",
@@ -250,8 +234,19 @@
     }
   },
   "editor.unicodeHighlight.ambiguousCharacters": false,
-  "terminal.integrated.hideOnStartup": "never",
+  "terminal.integrated.hideOnStartup": "always",
   "terminal.integrated.hideOnLastClosed": false,
   "terminal.integrated.enablePersistentSessions": true,
-  "terminal.integrated.defaultLocation": "view"
+  "terminal.integrated.defaultLocation": "view",
+  "window.openFilesInNewWindow": "on",
+  "chat.agent.enabled": false,
+  "chat.checkpoints.enabled": false,
+  "chat.customAgentInSubagent.enabled": false,
+  "chat.editing.confirmEditRequestRemoval": false,
+  "telemetry.feedback.enabled": false,
+  "editor.formatOnSave": true,
+  "editor.autoIndentOnPasteWithinString": false,
+  "window.newWindowProfile": "Default",
+  "window.titleBarStyle": "custom",
+  "workbench.secondarySideBar.defaultVisibility": "hidden"
 }
