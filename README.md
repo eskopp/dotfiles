@@ -33,16 +33,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/eskopp/dotfiles/main/boots
   https://github.com/eskopp/dotfiles.git
 ```
 
-## Wi-Fi
-
-This setup uses `iwd` / `iwctl` and does **not** use NetworkManager.
-
-Enable Wi-Fi management with:
-
-```sh
-sudo systemctl enable --now iwd
-```
-
 ## Wallpapers
 
 Put wallpapers into:
