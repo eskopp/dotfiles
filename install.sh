@@ -52,6 +52,8 @@ install_required_packages() {
     curl \
     zoxide \
     code \
+    neovim \
+    emacs-wayland \
     python
 }
 
