@@ -28,6 +28,12 @@ setopt HIST_REDUCE_BLANKS
 # Aliases
 alias cls="clear"
 
+# NeoVim
+alias neovim="nvim"
+
+# Funny Stuff
+alias please="sudo"
+
 # VPN
 alias vpn-on='sudo openconnect -b vpn2x.tu-ilmenau.de'
 alias vpn-status='ip addr show tun0 2>/dev/null || echo "tun0 is not up."'
