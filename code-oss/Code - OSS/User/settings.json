@@ -249,5 +249,9 @@
       "namespace": "#81A1C1"
     }
   },
-  "editor.unicodeHighlight.ambiguousCharacters": false
+  "editor.unicodeHighlight.ambiguousCharacters": false,
+  "terminal.integrated.hideOnStartup": "never",
+  "terminal.integrated.hideOnLastClosed": false,
+  "terminal.integrated.enablePersistentSessions": true,
+  "terminal.integrated.defaultLocation": "view"
 }
