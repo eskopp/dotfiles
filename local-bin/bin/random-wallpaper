@@ -1,17 +1,36 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+theme_env="$config_home/theme-switcher/current/theme.env"
+
 WALL_DIR="$HOME/git/wallpaper"
 
-FILE="$(find "$WALL_DIR" -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) | shuf -n 1)"
+if [[ -f "$theme_env" ]]; then
+  # shellcheck disable=SC1090
+  source "$theme_env"
+  if [[ -n "${WALLPAPER_DIR:-}" ]]; then
+    WALL_DIR="$WALLPAPER_DIR"
+  fi
+fi
+
+if [[ ! -d "$WALL_DIR" ]]; then
+  WALL_DIR="$HOME/git/wallpaper"
+fi
+
+FILE="$(
+  find "$WALL_DIR" -type f \
+    \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) \
+    | shuf -n 1
+)"
 
 [ -n "${FILE:-}" ] || {
-    echo "No wallpaper found in $WALL_DIR"
-    exit 1
+  echo "No wallpaper found in $WALL_DIR"
+  exit 1
 }
 
 for MON in $(hyprctl monitors | awk '/Monitor/{print $2}'); do
-    hyprctl hyprpaper wallpaper "$MON,$FILE,cover"
+  hyprctl hyprpaper wallpaper "$MON,$FILE,cover"
 done
 
 echo "$FILE"

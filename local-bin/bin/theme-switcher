@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+themes_dir="$config_home/theme-switcher/themes"
+
+# Resolve the real directory if the configured themes path is a symlink.
+if [[ -L "$themes_dir" ]]; then
+  themes_dir="$(readlink -f "$themes_dir")"
+fi
+
+[[ -d "$themes_dir" ]] || {
+  echo "Theme directory not found: $themes_dir" >&2
+  exit 1
+}
+
+if [[ $# -gt 0 ]]; then
+  exec "$HOME/.local/bin/theme-apply" "$1"
+fi
+
+mapfile -t themes < <(
+  find "$themes_dir" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort
+)
+
+[[ "${#themes[@]}" -gt 0 ]] || {
+  echo "No themes found in $themes_dir" >&2
+  exit 1
+}
+
+if command -v rofi >/dev/null 2>&1; then
+  choice="$(printf '%s\n' "${themes[@]}" | rofi -dmenu -i -p "theme")"
+else
+  printf '%s\n' "${themes[@]}"
+  read -r -p "theme: " choice
+fi
+
+[[ -n "${choice:-}" ]] || exit 0
+exec "$HOME/.local/bin/theme-apply" "$choice"

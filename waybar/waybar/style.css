@@ -1,3 +1,5 @@
+@import url("../theme-switcher/current/waybar-theme.css");
+
 * {
     font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
     font-size: 12px;
@@ -5,9 +7,14 @@
 }
 
 window#waybar {
-    background: linear-gradient(90deg, #2e3440 0%, #3b4252 55%, #434c5e 100%);
-    color: #eceff4;
-    border-bottom: 1px solid #4c566a;
+    background: linear-gradient(
+        90deg,
+        @wb_bg_start 0%,
+        @wb_bg_mid 55%,
+        @wb_bg_end 100%
+    );
+    color: @wb_fg;
+    border-bottom: 1px solid @wb_border;
 }
 
 window#waybar.hidden {
@@ -15,7 +22,7 @@ window#waybar.hidden {
 }
 
 label {
-    color: #eceff4;
+    color: @wb_fg;
 }
 
 button {
@@ -45,9 +52,9 @@ button:hover {
     padding: 0 10px;
     min-height: 24px;
     border-radius: 12px;
-    border: 1px solid #4c566a;
-    background: #3b4252;
-    color: #eceff4;
+    border: 1px solid @wb_border;
+    background: @wb_surface;
+    color: @wb_fg;
 }
 
 .modules-left > widget:first-child > #workspaces {
@@ -60,7 +67,7 @@ button:hover {
 
 #workspaces {
     padding: 0 4px;
-    background: #3b4252;
+    background: @wb_surface;
 }
 
 #workspaces button {
@@ -69,29 +76,29 @@ button:hover {
     min-width: 24px;
     border-radius: 9px;
     background: transparent;
-    color: #d8dee9;
+    color: @wb_muted;
 }
 
 #workspaces button:hover {
-    background: #4c566a;
-    color: #eceff4;
+    background: @wb_border;
+    color: @wb_fg;
 }
 
 #workspaces button.focused,
 #workspaces button.active {
-    background: #5e81ac;
-    color: #ffffff;
+    background: @wb_accent;
+    color: @wb_accent_text;
 }
 
 #workspaces button.urgent {
-    background: #bf616a;
-    color: #ffffff;
+    background: @wb_bad;
+    color: @wb_bad_text;
 }
 
 #clock {
     padding: 0 14px;
-    background: #5e81ac;
-    color: #ffffff;
+    background: @wb_accent;
+    color: @wb_accent_text;
     font-weight: 700;
 }
 
@@ -101,47 +108,47 @@ button:hover {
 }
 
 #idle_inhibitor.activated {
-    background: #a3be8c;
-    color: #2e3440;
+    background: @wb_good;
+    color: @wb_good_text;
     font-weight: 700;
 }
 
 #pulseaudio.muted {
-    background: #4c566a;
-    color: #d8dee9;
+    background: @wb_border;
+    color: @wb_muted;
 }
 
 #network.disconnected {
-    background: #bf616a;
-    color: #ffffff;
+    background: @wb_bad;
+    color: @wb_bad_text;
 }
 
 #temperature.warning {
-    background: #d08770;
-    color: #ffffff;
+    background: @wb_warn;
+    color: @wb_warn_text;
 }
 
 #temperature.critical {
-    background: #bf616a;
-    color: #ffffff;
+    background: @wb_bad;
+    color: @wb_bad_text;
     font-weight: 700;
 }
 
 #battery.warning:not(.charging) {
-    background: #d08770;
-    color: #ffffff;
+    background: @wb_warn;
+    color: @wb_warn_text;
 }
 
 #battery.critical:not(.charging) {
-    background: #bf616a;
-    color: #ffffff;
+    background: @wb_bad;
+    color: @wb_bad_text;
     font-weight: 700;
 }
 
 #battery.charging,
 #battery.plugged {
-    background: #a3be8c;
-    color: #2e3440;
+    background: @wb_good;
+    color: @wb_good_text;
     font-weight: 700;
 }
 
@@ -154,14 +161,14 @@ button:hover {
 }
 
 #tray > .needs-attention {
-    background: #bf616a;
+    background: @wb_bad;
     border-radius: 8px;
 }
 
 #custom-power {
     padding: 0 12px;
-    background: #bf616a;
-    color: #ffffff;
+    background: @wb_bad;
+    color: @wb_bad_text;
     font-weight: 700;
 }
 
@@ -170,44 +177,44 @@ button:hover {
     min-width: 148px;
     font-size: 12px;
     font-weight: 700;
-    background: #3b4252;
-    color: #eceff4;
-    border: 1px solid #4c566a;
+    background: @wb_surface;
+    color: @wb_fg;
+    border: 1px solid @wb_border;
 }
 
 tooltip {
-    background: #2e3440;
-    border: 1px solid #4c566a;
+    background: @wb_bg_start;
+    border: 1px solid @wb_border;
     border-radius: 10px;
 }
 
 tooltip label {
-    color: #eceff4;
+    color: @wb_fg;
 }
 
 menu {
-    background: #2e3440;
-    color: #eceff4;
-    border: 1px solid #4c566a;
+    background: @wb_bg_start;
+    color: @wb_fg;
+    border: 1px solid @wb_border;
     border-radius: 12px;
     padding: 6px;
 }
 
 menuitem {
     background: transparent;
-    color: #eceff4;
+    color: @wb_fg;
     padding: 8px 12px;
     border-radius: 8px;
 }
 
 menuitem:hover,
 menuitem:focus {
-    background: #5e81ac;
-    color: #ffffff;
+    background: @wb_accent;
+    color: @wb_accent_text;
 }
 
 menu separator {
-    background: #4c566a;
+    background: @wb_border;
     min-height: 1px;
     margin: 4px 0;
 }
@@ -215,5 +222,5 @@ menu separator {
 menu check,
 menu radio,
 menu arrow {
-    color: #eceff4;
+    color: @wb_fg;
 }

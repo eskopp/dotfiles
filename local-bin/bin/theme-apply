@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+theme="${1:-}"
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+cfg_dir="$config_home/theme-switcher"
+themes_dir="$cfg_dir/themes"
+current_dir="$cfg_dir/current"
+dunst_theme_dir="$config_home/dunst/dunstrc.d"
+
+usage() {
+  echo "Usage: theme-apply <theme-name>" >&2
+  exit 1
+}
+
+[[ -n "$theme" ]] || usage
+theme_dir="$themes_dir/$theme"
+[[ -d "$theme_dir" ]] || {
+  echo "Unknown theme: $theme" >&2
+  exit 1
+}
+
+# shellcheck disable=SC1090
+source "$theme_dir/theme.env"
+
+pick_image_from_dir() {
+  local dir="$1"
+  [[ -d "$dir" ]] || return 1
+  find "$dir" -maxdepth 1 -type f \
+    \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) \
+    | sort \
+    | head -n 1
+}
+
+resolve_wallpaper_dir() {
+  local candidate="$1"
+  if [[ -d "$candidate" ]]; then
+    printf '%s\n' "$candidate"
+    return 0
+  fi
+  if [[ -d "$HOME/git/wallpaper" ]]; then
+    printf '%s\n' "$HOME/git/wallpaper"
+    return 0
+  fi
+  printf '%s\n' "$candidate"
+}
+
+resolved_wallpaper_dir="$(resolve_wallpaper_dir "${WALLPAPER_DIR:-$HOME/git/wallpaper}")"
+resolved_lock_wallpaper="${LOCK_WALLPAPER:-}"
+
+if [[ -z "$resolved_lock_wallpaper" || ! -f "$resolved_lock_wallpaper" ]]; then
+  resolved_lock_wallpaper="$(pick_image_from_dir "$resolved_wallpaper_dir" || true)"
+fi
+
+if [[ -z "$resolved_lock_wallpaper" || ! -f "$resolved_lock_wallpaper" ]]; then
+  if [[ -f "$HOME/git/wallpaper/nord_valley.png" ]]; then
+    resolved_lock_wallpaper="$HOME/git/wallpaper/nord_valley.png"
+  fi
+fi
+
+mkdir -p "$current_dir" "$dunst_theme_dir"
+
+cp "$theme_dir/hyprland-colors.conf" "$current_dir/hyprland-colors.conf"
+cp "$theme_dir/waybar-theme.css" "$current_dir/waybar-theme.css"
+cp "$theme_dir/rofi-theme.rasi" "$current_dir/rofi-theme.rasi"
+cp "$theme_dir/alacritty-theme.toml" "$current_dir/alacritty-theme.toml"
+cp "$theme_dir/dunst-theme.conf" "$dunst_theme_dir/99-theme.conf"
+
+cat > "$current_dir/theme.env" <<THEMEEOF
+THEME_NAME="$theme"
+WALLPAPER_DIR="$resolved_wallpaper_dir"
+LOCK_WALLPAPER="$resolved_lock_wallpaper"
+THEMEEOF
+
+printf '%s\n' "$theme" > "$current_dir/name"
+
+if [[ -n "${resolved_lock_wallpaper:-}" && -f "$resolved_lock_wallpaper" ]]; then
+  ln -sfn "$resolved_lock_wallpaper" "$current_dir/lockscreen"
+fi
+
+if command -v hyprctl >/dev/null 2>&1; then
+  hyprctl reload >/dev/null 2>&1 || true
+fi
+
+if pgrep -x waybar >/dev/null 2>&1; then
+  pkill waybar || true
+  sleep 0.2
+  nohup waybar >/dev/null 2>&1 &
+fi
+
+if command -v dunstctl >/dev/null 2>&1; then
+  dunstctl reload >/dev/null 2>&1 || true
+fi
+
+if [[ -x "$HOME/.local/bin/random-wallpaper" ]]; then
+  "$HOME/.local/bin/random-wallpaper" >/dev/null 2>&1 || true
+fi
+
+echo "Applied theme: $theme"
