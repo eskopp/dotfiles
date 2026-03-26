@@ -7,7 +7,6 @@
     "margin-top": 0,
     "margin-left": 0,
     "margin-right": 0,
-
     "modules-left": [
         "hyprland/workspaces"
     ],
@@ -26,7 +25,6 @@
         "tray",
         "custom/power"
     ],
-
     "hyprland/workspaces": {
         "disable-scroll": false,
         "all-outputs": true,
@@ -35,15 +33,23 @@
         "format": "{name}",
         "persistent-only": true,
         "persistent-workspaces": {
-            "*": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            "*": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+            ]
         }
     },
-
     "clock": {
         "format": "   {:%a %d.%m. %H:%M}",
         "tooltip-format": "<big>{:%A, %d. %B %Y}</big>\n<tt>{calendar}</tt>"
     },
-
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
@@ -53,7 +59,6 @@
         "tooltip-format-activated": "Idle inhibitor active",
         "tooltip-format-deactivated": "Idle inhibitor inactive"
     },
-
     "pulseaudio": {
         "scroll-step": 5,
         "format": "{icon}   {volume}%",
@@ -67,11 +72,14 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", ""]
+            "default": [
+                "",
+                "",
+                ""
+            ]
         },
         "on-click": "pavucontrol"
     },
-
     "bluetooth": {
         "format": "",
         "format-disabled": "",
@@ -83,35 +91,31 @@
         "tooltip-format-enumerate-connected": "{device_alias}",
         "on-click": "$HOME/.local/bin/bluetooth-menu"
     },
-
     "network": {
         "format-wifi": "   {signalStrength}%",
         "format-ethernet": "󰈀   LAN",
         "format-linked": "󰈀   link",
         "format-disconnected": "󰖪   offline",
         "tooltip-format": "{ifname}\n{essid}\n{ipaddr}/{cidr}\nvia {gwaddr}",
-        "on-click": "$HOME/.local/bin/wifi-menu"
+        "on-click": "nm-connection-editor",
+        "on-click-right": "alacritty -e nmtui"
     },
-
     "custom/net-speed": {
         "exec": "$HOME/.local/bin/net-speed",
         "interval": 1,
         "tooltip": false
     },
-
     "cpu": {
         "interval": 5,
         "format": "   {usage}%",
         "tooltip": false
     },
-
     "temperature": {
         "warning-threshold": 70,
         "critical-threshold": 80,
         "format": "   {temperatureC}°C",
         "tooltip": false
     },
-
     "battery": {
         "states": {
             "warning": 30,
@@ -122,13 +126,17 @@
         "format-charging": "   {capacity}%",
         "format-plugged": "   {capacity}%",
         "format-alt": "{time}   {icon}",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
     },
-
     "tray": {
         "spacing": 8
     },
-
     "custom/power": {
         "format": "",
         "tooltip": false,

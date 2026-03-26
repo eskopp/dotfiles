@@ -244,7 +244,6 @@
   "chat.customAgentInSubagent.enabled": false,
   "chat.editing.confirmEditRequestRemoval": false,
   "telemetry.feedback.enabled": false,
-  "editor.formatOnSave": true,
   "editor.autoIndentOnPasteWithinString": false,
   "window.newWindowProfile": "Default",
   "window.titleBarStyle": "custom",
