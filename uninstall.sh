@@ -16,6 +16,7 @@ remove_empty_dirs() {
     "${HOME}/.config/fastfetch"
     "${HOME}/.config/nvim"
     "${HOME}/.config/emacs"
+    "${HOME}/.config/theme-switcher/fastfetch-logos"
     "${HOME}/.config/theme-switcher"
     "${HOME}/.config/Code - OSS/User"
     "${HOME}/.vscode-oss/extensions"

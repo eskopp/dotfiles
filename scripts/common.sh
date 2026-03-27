@@ -125,6 +125,7 @@ backup_stow_targets() {
     "${HOME}/.config/nvim"
     "${HOME}/.config/rofi"
     "${HOME}/.config/theme-switcher/themes"
+    "${HOME}/.config/theme-switcher/fastfetch-logos"
     "${HOME}/.config/waybar"
     "${HOME}/.config/Code - OSS/User"
     "${HOME}/.bashrc"
