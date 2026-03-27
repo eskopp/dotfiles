@@ -105,6 +105,8 @@ backup_target_if_needed() {
   [[ -e "${target}" || -L "${target}" ]] || return 0
 
   if is_repo_managed_symlink "${target}"; then
+    rm -f "${target}"
+    info "Removed existing repo-managed symlink: ${target}"
     return 0
   fi
 
