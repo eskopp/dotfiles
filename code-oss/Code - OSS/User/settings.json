@@ -1,6 +1,6 @@
 {
   "window.autoDetectColorScheme": false,
-  "workbench.preferredDarkColorTheme": "Anime Nebula",
+  "workbench.preferredDarkColorTheme": "Berserk Eclipse",
   "workbench.startupEditor": "none",
   "window.commandCenter": false,
   "breadcrumbs.enabled": true,
@@ -38,5 +38,5 @@
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
-  "workbench.colorTheme": "Anime Nebula"
+  "workbench.colorTheme": "Berserk Eclipse"
 }
