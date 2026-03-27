@@ -80,6 +80,8 @@ main() {
   printf '     sudo systemctl enable --now iwd\n'
   printf '  3. Start Hyprland from a TTY with:\n'
   printf '     %s\n' "${HOME}/.local/bin/start-hyprland"
+  printf '  4. Check Fastfetch with:\n'
+  printf '     fastfetch\n'
 }
 
 main "$@"

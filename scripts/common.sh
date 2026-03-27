@@ -32,6 +32,7 @@ ensure_base_dirs() {
     "${HOME}/.config" \
     "${HOME}/.config/wallpapers" \
     "${HOME}/.config/Code - OSS/User" \
+    "${HOME}/.config/theme-switcher/current" \
     "${HOME}/.local/bin" \
     "${HOME}/Pictures/Screenshots"
 }
@@ -62,10 +63,14 @@ stop_sudo_keepalive() {
 }
 
 mark_repo_binaries_executable() {
-  [[ -d "${REPO_DIR}/bin" ]] || return 0
+  local bin_dir="${REPO_DIR}/local-bin/bin"
+  local file
+
+  [[ -d "${bin_dir}" ]] || return 0
+
   while IFS= read -r -d '' file; do
     chmod +x "${file}"
-  done < <(find "${REPO_DIR}/bin" -maxdepth 1 -type f -print0)
+  done < <(find "${bin_dir}" -maxdepth 1 -type f -print0)
 }
 
 link_into_package() {
@@ -77,37 +82,65 @@ link_into_package() {
   ln -sfn "${source_path}" "${STOW_BUILD_DIR}/${package}/${relpath}"
 }
 
+link_home_dotfiles_from_dir() {
+  local package="$1"
+  local source_dir="$2"
+  local file base
+
+  [[ -d "${source_dir}" ]] || return 0
+
+  while IFS= read -r -d '' file; do
+    base="$(basename "${file}")"
+    link_into_package "${package}" "${base}" "${file}"
+  done < <(find "${source_dir}" -maxdepth 1 -mindepth 1 -type f -name '.*' -print0 | sort -z)
+}
+
 prepare_stow_tree() {
+  local file base
+
   rm -rf "${STOW_BUILD_DIR}"
   mkdir -p "${STOW_BUILD_DIR}"
 
   mark_repo_binaries_executable
 
-  [[ -d "${REPO_DIR}/config/hypr" ]]       && link_into_package hypr      ".config/hypr"                  "${REPO_DIR}/config/hypr"
-  [[ -d "${REPO_DIR}/config/waybar" ]]     && link_into_package waybar    ".config/waybar"                "${REPO_DIR}/config/waybar"
-  [[ -d "${REPO_DIR}/config/rofi" ]]       && link_into_package rofi      ".config/rofi"                  "${REPO_DIR}/config/rofi"
-  [[ -d "${REPO_DIR}/config/alacritty" ]]  && link_into_package alacritty ".config/alacritty"             "${REPO_DIR}/config/alacritty"
-  [[ -d "${REPO_DIR}/config/dunst" ]]      && link_into_package dunst     ".config/dunst"                 "${REPO_DIR}/config/dunst"
+  [[ -d "${REPO_DIR}/alacritty/alacritty" ]] \
+    && link_into_package alacritty ".config/alacritty" "${REPO_DIR}/alacritty/alacritty"
 
-  [[ -f "${REPO_DIR}/config/zsh/.zshrc" ]]    && link_into_package zsh      ".zshrc"                         "${REPO_DIR}/config/zsh/.zshrc"
-  [[ -f "${REPO_DIR}/config/zsh/.zprofile" ]] && link_into_package zsh      ".zprofile"                      "${REPO_DIR}/config/zsh/.zprofile"
-  [[ -f "${REPO_DIR}/config/bash/.bashrc" ]]  && link_into_package bash     ".bashrc"                        "${REPO_DIR}/config/bash/.bashrc"
+  [[ -d "${REPO_DIR}/dunst/dunst" ]] \
+    && link_into_package dunst ".config/dunst" "${REPO_DIR}/dunst/dunst"
 
-  if [[ -f "${REPO_DIR}/config/code-oss/User/settings.json" ]]; then
-    link_into_package code-oss ".config/Code - OSS/User/settings.json" "${REPO_DIR}/config/code-oss/User/settings.json"
-  fi
-  if [[ -f "${REPO_DIR}/config/code-oss/User/keybindings.json" ]]; then
-    link_into_package code-oss ".config/Code - OSS/User/keybindings.json" "${REPO_DIR}/config/code-oss/User/keybindings.json"
-  fi
-  if [[ -d "${REPO_DIR}/config/code-oss/User/snippets" ]]; then
-    link_into_package code-oss ".config/Code - OSS/User/snippets" "${REPO_DIR}/config/code-oss/User/snippets"
-  fi
+  [[ -d "${REPO_DIR}/emacs/emacs" ]] \
+    && link_into_package emacs ".config/emacs" "${REPO_DIR}/emacs/emacs"
 
-  if [[ -d "${REPO_DIR}/bin" ]]; then
+  [[ -d "${REPO_DIR}/fastfetch/fastfetch" ]] \
+    && link_into_package fastfetch ".config/fastfetch" "${REPO_DIR}/fastfetch/fastfetch"
+
+  [[ -d "${REPO_DIR}/hypr/hypr" ]] \
+    && link_into_package hypr ".config/hypr" "${REPO_DIR}/hypr/hypr"
+
+  [[ -d "${REPO_DIR}/nvim/nvim" ]] \
+    && link_into_package nvim ".config/nvim" "${REPO_DIR}/nvim/nvim"
+
+  [[ -d "${REPO_DIR}/rofi/rofi" ]] \
+    && link_into_package rofi ".config/rofi" "${REPO_DIR}/rofi/rofi"
+
+  [[ -d "${REPO_DIR}/waybar/waybar" ]] \
+    && link_into_package waybar ".config/waybar" "${REPO_DIR}/waybar/waybar"
+
+  [[ -d "${REPO_DIR}/code-oss/Code - OSS/User" ]] \
+    && link_into_package code-oss ".config/Code - OSS/User" "${REPO_DIR}/code-oss/Code - OSS/User"
+
+  [[ -d "${REPO_DIR}/theme-switcher/theme-switcher/themes" ]] \
+    && link_into_package theme-switcher ".config/theme-switcher/themes" "${REPO_DIR}/theme-switcher/theme-switcher/themes"
+
+  link_home_dotfiles_from_dir bash "${REPO_DIR}/bash"
+  link_home_dotfiles_from_dir zsh "${REPO_DIR}/zsh"
+
+  if [[ -d "${REPO_DIR}/local-bin/bin" ]]; then
     while IFS= read -r -d '' file; do
       base="$(basename "${file}")"
       link_into_package local-bin ".local/bin/${base}" "${file}"
-    done < <(find "${REPO_DIR}/bin" -maxdepth 1 -type f -print0)
+    done < <(find "${REPO_DIR}/local-bin/bin" -maxdepth 1 -type f -print0 | sort -z)
   fi
 }
 
@@ -148,23 +181,26 @@ backup_target_if_needed() {
 
 backup_stow_targets() {
   local targets=(
-    "${HOME}/.config/hypr"
-    "${HOME}/.config/waybar"
-    "${HOME}/.config/rofi"
     "${HOME}/.config/alacritty"
     "${HOME}/.config/dunst"
-    "${HOME}/.zshrc"
-    "${HOME}/.zprofile"
+    "${HOME}/.config/emacs"
+    "${HOME}/.config/fastfetch"
+    "${HOME}/.config/hypr"
+    "${HOME}/.config/nvim"
+    "${HOME}/.config/rofi"
+    "${HOME}/.config/theme-switcher/themes"
+    "${HOME}/.config/waybar"
+    "${HOME}/.config/Code - OSS/User"
     "${HOME}/.bashrc"
-    "${HOME}/.config/Code - OSS/User/settings.json"
-    "${HOME}/.config/Code - OSS/User/keybindings.json"
-    "${HOME}/.config/Code - OSS/User/snippets"
+    "${HOME}/.zprofile"
+    "${HOME}/.zshrc"
   )
+  local file
 
-  if [[ -d "${REPO_DIR}/bin" ]]; then
+  if [[ -d "${REPO_DIR}/local-bin/bin" ]]; then
     while IFS= read -r -d '' file; do
       targets+=("${HOME}/.local/bin/$(basename "${file}")")
-    done < <(find "${REPO_DIR}/bin" -maxdepth 1 -type f -print0)
+    done < <(find "${REPO_DIR}/local-bin/bin" -maxdepth 1 -type f -print0 | sort -z)
   fi
 
   for target in "${targets[@]}"; do

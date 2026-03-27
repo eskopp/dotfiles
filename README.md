@@ -4,15 +4,18 @@ Basic Wayland / Hyprland dotfiles for Arch Linux.
 
 ## Included
 
-- `Hyprland`
-- `Hyprpaper`
-- `Hyprlock`
-- `Waybar`
-- `Alacritty`
-- `Dunst`
-- `Rofi`
-- `Thunar`
-- `Code - OSS`
+- Hyprland
+- Hyprpaper
+- Hyprlock
+- Waybar
+- Alacritty
+- Dunst
+- Rofi
+- Fastfetch
+- Neovim
+- Emacs
+- Thunar
+- Code - OSS
 
 ## Installation
 
@@ -20,37 +23,37 @@ Basic Wayland / Hyprland dotfiles for Arch Linux.
 
 Run:
 
-```sh
-./install.sh
-```
+    ./install.sh
 
 ### Bootstrap via curl
 
 Run:
 
-```sh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/eskopp/dotfiles/main/bootstrap.sh)" -- \
-  https://github.com/eskopp/dotfiles.git
-```
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/eskopp/dotfiles/main/bootstrap.sh)" -- \
+      https://github.com/eskopp/dotfiles.git
 
 ## Wallpapers
 
 Put wallpapers into:
 
-```sh
-~/git/wallpaper
-```
+    ~/git/wallpaper
 
 You can switch to a new random wallpaper anytime with:
 
-```text
-SUPER+W
-```
+    SUPER+W
 
 ## Start Hyprland
 
 Start Hyprland from a TTY with:
 
-```sh
-~/.local/bin/start-hyprland
-```
+    ~/.local/bin/start-hyprland
+
+## Fastfetch
+
+The installer also installs fastfetch and stows the config to:
+
+    ~/.config/fastfetch/config.jsonc
+
+Run:
+
+    fastfetch

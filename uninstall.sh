@@ -12,6 +12,10 @@ remove_empty_dirs() {
     "${HOME}/.config/rofi"
     "${HOME}/.config/alacritty"
     "${HOME}/.config/dunst"
+    "${HOME}/.config/fastfetch"
+    "${HOME}/.config/nvim"
+    "${HOME}/.config/emacs"
+    "${HOME}/.config/theme-switcher"
     "${HOME}/.config/Code - OSS/User"
     "${HOME}/.local/bin"
   )
