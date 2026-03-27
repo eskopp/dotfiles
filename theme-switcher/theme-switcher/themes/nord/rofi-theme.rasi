@@ -1,55 +1,149 @@
 * {
     font: "Fira Sans 11";
-    bg: #2e3440ee;
-    bg-alt: #3b4252ee;
-    fg: #eceff4;
-    selected: #88c0d0;
-    active: #a3be8c;
-    urgent: #bf616a;
-    border-color: #88c0d0;
+
+    bg:             #2b303bee;
+    bg-alt:         #323946ee;
+    surface:        #3b4252ee;
+    surface-2:      #434c5eee;
+
+    fg:             #eceff4;
+    fg-muted:       #d8dee9;
+    fg-subtle:      #a7b1c2;
+
+    accent:         #88c0d0;
+    accent-strong:  #81a1c1;
+
+    good:           #a3be8c;
+    warn:           #ebcb8b;
+    bad:            #bf616a;
+
+    border:         #4c566a;
+    selected-fg:    #2e3440;
+    urgent-fg:      #eceff4;
 }
 
 window {
-    transparency: "real";
-    background-color: @bg;
-    text-color: @fg;
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    width: 46%;
+    padding: 22px;
     border: 2px;
-    border-color: @border-color;
-    border-radius: 12px;
-    width: 40%;
-    padding: 16px;
+    border-color: @accent;
+    border-radius: 18px;
+    background-color: @bg;
+    transparency: "real";
+}
+
+mainbox {
+    spacing: 14px;
+    children: [inputbar, mode-switcher, listview];
+    background-color: transparent;
 }
 
 inputbar {
     children: [prompt, entry];
-    background-color: @bg-alt;
-    border-radius: 10px;
-    padding: 10px;
+    spacing: 12px;
+    padding: 14px 16px;
+    border: 0;
+    border-radius: 14px;
+    background-color: @surface;
+    text-color: @fg;
 }
 
 prompt {
-    text-color: @selected;
-    margin: 0 8px 0 0;
+    enabled: true;
+    text-color: @accent;
+    background-color: transparent;
 }
 
 entry {
+    placeholder: "Search applications, commands, windows...";
+    placeholder-color: @fg-subtle;
     text-color: @fg;
+    background-color: transparent;
+}
+
+mode-switcher {
+    spacing: 10px;
+    background-color: transparent;
+}
+
+button {
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 12px;
+    background-color: @surface;
+    text-color: @fg-muted;
+}
+
+button selected {
+    background-color: @accent;
+    text-color: @selected-fg;
 }
 
 listview {
     lines: 10;
     columns: 1;
     fixed-height: false;
-    margin: 12px 0 0 0;
+    spacing: 8px;
+    cycle: true;
+    dynamic: true;
+    scrollbar: false;
     background-color: transparent;
 }
 
 element {
-    padding: 10px;
-    border-radius: 10px;
+    padding: 12px 14px;
+    spacing: 12px;
+    border: 0;
+    border-radius: 14px;
+    background-color: @surface;
+    text-color: @fg;
 }
 
-element selected {
-    background-color: @selected;
-    text-color: #2e3440;
+element normal.normal {
+    background-color: @surface;
+    text-color: @fg;
+}
+
+element alternate.normal {
+    background-color: @surface-2;
+    text-color: @fg;
+}
+
+element selected.normal {
+    background-color: @accent;
+    text-color: @selected-fg;
+}
+
+element selected.urgent {
+    background-color: @bad;
+    text-color: @urgent-fg;
+}
+
+element selected.active {
+    background-color: @good;
+    text-color: @selected-fg;
+}
+
+element-icon {
+    size: 1.1em;
+    background-color: transparent;
+    text-color: inherit;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+
+error-message {
+    padding: 12px;
+    border: 2px;
+    border-color: @bad;
+    border-radius: 12px;
+    background-color: @surface;
+    text-color: @fg;
 }
