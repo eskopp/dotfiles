@@ -28,6 +28,7 @@ setopt HIST_REDUCE_BLANKS
 # Aliases
 alias cls="clear"
 alias neofetch="fastfetch"
+alias fastfetch='fastfetch --config ~/.config/theme-switcher/current/fastfetch-config.jsonc'
 
 # NeoVim
 alias neovim="nvim"
@@ -75,3 +76,4 @@ fi
 if [ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
+ 

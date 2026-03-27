@@ -7,6 +7,8 @@ cfg_dir="$config_home/theme-switcher"
 themes_dir="$cfg_dir/themes"
 current_dir="$cfg_dir/current"
 dunst_theme_dir="$config_home/dunst/dunstrc.d"
+real_themes_dir="$(readlink -f "$themes_dir" 2>/dev/null || printf '%s\n' "$themes_dir")"
+repo_fastfetch_logo_dir="${real_themes_dir%/themes}/fastfetch-logos"
 
 usage() {
   echo "Usage: theme-apply <theme-name>" >&2
@@ -64,6 +66,14 @@ cp "$theme_dir/hyprland-colors.conf" "$current_dir/hyprland-colors.conf"
 cp "$theme_dir/waybar-theme.css" "$current_dir/waybar-theme.css"
 cp "$theme_dir/rofi-theme.rasi" "$current_dir/rofi-theme.rasi"
 cp "$theme_dir/alacritty-theme.toml" "$current_dir/alacritty-theme.toml"
+cp "$theme_dir/fastfetch-config.jsonc" "$current_dir/fastfetch-config.jsonc"
+
+if [[ -f "$repo_fastfetch_logo_dir/$theme.txt" ]]; then
+  cp "$repo_fastfetch_logo_dir/$theme.txt" "$current_dir/fastfetch-logo.txt"
+else
+  rm -f "$current_dir/fastfetch-logo.txt"
+fi
+
 cp "$theme_dir/dunst-theme.conf" "$dunst_theme_dir/99-theme.conf"
 
 cat > "$current_dir/theme.env" <<THEMEEOF
