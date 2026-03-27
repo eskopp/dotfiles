@@ -27,9 +27,11 @@ setopt HIST_REDUCE_BLANKS
 
 # Aliases
 alias cls="clear"
+alias neofetch="fastfetch"
 
 # NeoVim
 alias neovim="nvim"
+alias vim="nvim"
 
 # Funny Stuff
 alias please="sudo"
