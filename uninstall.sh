@@ -40,6 +40,7 @@ main() {
   unstow_packages
 
   rm -f "${HOME}/.vscode-oss/extensions/polar-nord"
+  rm -f "${HOME}/.vscode-oss/extensions/anime-nebula"
   rm -f "${HOME}/.config/dunst/dunstrc.d/99-theme.conf"
   rm -rf "${HOME}/.config/theme-switcher/current"
 

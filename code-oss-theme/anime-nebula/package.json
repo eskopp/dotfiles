@@ -1,0 +1,22 @@
+{
+  "name": "anime-nebula-theme",
+  "displayName": "Anime Nebula",
+  "description": "A soft pink-blue anime-inspired theme for Code - OSS",
+  "version": "0.0.1",
+  "publisher": "erikskopp-local",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Anime Nebula",
+        "uiTheme": "vs-dark",
+        "path": "./themes/anime-nebula-color-theme.json"
+      }
+    ]
+  }
+}

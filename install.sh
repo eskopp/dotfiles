@@ -59,16 +59,20 @@ install_required_packages() {
     python
 }
 
-install_code_oss_theme() {
-  local source_dir="${REPO_DIR}/code-oss-theme/polar-nord"
-  local target_dir="${HOME}/.vscode-oss/extensions/polar-nord"
+install_code_oss_themes() {
+  local themes_root="${REPO_DIR}/code-oss-theme"
+  local dir target_dir
 
-  [[ -d "${source_dir}" ]] || return 0
+  [[ -d "${themes_root}" ]] || return 0
 
   mkdir -p "${HOME}/.vscode-oss/extensions"
-  backup_target_if_needed "${target_dir}"
-  ln -sfn "${source_dir}" "${target_dir}"
-  info "Installed Code - OSS theme: Polar Nord"
+
+  while IFS= read -r -d '' dir; do
+    target_dir="${HOME}/.vscode-oss/extensions/$(basename "${dir}")"
+    backup_target_if_needed "${target_dir}"
+    ln -sfn "${dir}" "${target_dir}"
+    info "Installed Code - OSS theme: $(basename "${dir}")"
+  done < <(find "${themes_root}" -mindepth 1 -maxdepth 1 -type d -print0 | sort -z)
 }
 
 main() {
@@ -86,7 +90,7 @@ main() {
   backup_stow_targets
   stow_packages
 
-  install_code_oss_theme
+  install_code_oss_themes
 
   info "Enabling NetworkManager"
   sudo systemctl enable --now NetworkManager

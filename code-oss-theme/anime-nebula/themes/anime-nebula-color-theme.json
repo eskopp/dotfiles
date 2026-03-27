@@ -1,0 +1,84 @@
+{
+  "name": "Anime Nebula",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#1E1E2E",
+    "editor.foreground": "#CDD6F4",
+    "editorLineNumber.foreground": "#6C7086",
+    "editorLineNumber.activeForeground": "#F5C2E7",
+    "editorCursor.foreground": "#F5C2E7",
+    "editor.selectionBackground": "#F5C2E744",
+    "editor.inactiveSelectionBackground": "#89B4FA33",
+    "editorIndentGuide.background1": "#313244",
+    "editorIndentGuide.activeBackground1": "#45475A",
+    "sideBar.background": "#181825",
+    "sideBar.foreground": "#CDD6F4",
+    "activityBar.background": "#181825",
+    "activityBar.foreground": "#F5C2E7",
+    "titleBar.activeBackground": "#181825",
+    "titleBar.activeForeground": "#F5E0DC",
+    "statusBar.background": "#26283A",
+    "statusBar.foreground": "#CDD6F4",
+    "tab.activeBackground": "#1E1E2E",
+    "tab.inactiveBackground": "#181825",
+    "tab.activeForeground": "#F5E0DC",
+    "tab.inactiveForeground": "#BAC2DE",
+    "panel.background": "#26283A",
+    "terminal.background": "#1E1E2E",
+    "button.background": "#89B4FA",
+    "button.foreground": "#1E1E2E",
+    "button.hoverBackground": "#F5C2E7",
+    "input.background": "#313244",
+    "input.foreground": "#CDD6F4",
+    "input.border": "#6C7086",
+    "list.activeSelectionBackground": "#F5C2E7",
+    "list.activeSelectionForeground": "#1E1E2E",
+    "list.hoverBackground": "#313244",
+    "list.highlightForeground": "#89B4FA"
+  },
+  "tokenColors": [
+    {
+      "scope": ["comment", "punctuation.definition.comment"],
+      "settings": {
+        "foreground": "#9399B2",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "scope": ["keyword", "storage", "keyword.control"],
+      "settings": {
+        "foreground": "#89B4FA"
+      }
+    },
+    {
+      "scope": ["string", "punctuation.definition.string"],
+      "settings": {
+        "foreground": "#A6E3A1"
+      }
+    },
+    {
+      "scope": ["constant.numeric", "constant.language", "constant.character"],
+      "settings": {
+        "foreground": "#F9E2AF"
+      }
+    },
+    {
+      "scope": ["entity.name.function", "support.function", "meta.function-call"],
+      "settings": {
+        "foreground": "#F5C2E7"
+      }
+    },
+    {
+      "scope": ["entity.name.type", "entity.name.class", "support.type"],
+      "settings": {
+        "foreground": "#94E2D5"
+      }
+    },
+    {
+      "scope": ["variable", "identifier"],
+      "settings": {
+        "foreground": "#CDD6F4"
+      }
+    }
+  ]
+}

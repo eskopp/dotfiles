@@ -80,9 +80,29 @@ cat > "$current_dir/theme.env" <<THEMEEOF
 THEME_NAME="$theme"
 WALLPAPER_DIR="$resolved_wallpaper_dir"
 LOCK_WALLPAPER="$resolved_lock_wallpaper"
+CODE_OSS_THEME="${CODE_OSS_THEME:-}"
 THEMEEOF
 
 printf '%s\n' "$theme" > "$current_dir/name"
+
+if [[ -n "${CODE_OSS_THEME:-}" ]]; then
+  code_settings="$config_home/Code - OSS/User/settings.json"
+  if [[ -f "$code_settings" ]]; then
+    python3 - "$code_settings" "$CODE_OSS_THEME" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+settings_path = Path(sys.argv[1])
+theme_name = sys.argv[2]
+
+data = json.loads(settings_path.read_text(encoding="utf-8"))
+data["workbench.colorTheme"] = theme_name
+data["workbench.preferredDarkColorTheme"] = theme_name
+settings_path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+PY
+  fi
+fi
 
 if [[ -n "${resolved_lock_wallpaper:-}" && -f "$resolved_lock_wallpaper" ]]; then
   ln -sfn "$resolved_lock_wallpaper" "$current_dir/lockscreen"
