@@ -11,12 +11,14 @@ remove_empty_dirs() {
     "${HOME}/.config/waybar"
     "${HOME}/.config/rofi"
     "${HOME}/.config/alacritty"
+    "${HOME}/.config/dunst/dunstrc.d"
     "${HOME}/.config/dunst"
     "${HOME}/.config/fastfetch"
     "${HOME}/.config/nvim"
     "${HOME}/.config/emacs"
     "${HOME}/.config/theme-switcher"
     "${HOME}/.config/Code - OSS/User"
+    "${HOME}/.vscode-oss/extensions"
     "${HOME}/.local/bin"
   )
 
@@ -35,6 +37,11 @@ remove_empty_dirs() {
 main() {
   prepare_stow_tree
   unstow_packages
+
+  rm -f "${HOME}/.vscode-oss/extensions/polar-nord"
+  rm -f "${HOME}/.config/dunst/dunstrc.d/99-theme.conf"
+  rm -rf "${HOME}/.config/theme-switcher/current"
+
   remove_empty_dirs
   rm -rf "${STOW_BUILD_DIR}"
 

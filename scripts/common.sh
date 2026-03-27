@@ -32,8 +32,10 @@ ensure_base_dirs() {
     "${HOME}/.config" \
     "${HOME}/.config/wallpapers" \
     "${HOME}/.config/Code - OSS/User" \
+    "${HOME}/.config/dunst/dunstrc.d" \
     "${HOME}/.config/theme-switcher/current" \
     "${HOME}/.local/bin" \
+    "${HOME}/.vscode-oss/extensions" \
     "${HOME}/Pictures/Screenshots"
 }
 
@@ -73,75 +75,9 @@ mark_repo_binaries_executable() {
   done < <(find "${bin_dir}" -maxdepth 1 -type f -print0)
 }
 
-link_into_package() {
-  local package="$1"
-  local relpath="$2"
-  local source_path="$3"
-
-  mkdir -p "${STOW_BUILD_DIR}/${package}/$(dirname "${relpath}")"
-  ln -sfn "${source_path}" "${STOW_BUILD_DIR}/${package}/${relpath}"
-}
-
-link_home_dotfiles_from_dir() {
-  local package="$1"
-  local source_dir="$2"
-  local file base
-
-  [[ -d "${source_dir}" ]] || return 0
-
-  while IFS= read -r -d '' file; do
-    base="$(basename "${file}")"
-    link_into_package "${package}" "${base}" "${file}"
-  done < <(find "${source_dir}" -maxdepth 1 -mindepth 1 -type f -name '.*' -print0 | sort -z)
-}
-
 prepare_stow_tree() {
-  local file base
-
   rm -rf "${STOW_BUILD_DIR}"
-  mkdir -p "${STOW_BUILD_DIR}"
-
   mark_repo_binaries_executable
-
-  [[ -d "${REPO_DIR}/alacritty/alacritty" ]] \
-    && link_into_package alacritty ".config/alacritty" "${REPO_DIR}/alacritty/alacritty"
-
-  [[ -d "${REPO_DIR}/dunst/dunst" ]] \
-    && link_into_package dunst ".config/dunst" "${REPO_DIR}/dunst/dunst"
-
-  [[ -d "${REPO_DIR}/emacs/emacs" ]] \
-    && link_into_package emacs ".config/emacs" "${REPO_DIR}/emacs/emacs"
-
-  [[ -d "${REPO_DIR}/fastfetch/fastfetch" ]] \
-    && link_into_package fastfetch ".config/fastfetch" "${REPO_DIR}/fastfetch/fastfetch"
-
-  [[ -d "${REPO_DIR}/hypr/hypr" ]] \
-    && link_into_package hypr ".config/hypr" "${REPO_DIR}/hypr/hypr"
-
-  [[ -d "${REPO_DIR}/nvim/nvim" ]] \
-    && link_into_package nvim ".config/nvim" "${REPO_DIR}/nvim/nvim"
-
-  [[ -d "${REPO_DIR}/rofi/rofi" ]] \
-    && link_into_package rofi ".config/rofi" "${REPO_DIR}/rofi/rofi"
-
-  [[ -d "${REPO_DIR}/waybar/waybar" ]] \
-    && link_into_package waybar ".config/waybar" "${REPO_DIR}/waybar/waybar"
-
-  [[ -d "${REPO_DIR}/code-oss/Code - OSS/User" ]] \
-    && link_into_package code-oss ".config/Code - OSS/User" "${REPO_DIR}/code-oss/Code - OSS/User"
-
-  [[ -d "${REPO_DIR}/theme-switcher/theme-switcher/themes" ]] \
-    && link_into_package theme-switcher ".config/theme-switcher/themes" "${REPO_DIR}/theme-switcher/theme-switcher/themes"
-
-  link_home_dotfiles_from_dir bash "${REPO_DIR}/bash"
-  link_home_dotfiles_from_dir zsh "${REPO_DIR}/zsh"
-
-  if [[ -d "${REPO_DIR}/local-bin/bin" ]]; then
-    while IFS= read -r -d '' file; do
-      base="$(basename "${file}")"
-      link_into_package local-bin ".local/bin/${base}" "${file}"
-    done < <(find "${REPO_DIR}/local-bin/bin" -maxdepth 1 -type f -print0 | sort -z)
-  fi
 }
 
 is_repo_managed_symlink() {
@@ -153,7 +89,7 @@ is_repo_managed_symlink() {
   [[ -n "${resolved}" ]] || return 1
 
   case "${resolved}" in
-    "${REPO_DIR}"|"${REPO_DIR}"/*|"${STOW_BUILD_DIR}"|"${STOW_BUILD_DIR}"/*)
+    "${REPO_DIR}"|"${REPO_DIR}"/*)
       return 0
       ;;
     *)
@@ -182,7 +118,7 @@ backup_target_if_needed() {
 backup_stow_targets() {
   local targets=(
     "${HOME}/.config/alacritty"
-    "${HOME}/.config/dunst"
+    "${HOME}/.config/dunst/dunstrc"
     "${HOME}/.config/emacs"
     "${HOME}/.config/fastfetch"
     "${HOME}/.config/hypr"
@@ -208,34 +144,58 @@ backup_stow_targets() {
   done
 }
 
-collect_stow_packages() {
-  local packages=()
-  local dir
+stow_group() {
+  local action="$1"
+  local target="$2"
+  shift 2
 
-  [[ -d "${STOW_BUILD_DIR}" ]] || return 0
+  (( $# > 0 )) || return 0
 
-  while IFS= read -r -d '' dir; do
-    packages+=("$(basename "${dir}")")
-  done < <(find "${STOW_BUILD_DIR}" -mindepth 1 -maxdepth 1 -type d -print0 | sort -z)
-
-  printf '%s\n' "${packages[@]}"
+  if [[ "${action}" == "restow" ]]; then
+    info "Applying stow packages to ${target}: $*"
+    stow --no-folding --restow --dir "${REPO_DIR}" --target "${target}" "$@"
+  else
+    info "Removing stow packages from ${target}: $*"
+    stow --no-folding --delete --dir "${REPO_DIR}" --target "${target}" "$@" || true
+  fi
 }
 
 stow_packages() {
-  mapfile -t packages < <(collect_stow_packages)
-  (( ${#packages[@]} > 0 )) || {
-    warn "No stow packages found in ${STOW_BUILD_DIR}"
-    return 0
-  }
+  local config_packages=()
+  local home_packages=()
+  local local_packages=()
 
-  info "Applying stow packages: ${packages[*]}"
-  stow --no-folding --restow --dir "${STOW_BUILD_DIR}" --target "${HOME}" "${packages[@]}"
+  for pkg in alacritty code-oss dunst emacs fastfetch hypr nvim rofi theme-switcher waybar; do
+    [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
+  done
+
+  for pkg in bash zsh; do
+    [[ -d "${REPO_DIR}/${pkg}" ]] && home_packages+=("${pkg}")
+  done
+
+  [[ -d "${REPO_DIR}/local-bin" ]] && local_packages+=("local-bin")
+
+  stow_group restow "${HOME}/.config" "${config_packages[@]}"
+  stow_group restow "${HOME}" "${home_packages[@]}"
+  stow_group restow "${HOME}/.local" "${local_packages[@]}"
 }
 
 unstow_packages() {
-  mapfile -t packages < <(collect_stow_packages)
-  (( ${#packages[@]} > 0 )) || return 0
+  local config_packages=()
+  local home_packages=()
+  local local_packages=()
 
-  info "Removing stow packages: ${packages[*]}"
-  stow --no-folding --delete --dir "${STOW_BUILD_DIR}" --target "${HOME}" "${packages[@]}" || true
+  for pkg in alacritty code-oss dunst emacs fastfetch hypr nvim rofi theme-switcher waybar; do
+    [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
+  done
+
+  for pkg in bash zsh; do
+    [[ -d "${REPO_DIR}/${pkg}" ]] && home_packages+=("${pkg}")
+  done
+
+  [[ -d "${REPO_DIR}/local-bin" ]] && local_packages+=("local-bin")
+
+  stow_group delete "${HOME}/.config" "${config_packages[@]}"
+  stow_group delete "${HOME}" "${home_packages[@]}"
+  stow_group delete "${HOME}/.local" "${local_packages[@]}"
 }

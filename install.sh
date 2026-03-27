@@ -12,7 +12,6 @@ install_required_packages() {
     qt6-wayland \
     qt5ct \
     qt6ct \
-    iwd \
     wireplumber \
     firefox \
     fastfetch \
@@ -47,6 +46,9 @@ install_required_packages() {
     wtype \
     libnotify \
     blueman \
+    networkmanager \
+    network-manager-applet \
+    nm-connection-editor \
     zsh \
     git \
     curl \
@@ -55,6 +57,18 @@ install_required_packages() {
     neovim \
     emacs-wayland \
     python
+}
+
+install_code_oss_theme() {
+  local source_dir="${REPO_DIR}/code-oss-theme/polar-nord"
+  local target_dir="${HOME}/.vscode-oss/extensions/polar-nord"
+
+  [[ -d "${source_dir}" ]] || return 0
+
+  mkdir -p "${HOME}/.vscode-oss/extensions"
+  backup_target_if_needed "${target_dir}"
+  ln -sfn "${source_dir}" "${target_dir}"
+  info "Installed Code - OSS theme: Polar Nord"
 }
 
 main() {
@@ -72,15 +86,26 @@ main() {
   backup_stow_targets
   stow_packages
 
+  install_code_oss_theme
+
+  info "Enabling NetworkManager"
+  sudo systemctl enable --now NetworkManager
+  sudo systemctl disable --now iwd 2>/dev/null || true
+
+  if [[ -x "${HOME}/.local/bin/theme-apply" ]]; then
+    info "Applying default theme: nord"
+    "${HOME}/.local/bin/theme-apply" nord
+  else
+    warn "theme-apply was not found after stowing; skipping default theme application"
+  fi
+
   info "All installers finished successfully."
   printf '\n'
   printf 'Next steps:\n'
   printf '  1. Put wallpapers into: %s\n' "${HOME}/git/wallpaper"
-  printf '  2. Enable Wi-Fi management if needed:\n'
-  printf '     sudo systemctl enable --now iwd\n'
-  printf '  3. Start Hyprland from a TTY with:\n'
+  printf '  2. Start Hyprland from a TTY with:\n'
   printf '     %s\n' "${HOME}/.local/bin/start-hyprland"
-  printf '  4. Check Fastfetch with:\n'
+  printf '  3. Check Fastfetch with:\n'
   printf '     fastfetch\n'
 }
 

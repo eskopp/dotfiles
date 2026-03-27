@@ -8,7 +8,7 @@ require_cmd() {
   fi
 }
 
-require_cmd iwctl
+require_cmd nmcli
 require_cmd rofi
 
 notify() {
@@ -17,80 +17,64 @@ notify() {
   fi
 }
 
-get_station_iface() {
-  iwctl station list 2>/dev/null | awk '
-    /^[-[:space:]]+$/ {sep=1; next}
-    sep && NF {print $1; exit}
-  '
+terminal="${TERMINAL:-alacritty}"
+
+wifi_state() {
+  nmcli radio wifi 2>/dev/null || echo "unknown"
 }
 
-iface="$(get_station_iface)"
-if [[ -z "${iface}" ]]; then
-  echo "No Wi-Fi station interface found (is iwd running?)." >&2
-  exit 1
-fi
+active_connection() {
+  nmcli -t -f NAME,DEVICE,TYPE connection show --active 2>/dev/null | awk -F: '$3=="wifi"{print $1 " [" $2 "]"; exit}'
+}
 
 show_status() {
-  iwctl station "${iface}" show | rofi -dmenu -i -p "wifi status (${iface})" >/dev/null || true
+  local state active
+  state="$(wifi_state)"
+  active="$(active_connection || true)"
+  printf 'Wi-Fi: %s\nActive: %s\n' "${state}" "${active:-none}" | rofi -dmenu -p "wifi status" >/dev/null || true
 }
 
-connect_network() {
-  iwctl station "${iface}" scan >/dev/null 2>&1 || true
-  sleep 1
-
-  local raw_lines
-  raw_lines="$(iwctl station "${iface}" get-networks 2>/dev/null | awk '
-    /^[-[:space:]]+$/ {sep=1; next}
-    sep && NF {
-      line=$0
-      sub(/^[[:space:]]*[>*]?[[:space:]]*/, "", line)
-      print line
-    }
-  ')"
-
-  if [[ -z "${raw_lines}" ]]; then
-    echo "No networks found." | rofi -dmenu -p "wifi"
-    return 0
+open_connect_ui() {
+  if command -v nmtui >/dev/null 2>&1; then
+    nohup "${terminal}" -e nmtui connect >/dev/null 2>&1 &
+    exit 0
   fi
 
-  local selected ssid pass
-  selected="$(printf '%s\n' "${raw_lines}" | rofi -dmenu -i -p "connect (${iface})")"
-  [[ -z "${selected}" ]] && return 0
-
-  ssid="$(printf '%s' "${selected}" | awk -F'  +' '{print $1}')"
-  [[ -z "${ssid}" ]] && return 0
-
-  if iwctl station "${iface}" connect "${ssid}" >/dev/null 2>&1; then
-    notify "Connected to ${ssid}"
-    return 0
+  if command -v nm-connection-editor >/dev/null 2>&1; then
+    nohup nm-connection-editor >/dev/null 2>&1 &
+    exit 0
   fi
 
-  pass="$(rofi -dmenu -password -p "Passphrase for ${ssid}")"
-  [[ -z "${pass}" ]] && return 0
+  notify "No NetworkManager UI found"
+  exit 1
+}
 
-  if iwctl --passphrase "${pass}" station "${iface}" connect "${ssid}" >/dev/null 2>&1; then
-    notify "Connected to ${ssid}"
+toggle_wifi() {
+  local state
+  state="$(wifi_state)"
+  if [[ "${state}" == "enabled" ]]; then
+    nmcli radio wifi off
+    notify "Wi-Fi disabled"
   else
-    notify "Failed to connect to ${ssid}"
-    exit 1
+    nmcli radio wifi on
+    notify "Wi-Fi enabled"
   fi
 }
 
-choice="$(printf 'connect\ndisconnect\nrescan\nstatus\n' | rofi -dmenu -p "wifi (${iface})")"
+choice="$(printf 'connect or switch network\ntoggle wifi\nrescan\nstatus\n' | rofi -dmenu -p 'wifi')"
 
-case "${choice}" in
-  connect)
-    connect_network
+case "${choice:-}" in
+  "connect or switch network")
+    open_connect_ui
     ;;
-  disconnect)
-    iwctl station "${iface}" disconnect >/dev/null
-    notify "Disconnected"
+  "toggle wifi")
+    toggle_wifi
     ;;
-  rescan)
-    iwctl station "${iface}" scan >/dev/null
-    notify "Scan started"
+  "rescan")
+    nmcli device wifi rescan >/dev/null 2>&1 || true
+    notify "Wi-Fi rescan started"
     ;;
-  status)
+  "status")
     show_status
     ;;
 esac
