@@ -61,17 +61,27 @@ install_required_packages() {
 
 install_code_oss_themes() {
   local themes_root="${REPO_DIR}/code-oss-theme"
-  local dir target_dir
+  local dir manifest target_dir ext_id ext_version ext_dirname
 
   [[ -d "${themes_root}" ]] || return 0
 
   mkdir -p "${HOME}/.vscode-oss/extensions"
 
   while IFS= read -r -d '' dir; do
-    target_dir="${HOME}/.vscode-oss/extensions/$(basename "${dir}")"
+    manifest="${dir}/package.json"
+    [[ -f "${manifest}" ]] || continue
+
+    ext_id="$(python3 -c 'import json,sys; d=json.load(open(sys.argv[1], encoding="utf-8")); print(f"{d.get(\"publisher\",\"\")}.{d.get(\"name\",\"\")}")' "${manifest}")"
+    ext_version="$(python3 -c 'import json,sys; d=json.load(open(sys.argv[1], encoding="utf-8")); print(d.get("version","0.0.0"))' "${manifest}")"
+
+    [[ -n "${ext_id}" && "${ext_id}" != "." ]] || continue
+
+    ext_dirname="${ext_id}-${ext_version}"
+    target_dir="${HOME}/.vscode-oss/extensions/${ext_dirname}"
+
     backup_target_if_needed "${target_dir}"
     ln -sfn "${dir}" "${target_dir}"
-    info "Installed Code - OSS theme: $(basename "${dir}")"
+    info "Installed Code - OSS theme: ${ext_dirname}"
   done < <(find "${themes_root}" -mindepth 1 -maxdepth 1 -type d -print0 | sort -z)
 }
 

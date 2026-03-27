@@ -1,0 +1,91 @@
+{
+  "name": "Berserk Eclipse",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#080608",
+    "editor.foreground": "#F5EDED",
+    "editorLineNumber.foreground": "#5B1A1A",
+    "editorLineNumber.activeForeground": "#FF3B30",
+    "editorCursor.foreground": "#FF3B30",
+    "editor.selectionBackground": "#3A121244",
+    "editor.inactiveSelectionBackground": "#2A0D1133",
+    "editorIndentGuide.background1": "#1A0D0D",
+    "editorIndentGuide.activeBackground1": "#3A1212",
+
+    "sideBar.background": "#0D0809",
+    "sideBar.foreground": "#E7D8D8",
+    "activityBar.background": "#0D0809",
+    "activityBar.foreground": "#FF3B30",
+
+    "titleBar.activeBackground": "#0D0809",
+    "titleBar.activeForeground": "#F5EDED",
+    "statusBar.background": "#160C0D",
+    "statusBar.foreground": "#F5EDED",
+
+    "tab.activeBackground": "#080608",
+    "tab.inactiveBackground": "#0D0809",
+    "tab.activeForeground": "#FFFFFF",
+    "tab.inactiveForeground": "#BFAAAA",
+
+    "panel.background": "#160C0D",
+    "terminal.background": "#080608",
+
+    "button.background": "#FF3B30",
+    "button.foreground": "#080608",
+    "button.hoverBackground": "#FF6B5A",
+
+    "input.background": "#1A0D0D",
+    "input.foreground": "#F5EDED",
+    "input.border": "#5B1A1A",
+
+    "list.activeSelectionBackground": "#FF3B30",
+    "list.activeSelectionForeground": "#080608",
+    "list.hoverBackground": "#1F1011",
+    "list.highlightForeground": "#FF6B5A"
+  },
+  "tokenColors": [
+    {
+      "scope": ["comment", "punctuation.definition.comment"],
+      "settings": {
+        "foreground": "#A98E8E",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "scope": ["keyword", "storage", "keyword.control"],
+      "settings": {
+        "foreground": "#FF3B30"
+      }
+    },
+    {
+      "scope": ["string", "punctuation.definition.string"],
+      "settings": {
+        "foreground": "#D95F43"
+      }
+    },
+    {
+      "scope": ["constant.numeric", "constant.language", "constant.character"],
+      "settings": {
+        "foreground": "#FF875F"
+      }
+    },
+    {
+      "scope": ["entity.name.function", "support.function", "meta.function-call"],
+      "settings": {
+        "foreground": "#FF6B5A"
+      }
+    },
+    {
+      "scope": ["entity.name.type", "entity.name.class", "support.type"],
+      "settings": {
+        "foreground": "#FF5C5C"
+      }
+    },
+    {
+      "scope": ["variable", "identifier"],
+      "settings": {
+        "foreground": "#F5EDED"
+      }
+    }
+  ]
+}

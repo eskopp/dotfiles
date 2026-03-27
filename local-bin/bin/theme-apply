@@ -66,8 +66,13 @@ cp "$theme_dir/hyprland-colors.conf" "$current_dir/hyprland-colors.conf"
 cp "$theme_dir/waybar-theme.css" "$current_dir/waybar-theme.css"
 cp "$theme_dir/rofi-theme.rasi" "$current_dir/rofi-theme.rasi"
 cp "$theme_dir/alacritty-theme.toml" "$current_dir/alacritty-theme.toml"
-cp "$theme_dir/nvim-theme.lua" "$current_dir/nvim-theme.lua"
 cp "$theme_dir/fastfetch-config.jsonc" "$current_dir/fastfetch-config.jsonc"
+
+if [[ -f "$theme_dir/nvim-theme.lua" ]]; then
+  cp "$theme_dir/nvim-theme.lua" "$current_dir/nvim-theme.lua"
+else
+  rm -f "$current_dir/nvim-theme.lua"
+fi
 
 if [[ -f "$repo_fastfetch_logo_dir/$theme.txt" ]]; then
   cp "$repo_fastfetch_logo_dir/$theme.txt" "$current_dir/fastfetch-logo.txt"

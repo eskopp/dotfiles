@@ -1,0 +1,161 @@
+* {
+    font: "Fira Sans 12";
+
+    bg:             #050304ee;
+    bg-alt:         #0b0506ee;
+    surface:        #120809ee;
+    surface-2:      #1a0b0cee;
+    surface-3:      #260d10ee;
+
+    fg:             #f6eeee;
+    fg-muted:       #d6c1c1;
+    fg-subtle:      #9e7f7f;
+
+    accent:         #ff2a1f;
+    accent-2:       #ff5a4d;
+    accent-3:       #b80f1b;
+
+    good:           #d84d37;
+    warn:           #ff7b52;
+    bad:            #ff1010;
+
+    border:         #4a1114;
+    selected-fg:    #050304;
+    urgent-fg:      #ffffff;
+}
+
+window {
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    width: 44%;
+    padding: 24px;
+    border: 2px;
+    border-color: @accent;
+    border-radius: 28px;
+    background-color: @bg;
+    transparency: "real";
+}
+
+mainbox {
+    spacing: 14px;
+    children: [inputbar, mode-switcher, listview];
+    background-color: transparent;
+}
+
+inputbar {
+    children: [prompt, entry];
+    spacing: 12px;
+    padding: 14px 16px;
+    border: 0;
+    border-radius: 18px;
+    background-color: @surface;
+    text-color: @fg;
+}
+
+prompt {
+    enabled: true;
+    padding: 5px 12px;
+    border-radius: 12px;
+    background-color: @accent;
+    text-color: @selected-fg;
+    font: "Fira Sans Bold 11";
+}
+
+entry {
+    placeholder: "Invoke the eclipse...";
+    placeholder-color: @fg-subtle;
+    text-color: @fg;
+    background-color: transparent;
+    expand: true;
+}
+
+mode-switcher {
+    spacing: 10px;
+    background-color: transparent;
+}
+
+button {
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 16px;
+    background-color: @surface-2;
+    text-color: @fg-muted;
+}
+
+button selected {
+    background-color: @accent;
+    text-color: @selected-fg;
+    font: "Fira Sans Bold 11";
+}
+
+listview {
+    lines: 8;
+    columns: 1;
+    fixed-height: false;
+    spacing: 10px;
+    cycle: true;
+    dynamic: true;
+    scrollbar: false;
+    background-color: transparent;
+}
+
+element {
+    padding: 13px 16px;
+    spacing: 14px;
+    border: 0;
+    border-radius: 18px;
+    background-color: @surface;
+    text-color: @fg;
+}
+
+element normal.normal {
+    background-color: @surface;
+    text-color: @fg;
+}
+
+element alternate.normal {
+    background-color: @surface-2;
+    text-color: @fg;
+}
+
+element selected.normal {
+    background-color: @accent;
+    text-color: @selected-fg;
+}
+
+element selected.active {
+    background-color: @accent-2;
+    text-color: @selected-fg;
+}
+
+element selected.urgent {
+    background-color: @bad;
+    text-color: @urgent-fg;
+}
+
+element-icon {
+    size: 1.15em;
+    background-color: transparent;
+    text-color: inherit;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    vertical-align: 0.5;
+}
+
+textbox {
+    background-color: transparent;
+    text-color: inherit;
+}
+
+error-message {
+    padding: 12px;
+    border: 2px;
+    border-color: @bad;
+    border-radius: 14px;
+    background-color: @surface;
+    text-color: @fg;
+}
