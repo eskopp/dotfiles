@@ -1,0 +1,20 @@
+@define-color wb_bg_start #2b211c;
+@define-color wb_bg_mid   #332720;
+@define-color wb_bg_end   #3a2b24;
+
+@define-color wb_fg       #f4e7da;
+@define-color wb_muted    #e0cfbf;
+@define-color wb_border   #8f6f5a;
+@define-color wb_surface  #45342b;
+
+@define-color wb_accent       #dda15e;
+@define-color wb_accent_text  #2b211c;
+
+@define-color wb_good         #b7a06a;
+@define-color wb_good_text    #2b211c;
+
+@define-color wb_warn         #e9c46a;
+@define-color wb_warn_text    #2b211c;
+
+@define-color wb_bad          #b66a50;
+@define-color wb_bad_text     #fff5ec;

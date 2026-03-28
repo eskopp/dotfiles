@@ -1,0 +1,22 @@
+{
+  "name": "solstice-glow-theme",
+  "displayName": "Solstice Glow",
+  "description": "A warm and cozy summer-inspired theme for Code - OSS",
+  "version": "0.0.1",
+  "publisher": "erikskopp-local",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Solstice Glow",
+        "uiTheme": "vs-dark",
+        "path": "./themes/solstice-glow-color-theme.json"
+      }
+    ]
+  }
+}

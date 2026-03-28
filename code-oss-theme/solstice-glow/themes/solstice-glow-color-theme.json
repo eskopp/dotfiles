@@ -1,0 +1,84 @@
+{
+  "name": "Solstice Glow",
+  "type": "dark",
+  "colors": {
+    "editor.background": "#2B211C",
+    "editor.foreground": "#F4E7DA",
+    "editorLineNumber.foreground": "#8F6F5A",
+    "editorLineNumber.activeForeground": "#DDA15E",
+    "editorCursor.foreground": "#DDA15E",
+    "editor.selectionBackground": "#6B4F3D44",
+    "editor.inactiveSelectionBackground": "#5A433833",
+    "editorIndentGuide.background1": "#3A2B24",
+    "editorIndentGuide.activeBackground1": "#6B4F3D",
+    "sideBar.background": "#241C17",
+    "sideBar.foreground": "#EADBCD",
+    "activityBar.background": "#241C17",
+    "activityBar.foreground": "#DDA15E",
+    "titleBar.activeBackground": "#241C17",
+    "titleBar.activeForeground": "#F4E7DA",
+    "statusBar.background": "#332720",
+    "statusBar.foreground": "#F4E7DA",
+    "tab.activeBackground": "#2B211C",
+    "tab.inactiveBackground": "#241C17",
+    "tab.activeForeground": "#FFF5EC",
+    "tab.inactiveForeground": "#D8C0AE",
+    "panel.background": "#332720",
+    "terminal.background": "#2B211C",
+    "button.background": "#DDA15E",
+    "button.foreground": "#2B211C",
+    "button.hoverBackground": "#E9C46A",
+    "input.background": "#3A2B24",
+    "input.foreground": "#F4E7DA",
+    "input.border": "#8F6F5A",
+    "list.activeSelectionBackground": "#DDA15E",
+    "list.activeSelectionForeground": "#2B211C",
+    "list.hoverBackground": "#45342B",
+    "list.highlightForeground": "#E9C46A"
+  },
+  "tokenColors": [
+    {
+      "scope": ["comment", "punctuation.definition.comment"],
+      "settings": {
+        "foreground": "#BFA089",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "scope": ["keyword", "storage", "keyword.control"],
+      "settings": {
+        "foreground": "#DDA15E"
+      }
+    },
+    {
+      "scope": ["string", "punctuation.definition.string"],
+      "settings": {
+        "foreground": "#C39A76"
+      }
+    },
+    {
+      "scope": ["constant.numeric", "constant.language", "constant.character"],
+      "settings": {
+        "foreground": "#E9C46A"
+      }
+    },
+    {
+      "scope": ["entity.name.function", "support.function", "meta.function-call"],
+      "settings": {
+        "foreground": "#D4A373"
+      }
+    },
+    {
+      "scope": ["entity.name.type", "entity.name.class", "support.type"],
+      "settings": {
+        "foreground": "#C08A6E"
+      }
+    },
+    {
+      "scope": ["variable", "identifier"],
+      "settings": {
+        "foreground": "#F4E7DA"
+      }
+    }
+  ]
+}

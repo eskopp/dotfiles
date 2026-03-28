@@ -29,3 +29,10 @@ vim.opt.shiftwidth = 4
 vim.cmd("highlight Normal guibg=NONE ctermbg=NONE")
 vim.cmd("highlight NormalNC guibg=NONE ctermbg=NONE")
 vim.cmd("highlight EndOfBuffer guibg=NONE ctermbg=NONE")
+
+
+-- Loeschen von Stuff
+vim.opt.backspace = { "indent", "eol", "start" }
+vim.keymap.set("n", "<C-v>", '"+p', { desc = "Paste from system clipboard" })
+vim.keymap.set("i", "<C-v>", '<C-r>+', { desc = "Paste from system clipboard" })
+vim.keymap.set("v", "<C-v>", '"+p', { desc = "Paste from system clipboard" })
