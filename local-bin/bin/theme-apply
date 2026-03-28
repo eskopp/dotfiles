@@ -7,8 +7,10 @@ cfg_dir="$config_home/theme-switcher"
 themes_dir="$cfg_dir/themes"
 current_dir="$cfg_dir/current"
 dunst_theme_dir="$config_home/dunst/dunstrc.d"
-real_themes_dir="$(readlink -f "$themes_dir" 2>/dev/null || printf '%s\n' "$themes_dir")"
-repo_fastfetch_logo_dir="${real_themes_dir%/themes}/fastfetch-logos"
+script_path="$(readlink -f "${BASH_SOURCE[0]}")"
+script_dir="$(cd "$(dirname "$script_path")" && pwd)"
+repo_dir="$(cd "${script_dir}/../.." && pwd)"
+repo_fastfetch_logo_dir="${repo_dir}/theme-switcher/theme-switcher/fastfetch-logos"
 
 usage() {
   echo "Usage: theme-apply <theme-name>" >&2
