@@ -33,6 +33,7 @@ ensure_base_dirs() {
     "${HOME}/.config/wallpapers" \
     "${HOME}/.config/Code - OSS/User" \
     "${HOME}/.config/dunst/dunstrc.d" \
+    "${HOME}/.config/btop/themes" \
     "${HOME}/.config/theme-switcher/current" \
     "${HOME}/.local/bin" \
     "${HOME}/.vscode-oss/extensions" \
@@ -121,6 +122,7 @@ backup_stow_targets() {
   local targets=(
     "${HOME}/.config/alacritty"
     "${HOME}/.config/dunst/dunstrc"
+    "${HOME}/.config/btop"
     "${HOME}/.config/emacs"
     "${HOME}/.config/fastfetch"
     "${HOME}/.config/hypr"
@@ -168,7 +170,7 @@ stow_packages() {
   local home_packages=()
   local local_packages=()
 
-  for pkg in alacritty code-oss dunst emacs fastfetch hypr nvim rofi theme-switcher waybar; do
+  for pkg in alacritty btop code-oss dunst emacs fastfetch hypr nvim rofi theme-switcher waybar; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 
@@ -188,7 +190,7 @@ unstow_packages() {
   local home_packages=()
   local local_packages=()
 
-  for pkg in alacritty code-oss dunst emacs fastfetch hypr nvim rofi theme-switcher waybar; do
+  for pkg in alacritty btop code-oss dunst emacs fastfetch hypr nvim rofi theme-switcher waybar; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 

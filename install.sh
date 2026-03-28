@@ -15,6 +15,7 @@ install_required_packages() {
     wireplumber \
     firefox \
     fastfetch \
+    btop \
     jq \
     papirus-icon-theme \
     ttf-font-awesome \

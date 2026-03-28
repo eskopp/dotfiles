@@ -68,6 +68,11 @@ cp "$theme_dir/rofi-theme.rasi" "$current_dir/rofi-theme.rasi"
 cp "$theme_dir/alacritty-theme.toml" "$current_dir/alacritty-theme.toml"
 cp "$theme_dir/fastfetch-config.jsonc" "$current_dir/fastfetch-config.jsonc"
 
+mkdir -p "$config_home/btop/themes"
+if [[ -f "$theme_dir/btop.theme" ]]; then
+  cp "$theme_dir/btop.theme" "$config_home/btop/themes/current.theme"
+fi
+
 if [[ -f "$theme_dir/nvim-theme.lua" ]]; then
   cp "$theme_dir/nvim-theme.lua" "$current_dir/nvim-theme.lua"
 else
