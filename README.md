@@ -1,10 +1,22 @@
 # dotfiles
 
-Personal Arch Linux dotfiles for a Wayland desktop built around Hyprland.
+Personal Arch Linux dotfiles for a Wayland desktop built around **Hyprland**.
+
+This setup focuses on a themed, keyboard-friendly workflow with shared styling across the terminal, launcher, bar, notifications, shell prompt, and editor tooling.
+
+## Features
+
+- Hyprland-based Wayland desktop
+- Shared theme system across multiple applications
+- GNU Stow-based installation
+- Custom helper scripts for wallpapers, screenshots, clipboard, Wi-Fi, Bluetooth, and power actions
+- Fast terminal workflow with Alacritty, Zsh, Fastfetch, and Neovim
+- Optional GUI editor setup for Code - OSS
+- Multiple desktop themes with a single theme switcher
 
 ## Included
 
-This setup currently includes configuration for:
+This repository currently includes configuration for:
 
 - Hyprland
 - Hyprpaper
@@ -18,8 +30,33 @@ This setup currently includes configuration for:
 - Emacs
 - Thunar
 - Code - OSS
+- Zsh
+- Bash
 - theme-switcher
-- custom local scripts
+- local helper scripts
+
+## Themes
+
+The desktop theme system is shared across multiple components.
+
+Currently available themes include:
+
+- `nord`
+- `anime`
+- `berserk`
+- `solstice`
+
+The active theme affects parts of the desktop such as:
+
+- Waybar
+- Rofi
+- Dunst
+- Alacritty
+- Fastfetch
+- Hyprland colors
+- shell prompt
+- Neovim
+- Code - OSS
 
 ## Installation
 
@@ -36,6 +73,20 @@ Run:
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/eskopp/dotfiles/main/bootstrap.sh)" -- \
       https://github.com/eskopp/dotfiles.git
 
+## Theme switching
+
+Open the interactive theme switcher with:
+
+    ~/.local/bin/theme-switcher
+
+Apply a theme directly with:
+
+    ~/.local/bin/theme-apply <theme-name>
+
+Theme definitions live in:
+
+    ~/.config/theme-switcher/themes
+
 ## Wallpapers
 
 Wallpapers are expected in:
@@ -46,28 +97,12 @@ A random wallpaper can be applied at any time with:
 
     SUPER+W
 
-Some themes can also use theme-specific wallpaper subfolders, for example:
+Theme-specific wallpaper folders can also be used, for example:
 
     ~/git/wallpaper/nord
     ~/git/wallpaper/anime
     ~/git/wallpaper/berserk
     ~/git/wallpaper/solstice
-
-## Theme switching
-
-The setup includes a theme switcher for shared colors across the desktop.
-
-Available themes are stored in:
-
-    ~/.config/theme-switcher/themes
-
-You can open the theme switcher with:
-
-    ~/.local/bin/theme-switcher
-
-Or apply a theme directly with:
-
-    ~/.local/bin/theme-apply <theme-name>
 
 ## Start Hyprland
 
@@ -85,8 +120,26 @@ Run:
 
     fastfetch
 
+## Repository layout
+
+A simplified overview of the main structure:
+
+- `hypr/` → Hyprland, Hyprpaper, Hyprlock
+- `waybar/` → Waybar config and styling
+- `rofi/` → launcher config
+- `dunst/` → notification styling
+- `alacritty/` → terminal config
+- `nvim/` → Neovim config
+- `zsh/` → shell config and prompt
+- `code-oss/` → user settings
+- `code-oss-theme/` → local Code - OSS themes
+- `theme-switcher/` → shared theme files
+- `local-bin/` → helper scripts
+- `scripts/` → install helpers
+
 ## Notes
 
-- The install script is intended for Arch Linux.
-- GNU Stow is used to manage the linked configuration files.
-- Some theme-dependent files are generated dynamically when a theme is applied.
+- This setup is intended for **Arch Linux**.
+- GNU Stow is used to manage symlinked configuration files.
+- Some files are generated dynamically when a theme is applied.
+- Wallpapers are not included in this repository.
