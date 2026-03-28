@@ -69,6 +69,11 @@ frisk_apply_palette() {
 frisk_precmd() {
   frisk_apply_palette
 
+  if [[ -n "${FRISK_PROMPT_READY:-}" ]]; then
+    print ""
+  fi
+  FRISK_PROMPT_READY=1
+
   PROMPT="%{$fg[${FRISK_PATH_COLOR}]%}%/%{$reset_color%} \$(git_prompt_info)\$(bzr_prompt_info)%{$fg[${FRISK_USERHOST_COLOR}]%}[%n@%m]%{$reset_color%} %{$fg[${FRISK_TIME_COLOR}]%}[%T]%{$reset_color%}
 %{$fg_bold[${FRISK_PROMPT_COLOR}]%}>%{$reset_color%} "
   PROMPT2="%{$fg_bold[${FRISK_PROMPT_COLOR}]%}%_> %{$reset_color%}"
