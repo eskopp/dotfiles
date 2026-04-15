@@ -131,6 +131,7 @@ backup_stow_targets() {
     "${HOME}/.config/rofi"
     "${HOME}/.config/waybar"
     "${HOME}/.config/Code - OSS/User"
+    "${HOME}/.tmux.conf"
     "${HOME}/.bashrc"
     "${HOME}/.zprofile"
     "${HOME}/.zshrc"
@@ -173,7 +174,7 @@ stow_packages() {
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 
-  for pkg in bash zsh; do
+  for pkg in bash tmux zsh; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && home_packages+=("${pkg}")
   done
 
@@ -193,7 +194,7 @@ unstow_packages() {
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 
-  for pkg in bash zsh; do
+  for pkg in bash tmux zsh; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && home_packages+=("${pkg}")
   done
 
