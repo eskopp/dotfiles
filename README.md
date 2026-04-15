@@ -36,15 +36,17 @@ This repository currently includes configuration for:
 ### Local install
 
 Clone the repository and run:
-
+```sh
     ./install.sh
+```
 
 ### Bootstrap via curl
 
 Run:
-
+```sh
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/eskopp/dotfiles/main/bootstrap.sh)" -- \
       https://github.com/eskopp/dotfiles.git
+```
 
 ## Wallpapers
 
