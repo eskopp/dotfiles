@@ -51,7 +51,7 @@ In this setup, the prefix key is:
 
 So the full reload shortcut is:
 
-- `Ctrl + a`, then `r`
+- `Ctrl + b`, then `r`
 
 ## Main behavior
 
@@ -62,7 +62,7 @@ This config enables the following defaults:
 - window numbering starts at `1`
 - pane numbering starts at `1`
 - window numbers are renumbered automatically
-- the tmux prefix is changed from `Ctrl + b` to `Ctrl + a`
+- the tmux prefix uses the default `Ctrl + b`
 
 ## Key behavior in this config
 
@@ -72,13 +72,13 @@ Default tmux prefix:
 
 - `Ctrl + b`
 
-This config changes it to:
+The tmux prefix in this setup is:
 
-- `Ctrl + a`
+- `Ctrl + b`
 
-You can still send the prefix key through tmux applications with:
+You can send the prefix key itself through tmux with:
 
-- `Ctrl + a`, then `Ctrl + a`
+- `Ctrl + b`, then `Ctrl + b`
 
 ## Useful standard tmux shortcuts
 
@@ -86,7 +86,7 @@ These are the most important tmux keybindings to know when using this setup.
 
 All of the following start with the tmux prefix:
 
-- `Ctrl + a`
+- `Ctrl + b`
 
 ### Session and window management
 
@@ -99,11 +99,18 @@ All of the following start with the tmux prefix:
 
 ### Pane management
 
-- `Prefix + %` → split pane vertically
-- `Prefix + "` → split pane horizontally
+- `Prefix + s` → split pane horizontally
+- `Prefix + v` → split pane vertically
 - `Prefix + x` → close current pane
 - `Prefix + o` → move to the next pane
-- `Prefix + ;` → switch to the last active pane
+- `Prefix + h` → focus pane left
+- `Prefix + j` → focus pane down
+- `Prefix + k` → focus pane up
+- `Prefix + l` → focus pane right
+- `Prefix + H` → resize pane left
+- `Prefix + J` → resize pane down
+- `Prefix + K` → resize pane up
+- `Prefix + L` → resize pane right
 - `Prefix + q` → show pane numbers
 - `Prefix + z` → zoom/unzoom current pane
 
@@ -148,7 +155,10 @@ The config currently sets:
 - `base-index 1`
 - `pane-base-index 1`
 - `renumber-windows on`
-- `prefix C-a`
+- `prefix C-b`
+- custom pane split bindings on `s` and `v`
+- pane movement on `h`, `j`, `k`, `l`
+- pane resizing on `H`, `J`, `K`, `L`
 - a dark Nord status line
 - Nord pane border colors
 - a reload binding on `Prefix + r`
@@ -169,8 +179,9 @@ If you already have a local `~/.tmux.conf`, the repo install logic may back it u
 
 To test whether the config is active, start tmux and check:
 
-- the prefix is `Ctrl + a`
+- the prefix is `Ctrl + b`
 - the status bar has the dark Nord styling
+- `Prefix + s` and `Prefix + v` split panes
 - `Prefix + r` reloads the config
 
 ## Start tmux
