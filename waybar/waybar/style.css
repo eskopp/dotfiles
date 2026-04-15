@@ -1,6 +1,6 @@
 @define-color wb_bg_start #2E3440;
-@define-color wb_bg_mid   #3B4252;
-@define-color wb_bg_end   #434C5E;
+@define-color wb_bg_mid   #2E3440;
+@define-color wb_bg_end   #2E3440;
 
 @define-color wb_fg       #ECEFF4;
 @define-color wb_muted    #D8DEE9;
@@ -26,12 +26,7 @@
 }
 
 window#waybar {
-    background: linear-gradient(
-        90deg,
-        @wb_bg_start 0%,
-        @wb_bg_mid 55%,
-        @wb_bg_end 100%
-    );
+    background: @wb_bg_start;
     color: @wb_fg;
     border-bottom: 1px solid @wb_border;
 }
