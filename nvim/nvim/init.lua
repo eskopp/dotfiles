@@ -2,13 +2,36 @@ require("config.options")
 require("config.keymaps")
 require("config.lazy")
 
-local theme_file = (os.getenv("XDG_CONFIG_HOME") or (vim.fn.expand("~") .. "/.config")) .. "/theme-switcher/current/nvim-theme.lua"
+vim.opt.termguicolors = true
 
-if vim.fn.filereadable(theme_file) == 1 then
-  local ok, err = pcall(dofile, theme_file)
-  if not ok then
-    vim.schedule(function()
-      vim.notify("Failed to load theme file: " .. err, vim.log.levels.WARN)
-    end)
-  end
+pcall(vim.cmd.colorscheme, "nord")
+
+local transparent_groups = {
+  "Normal",
+  "NormalNC",
+  "EndOfBuffer",
+  "SignColumn",
+  "FoldColumn",
+  "LineNr",
+  "NormalFloat",
+  "FloatBorder",
+  "Pmenu",
+  "PmenuSel",
+  "TelescopeNormal",
+  "TelescopeBorder",
+  "TelescopePromptNormal",
+  "TelescopePromptBorder",
+  "TelescopeResultsNormal",
+  "TelescopeResultsBorder",
+  "TelescopePreviewNormal",
+  "TelescopePreviewBorder",
+}
+
+for _, group in ipairs(transparent_groups) do
+  vim.api.nvim_set_hl(0, group, { bg = "NONE" })
 end
+
+vim.api.nvim_set_hl(0, "CursorLine", { bg = "#2E3440" })
+vim.api.nvim_set_hl(0, "Visual", { bg = "#434C5E" })
+vim.api.nvim_set_hl(0, "Search", { fg = "#2E3440", bg = "#EBCB8B" })
+vim.api.nvim_set_hl(0, "IncSearch", { fg = "#2E3440", bg = "#88C0D0" })

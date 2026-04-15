@@ -16,8 +16,6 @@ remove_empty_dirs() {
     "${HOME}/.config/fastfetch"
     "${HOME}/.config/nvim"
     "${HOME}/.config/emacs"
-    "${HOME}/.config/theme-switcher/fastfetch-logos"
-    "${HOME}/.config/theme-switcher"
     "${HOME}/.config/Code - OSS/User"
     "${HOME}/.vscode-oss/extensions"
     "${HOME}/.local/bin"
@@ -41,8 +39,6 @@ main() {
 
   rm -f "${HOME}/.vscode-oss/extensions/polar-nord"
   rm -f "${HOME}/.vscode-oss/extensions/anime-nebula"
-  rm -f "${HOME}/.config/dunst/dunstrc.d/99-theme.conf"
-  rm -rf "${HOME}/.config/theme-switcher/current"
 
   remove_empty_dirs
   rm -rf "${STOW_BUILD_DIR}"

@@ -1,18 +1,15 @@
 # dotfiles
 
-Personal Arch Linux dotfiles for a Wayland desktop built around **Hyprland**.
-
-This setup focuses on a themed, keyboard-friendly workflow with shared styling across the terminal, launcher, bar, notifications, shell prompt, and editor tooling.
+Personal Arch Linux dotfiles for a Wayland desktop built around **Hyprland** and a consistent **Nord** look.
 
 ## Features
 
 - Hyprland-based Wayland desktop
-- Shared theme system across multiple applications
+- Static Nord styling across the desktop
 - GNU Stow-based installation
 - Custom helper scripts for wallpapers, screenshots, clipboard, Wi-Fi, Bluetooth, and power actions
 - Fast terminal workflow with Alacritty, Zsh, Fastfetch, and Neovim
 - Optional GUI editor setup for Code - OSS
-- Multiple desktop themes with a single theme switcher
 
 ## Included
 
@@ -32,31 +29,7 @@ This repository currently includes configuration for:
 - Code - OSS
 - Zsh
 - Bash
-- theme-switcher
 - local helper scripts
-
-## Themes
-
-The desktop theme system is shared across multiple components.
-
-Currently available themes include:
-
-- `nord`
-- `anime`
-- `berserk`
-- `solstice`
-
-The active theme affects parts of the desktop such as:
-
-- Waybar
-- Rofi
-- Dunst
-- Alacritty
-- Fastfetch
-- Hyprland colors
-- shell prompt
-- Neovim
-- Code - OSS
 
 ## Installation
 
@@ -73,20 +46,6 @@ Run:
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/eskopp/dotfiles/main/bootstrap.sh)" -- \
       https://github.com/eskopp/dotfiles.git
 
-## Theme switching
-
-Open the interactive theme switcher with:
-
-    ~/.local/bin/theme-switcher
-
-Apply a theme directly with:
-
-    ~/.local/bin/theme-apply <theme-name>
-
-Theme definitions live in:
-
-    ~/.config/theme-switcher/themes
-
 ## Wallpapers
 
 Wallpapers are expected in:
@@ -96,13 +55,6 @@ Wallpapers are expected in:
 A random wallpaper can be applied at any time with:
 
     SUPER+W
-
-Theme-specific wallpaper folders can also be used, for example:
-
-    ~/git/wallpaper/nord
-    ~/git/wallpaper/anime
-    ~/git/wallpaper/berserk
-    ~/git/wallpaper/solstice
 
 ## Start Hyprland
 
@@ -122,8 +74,6 @@ Run:
 
 ## Repository layout
 
-A simplified overview of the main structure:
-
 - `hypr/` → Hyprland, Hyprpaper, Hyprlock
 - `waybar/` → Waybar config and styling
 - `rofi/` → launcher config
@@ -133,7 +83,6 @@ A simplified overview of the main structure:
 - `zsh/` → shell config and prompt
 - `code-oss/` → user settings
 - `code-oss-theme/` → local Code - OSS themes
-- `theme-switcher/` → shared theme files
 - `local-bin/` → helper scripts
 - `scripts/` → install helpers
 
@@ -141,5 +90,4 @@ A simplified overview of the main structure:
 
 - This setup is intended for **Arch Linux**.
 - GNU Stow is used to manage symlinked configuration files.
-- Some files are generated dynamically when a theme is applied.
 - Wallpapers are not included in this repository.

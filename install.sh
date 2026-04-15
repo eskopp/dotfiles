@@ -107,13 +107,6 @@ main() {
   sudo systemctl enable --now NetworkManager
   sudo systemctl disable --now iwd 2>/dev/null || true
 
-  if [[ -x "${HOME}/.local/bin/theme-apply" ]]; then
-    info "Applying default theme: nord"
-    "${HOME}/.local/bin/theme-apply" nord
-  else
-    warn "theme-apply was not found after stowing; skipping default theme application"
-  fi
-
   info "All installers finished successfully."
   printf '\n'
   printf 'Next steps:\n'

@@ -34,7 +34,6 @@ ensure_base_dirs() {
     "${HOME}/.config/Code - OSS/User" \
     "${HOME}/.config/dunst/dunstrc.d" \
     "${HOME}/.config/btop/themes" \
-    "${HOME}/.config/theme-switcher/current" \
     "${HOME}/.local/bin" \
     "${HOME}/.vscode-oss/extensions" \
     "${HOME}/Pictures/Screenshots"
@@ -128,8 +127,6 @@ backup_stow_targets() {
     "${HOME}/.config/hypr"
     "${HOME}/.config/nvim"
     "${HOME}/.config/rofi"
-    "${HOME}/.config/theme-switcher/themes"
-    "${HOME}/.config/theme-switcher/fastfetch-logos"
     "${HOME}/.config/waybar"
     "${HOME}/.config/Code - OSS/User"
     "${HOME}/.bashrc"
@@ -170,7 +167,7 @@ stow_packages() {
   local home_packages=()
   local local_packages=()
 
-  for pkg in alacritty btop code-oss dunst emacs fastfetch hypr nvim rofi theme-switcher waybar; do
+  for pkg in alacritty btop code-oss dunst emacs fastfetch hypr nvim rofi waybar; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 
@@ -190,7 +187,7 @@ unstow_packages() {
   local home_packages=()
   local local_packages=()
 
-  for pkg in alacritty btop code-oss dunst emacs fastfetch hypr nvim rofi theme-switcher waybar; do
+  for pkg in alacritty btop code-oss dunst emacs fastfetch hypr nvim rofi waybar; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 

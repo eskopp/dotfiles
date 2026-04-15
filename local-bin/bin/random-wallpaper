@@ -1,21 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
-theme_env="$config_home/theme-switcher/current/theme.env"
-
 WALL_DIR="$HOME/git/wallpaper"
-
-if [[ -f "$theme_env" ]]; then
-  # shellcheck disable=SC1090
-  source "$theme_env"
-  if [[ -n "${WALLPAPER_DIR:-}" ]]; then
-    WALL_DIR="$WALLPAPER_DIR"
-  fi
-fi
+LOCKSCREEN_LINK="${XDG_CONFIG_HOME:-$HOME/.config}/hypr/lockscreen"
 
 if [[ ! -d "$WALL_DIR" ]]; then
-  WALL_DIR="$HOME/git/wallpaper"
+  echo "Wallpaper directory not found: $WALL_DIR" >&2
+  exit 1
 fi
 
 FILE="$(
@@ -25,12 +16,17 @@ FILE="$(
 )"
 
 [ -n "${FILE:-}" ] || {
-  echo "No wallpaper found in $WALL_DIR"
+  echo "No wallpaper found in $WALL_DIR" >&2
   exit 1
 }
 
-for MON in $(hyprctl monitors | awk '/Monitor/{print $2}'); do
-  hyprctl hyprpaper wallpaper "$MON,$FILE,cover"
-done
+mkdir -p "$(dirname "$LOCKSCREEN_LINK")"
+ln -sfn "$FILE" "$LOCKSCREEN_LINK"
+
+if command -v hyprctl >/dev/null 2>&1; then
+  for MON in $(hyprctl monitors | awk '/Monitor/{print $2}'); do
+    hyprctl hyprpaper wallpaper "$MON,$FILE,cover"
+  done
+fi
 
 echo "$FILE"

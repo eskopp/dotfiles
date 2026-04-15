@@ -28,7 +28,6 @@ setopt HIST_REDUCE_BLANKS
 # Aliases
 alias cls="clear"
 alias neofetch="fastfetch"
-alias fastfetch='fastfetch --config ~/.config/theme-switcher/current/fastfetch-config.jsonc'
 
 # NeoVim
 alias neovim="nvim"
