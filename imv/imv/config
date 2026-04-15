@@ -1,0 +1,5 @@
+[options]
+overlay = true
+overlay_position_bottom = true
+overlay_text = $imv_current_file
+title_text = $imv_current_file

@@ -14,6 +14,7 @@ install_required_packages() {
     qt6ct \
     wireplumber \
     firefox \
+    imv \
     fastfetch \
     btop \
     jq \

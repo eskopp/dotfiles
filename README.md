@@ -17,6 +17,7 @@ This repository currently includes configuration for:
 - Hyprland
 - Hyprpaper
 - Hyprlock
+- imv
 - Waybar
 - Alacritty
 - Dunst
@@ -61,6 +62,14 @@ A random wallpaper can be applied at any time with:
 Start Hyprland from a TTY with:
 
     ~/.local/bin/start-hyprland
+
+## Image viewer
+
+imv is included as a lightweight image viewer. It supports keyboard navigation and can show the current image path as an overlay.
+
+Run:
+
+    imv .
 
 ## Fastfetch
 
