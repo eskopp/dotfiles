@@ -10,7 +10,6 @@ remove_empty_dirs() {
     "${HOME}/.config/hypr"
     "${HOME}/.config/waybar"
     "${HOME}/.config/rofi"
-    "${HOME}/.config/alacritty"
     "${HOME}/.config/dunst/dunstrc.d"
     "${HOME}/.config/dunst"
     "${HOME}/.config/fastfetch"

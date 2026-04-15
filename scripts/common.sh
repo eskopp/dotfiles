@@ -119,7 +119,6 @@ backup_target_if_needed() {
 
 backup_stow_targets() {
   local targets=(
-    "${HOME}/.config/alacritty"
     "${HOME}/.config/dunst/dunstrc"
     "${HOME}/.config/btop"
     "${HOME}/.config/emacs"
@@ -170,7 +169,7 @@ stow_packages() {
   local home_packages=()
   local local_packages=()
 
-  for pkg in alacritty btop dunst emacs fastfetch foot hypr imv nvim rofi waybar; do
+  for pkg in btop dunst emacs fastfetch foot hypr imv nvim rofi waybar; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 
@@ -190,7 +189,7 @@ unstow_packages() {
   local home_packages=()
   local local_packages=()
 
-  for pkg in alacritty btop dunst emacs fastfetch foot hypr imv nvim rofi waybar; do
+  for pkg in btop dunst emacs fastfetch foot hypr imv nvim rofi waybar; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 

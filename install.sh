@@ -30,7 +30,6 @@ install_required_packages() {
     xdg-desktop-portal-hyprland \
     xdg-desktop-portal-gtk \
     waybar \
-    alacritty \
     foot \
     foot-terminfo \
     dunst \
