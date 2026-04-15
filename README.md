@@ -47,13 +47,19 @@ Run:
       https://github.com/eskopp/dotfiles.git
 ```
 
-## Wallpapers
+## Wallpaper
 
-Wallpapers are expected in:
+The desktop uses fixed images stored directly in the repo:
 
-    ~/git/wallpaper
+    hypr/hypr/background.png
+    hypr/hypr/lockscreen.png
 
-A random wallpaper can be applied at any time with:
+After stowing they are available as:
+
+    ~/.config/hypr/background.png
+    ~/.config/hypr/lockscreen.png
+
+You can re-apply the desktop wallpaper at any time with:
 
     SUPER+W
 

@@ -1,32 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-WALL_DIR="$HOME/git/wallpaper"
-LOCKSCREEN_LINK="${XDG_CONFIG_HOME:-$HOME/.config}/hypr/lockscreen"
+BG="${XDG_CONFIG_HOME:-$HOME/.config}/hypr/background.png"
 
-if [[ ! -d "$WALL_DIR" ]]; then
-  echo "Wallpaper directory not found: $WALL_DIR" >&2
-  exit 1
-fi
-
-FILE="$(
-  find "$WALL_DIR" -type f \
-    \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) \
-    | shuf -n 1
-)"
-
-[ -n "${FILE:-}" ] || {
-  echo "No wallpaper found in $WALL_DIR" >&2
+[[ -f "$BG" ]] || {
+  echo "Wallpaper not found: $BG" >&2
   exit 1
 }
 
-mkdir -p "$(dirname "$LOCKSCREEN_LINK")"
-ln -sfn "$FILE" "$LOCKSCREEN_LINK"
-
 if command -v hyprctl >/dev/null 2>&1; then
-  for MON in $(hyprctl monitors | awk '/Monitor/{print $2}'); do
-    hyprctl hyprpaper wallpaper "$MON,$FILE,cover"
-  done
+  while IFS= read -r MON; do
+    [[ -n "$MON" ]] || continue
+    hyprctl hyprpaper wallpaper "$MON,$BG,cover"
+  done < <(hyprctl monitors | awk '/Monitor/{print $2}')
 fi
 
-echo "$FILE"
+printf '%s\n' "$BG"
