@@ -9,7 +9,7 @@ export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export EDITOR="nano"
 export VISUAL="nano"
 export BROWSER="firefox"
-export TERMINAL="alacritty"
+export TERMINAL="foot"
 
 # User paths
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"

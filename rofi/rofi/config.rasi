@@ -2,7 +2,7 @@ configuration {
     modi: "drun,run,window";
     show-icons: true;
     icon-theme: "Papirus";
-    terminal: "/usr/bin/alacritty";
+    terminal: "/usr/bin/foot";
     drun-display-format: "{name}";
     location: 0;
     disable-history: false;

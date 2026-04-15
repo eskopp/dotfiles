@@ -17,7 +17,7 @@ notify() {
   fi
 }
 
-terminal="${TERMINAL:-alacritty}"
+terminal="${TERMINAL:-foot}"
 
 wifi_state() {
   nmcli radio wifi 2>/dev/null || echo "unknown"
@@ -36,7 +36,14 @@ show_status() {
 
 open_connect_ui() {
   if command -v nmtui >/dev/null 2>&1; then
-    nohup "${terminal}" -e nmtui connect >/dev/null 2>&1 &
+    case "${terminal}" in
+      foot|/usr/bin/foot|footclient|/usr/bin/footclient)
+        nohup "${terminal}" nmtui connect >/dev/null 2>&1 &
+        ;;
+      *)
+        nohup "${terminal}" -e nmtui connect >/dev/null 2>&1 &
+        ;;
+    esac
     exit 0
   fi
 

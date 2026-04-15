@@ -31,6 +31,8 @@ install_required_packages() {
     xdg-desktop-portal-gtk \
     waybar \
     alacritty \
+    foot \
+    foot-terminfo \
     dunst \
     rofi \
     thunar \

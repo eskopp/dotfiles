@@ -8,7 +8,7 @@ Personal Arch Linux dotfiles for a Wayland desktop built around **Hyprland** and
 - Static Nord styling across the desktop
 - GNU Stow-based installation
 - Custom helper scripts for wallpapers, screenshots, clipboard, Wi-Fi, Bluetooth, and power actions
-- Fast terminal workflow with Alacritty, Zsh, Fastfetch, and Neovim
+- Fast terminal workflow with Foot, Alacritty, Zsh, Fastfetch, and Neovim
 
 ## Included
 
@@ -20,6 +20,7 @@ This repository currently includes configuration for:
 - imv
 - Waybar
 - Alacritty
+- Foot
 - Dunst
 - Rofi
 - Fastfetch
@@ -91,6 +92,7 @@ Run:
 - `rofi/` → launcher config
 - `dunst/` → notification styling
 - `alacritty/` → terminal config
+- `foot/` → Foot terminal config
 - `nvim/` → Neovim config
 - `zsh/` → shell config and prompt
 - `local-bin/` → helper scripts
