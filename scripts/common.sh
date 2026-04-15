@@ -167,7 +167,7 @@ stow_packages() {
   local home_packages=()
   local local_packages=()
 
-  for pkg in alacritty btop code-oss dunst emacs fastfetch hypr nvim rofi waybar; do
+  for pkg in alacritty btop dunst emacs fastfetch hypr nvim rofi waybar; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 
@@ -187,7 +187,7 @@ unstow_packages() {
   local home_packages=()
   local local_packages=()
 
-  for pkg in alacritty btop code-oss dunst emacs fastfetch hypr nvim rofi waybar; do
+  for pkg in alacritty btop dunst emacs fastfetch hypr nvim rofi waybar; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 

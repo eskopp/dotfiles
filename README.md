@@ -9,7 +9,6 @@ Personal Arch Linux dotfiles for a Wayland desktop built around **Hyprland** and
 - GNU Stow-based installation
 - Custom helper scripts for wallpapers, screenshots, clipboard, Wi-Fi, Bluetooth, and power actions
 - Fast terminal workflow with Alacritty, Zsh, Fastfetch, and Neovim
-- Optional GUI editor setup for Code - OSS
 
 ## Included
 
@@ -26,7 +25,6 @@ This repository currently includes configuration for:
 - Neovim
 - Emacs
 - Thunar
-- Code - OSS
 - Zsh
 - Bash
 - local helper scripts
@@ -83,8 +81,6 @@ Run:
 - `alacritty/` → terminal config
 - `nvim/` → Neovim config
 - `zsh/` → shell config and prompt
-- `code-oss/` → user settings
-- `code-oss-theme/` → local Code - OSS themes
 - `local-bin/` → helper scripts
 - `scripts/` → install helpers
 

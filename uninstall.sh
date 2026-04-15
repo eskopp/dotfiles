@@ -37,8 +37,6 @@ main() {
   prepare_stow_tree
   unstow_packages
 
-  rm -f "${HOME}/.vscode-oss/extensions/polar-nord"
-  rm -f "${HOME}/.vscode-oss/extensions/anime-nebula"
 
   remove_empty_dirs
   rm -rf "${STOW_BUILD_DIR}"
