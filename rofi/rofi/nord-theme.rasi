@@ -1,25 +1,25 @@
 * {
     font: "Fira Sans 11";
 
-    bg:             #2b303bee;
-    bg-alt:         #323946ee;
-    surface:        #3b4252ee;
-    surface-2:      #434c5eee;
+    bg:             #2E3440;
+    bg-alt:         #3B4252;
+    surface:        #3B4252;
+    surface-2:      #434C5E;
 
-    fg:             #eceff4;
-    fg-muted:       #d8dee9;
-    fg-subtle:      #a7b1c2;
+    fg:             #ECEFF4;
+    fg-muted:       #D8DEE9;
+    fg-subtle:      #4C566A;
 
-    accent:         #88c0d0;
-    accent-strong:  #81a1c1;
+    accent:         #88C0D0;
+    accent-strong:  #81A1C1;
 
-    good:           #a3be8c;
-    warn:           #ebcb8b;
-    bad:            #bf616a;
+    good:           #A3BE8C;
+    warn:           #EBCB8B;
+    bad:            #BF616A;
 
-    border:         #4c566a;
-    selected-fg:    #2e3440;
-    urgent-fg:      #eceff4;
+    border:         #4C566A;
+    selected-fg:    #2E3440;
+    urgent-fg:      #ECEFF4;
 }
 
 window {
