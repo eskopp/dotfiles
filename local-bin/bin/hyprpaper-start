@@ -2,4 +2,3 @@
 pkill hyprpaper 2>/dev/null || true
 hyprpaper >/tmp/hyprpaper.log 2>&1 &
 sleep 1
-"$HOME/.local/bin/random-wallpaper"

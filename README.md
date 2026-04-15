@@ -59,9 +59,6 @@ After stowing they are available as:
     ~/.config/hypr/background.png
     ~/.config/hypr/lockscreen.png
 
-You can re-apply the desktop wallpaper at any time with:
-
-    SUPER+W
 
 ## Start Hyprland
 

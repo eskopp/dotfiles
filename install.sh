@@ -84,10 +84,9 @@ main() {
   info "All installers finished successfully."
   printf '\n'
   printf 'Next steps:\n'
-  printf '  1. Put wallpapers into: %s\n' "${HOME}/git/wallpaper"
-  printf '  2. Start Hyprland from a TTY with:\n'
+  printf '  1. Start Hyprland from a TTY with:\n'
   printf '     %s\n' "${HOME}/.local/bin/start-hyprland"
-  printf '  3. Check Fastfetch with:\n'
+  printf '  2. Check Fastfetch with:\n'
   printf '     fastfetch\n'
 }
 
