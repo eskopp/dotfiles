@@ -28,6 +28,10 @@ setopt HIST_REDUCE_BLANKS
 # Aliases
 alias cls="clear"
 alias neofetch="fastfetch"
+alias yay-update="yay -Syu --noconfirm && yay -Sc --noconfirm"
+alias paru-update="paru -Syu && paru -Sc --noconfirm"
+alias pacman-update="sudo pacman -Syyu"
+
 
 # NeoVim
 alias neovim="nvim"
