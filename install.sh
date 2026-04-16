@@ -58,6 +58,7 @@ install_required_packages() {
     zoxide \
     tmux \
     neovim \
+    ripgrep \
     emacs-wayland \
     python
 }
@@ -77,6 +78,9 @@ main() {
   prepare_stow_tree
   backup_stow_targets
   stow_packages
+
+  info "Syncing Neovim plugins"
+  nvim --headless "+Lazy! sync" +qa
 
 
   info "Enabling NetworkManager"
