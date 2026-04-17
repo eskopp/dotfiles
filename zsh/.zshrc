@@ -41,7 +41,7 @@ alias vim="nvim"
 alias please="sudo"
 
 # VPN
-alias vpn-on='sudo openconnect -b vpn2x.tu-ilmenau.de'
+alias vpn-on='sudo openconnect --protocol=anyconnect --authgroup="mfa-full+IPv6" -b vpn2x.tu-ilmenau.de'
 alias vpn-status='ip addr show tun0 2>/dev/null || echo "tun0 is not up."'
 alias vpn-off='sudo pkill -SIGINT openconnect'
 
