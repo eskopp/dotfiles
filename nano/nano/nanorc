@@ -12,20 +12,20 @@ set smarthome
 set softwrap
 set tabsize 4
 
-## Nord UI colors
-set titlecolor bold,#ECEFF4,#2E3440
-set statuscolor bold,#ECEFF4,#3B4252
-set errorcolor bold,#ECEFF4,#BF616A
-set promptcolor bold,#ECEFF4,#434C5E
-set minicolor bold,#E5E9F0,#2E3440
-set keycolor #88C0D0,#2E3440
-set functioncolor #8FBCBB,#2E3440
-set numbercolor #81A1C1,#2E3440
-set selectedcolor #ECEFF4,#5E81AC
-set spotlightcolor black,#EBCB8B
-set scrollercolor #88C0D0,#434C5E
-set stripecolor #434C5E,#2E3440
+## UI colors (Nord-ish, using safe nano color names)
+set titlecolor bold,white,black
+set statuscolor bold,white,brightblack
+set errorcolor bold,white,red
+set promptcolor bold,white,brightblack
+set minicolor bold,white,black
+set keycolor cyan,black
+set functioncolor green,black
+set numbercolor blue,black
+set selectedcolor white,blue
+set spotlightcolor black,yellow
+set scrollercolor cyan,brightblack
+set stripecolor brightblack,black
 set guidestripe 80
 
-## Load distro-provided syntax files
+## Load distro syntax files when available
 include "/usr/share/nano/*.nanorc"
