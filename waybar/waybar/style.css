@@ -197,13 +197,16 @@ button:hover {
 }
 
 tooltip {
-    background: @wb_bg_start;
-    border: 1px solid @wb_border;
-    border-radius: 10px;
+    background: @wb_surface;
+    border: 1px solid @wb_accent;
+    border-radius: 14px;
+    padding: 10px 12px;
 }
 
 tooltip label {
     color: @wb_fg;
+    font-size: 13px;
+    padding: 2px 4px;
 }
 
 menu {

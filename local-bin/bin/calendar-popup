@@ -1,0 +1,214 @@
+#!/usr/bin/env python3
+import os
+import signal
+from pathlib import Path
+from datetime import date
+
+import gi
+gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
+from gi.repository import Gtk, Gdk
+
+PIDFILE = Path(f"/tmp/calendar-popup-{os.getuid()}.pid")
+
+def other_instance_running():
+    if not PIDFILE.exists():
+        return None
+    try:
+        pid = int(PIDFILE.read_text().strip())
+    except Exception:
+        PIDFILE.unlink(missing_ok=True)
+        return None
+    try:
+        os.kill(pid, 0)
+        return pid
+    except OSError:
+        PIDFILE.unlink(missing_ok=True)
+        return None
+
+running = other_instance_running()
+if running:
+    try:
+        os.kill(running, signal.SIGTERM)
+    except OSError:
+        pass
+    PIDFILE.unlink(missing_ok=True)
+    raise SystemExit(0)
+
+PIDFILE.write_text(str(os.getpid()))
+
+class CalendarPopup(Gtk.Window):
+    def __init__(self):
+        super().__init__(title="Calendar")
+        self.set_default_size(360, 320)
+        self.set_resizable(False)
+        self.set_decorated(False)
+        self.set_skip_taskbar_hint(True)
+        self.set_skip_pager_hint(True)
+        self.set_keep_above(True)
+        self.set_type_hint(Gdk.WindowTypeHint.DIALOG)
+        self.set_border_width(14)
+
+        self.connect("destroy", self.on_destroy)
+        self.connect("focus-out-event", self.on_focus_out)
+        self.connect("key-press-event", self.on_key_press)
+
+        outer = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        self.add(outer)
+
+        header = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=8)
+        outer.pack_start(header, False, False, 0)
+
+        self.prev_btn = Gtk.Button(label="‹")
+        self.today_btn = Gtk.Button(label="Heute")
+        self.next_btn = Gtk.Button(label="›")
+        self.title_lbl = Gtk.Label()
+
+        self.title_lbl.set_xalign(0.5)
+        self.title_lbl.set_hexpand(True)
+
+        header.pack_start(self.prev_btn, False, False, 0)
+        header.pack_start(self.title_lbl, True, True, 0)
+        header.pack_start(self.today_btn, False, False, 0)
+        header.pack_start(self.next_btn, False, False, 0)
+
+        self.cal = Gtk.Calendar()
+        self.cal.set_display_options(
+            Gtk.CalendarDisplayOptions.SHOW_HEADING
+            | Gtk.CalendarDisplayOptions.SHOW_DAY_NAMES
+            | Gtk.CalendarDisplayOptions.SHOW_WEEK_NUMBERS
+        )
+        outer.pack_start(self.cal, True, True, 0)
+
+        self.prev_btn.connect("clicked", self.on_prev)
+        self.next_btn.connect("clicked", self.on_next)
+        self.today_btn.connect("clicked", self.on_today)
+        self.cal.connect("month-changed", self.on_month_changed)
+
+        self.apply_css()
+        self.on_today(None)
+        self.center_on_active_monitor()
+        self.show_all()
+
+    def apply_css(self):
+        css = b'''
+        window {
+            background: #3B4252;
+            color: #ECEFF4;
+            border: 1px solid #88C0D0;
+            border-radius: 16px;
+        }
+        button {
+            background: #434C5E;
+            color: #ECEFF4;
+            border: 1px solid #4C566A;
+            border-radius: 10px;
+            box-shadow: none;
+            padding: 6px 10px;
+        }
+        button:hover {
+            background: #88C0D0;
+            color: #2E3440;
+        }
+        label {
+            color: #ECEFF4;
+            font-weight: 700;
+        }
+        calendar {
+            background: transparent;
+            color: #ECEFF4;
+            border: none;
+        }
+        calendar.header {
+            color: #88C0D0;
+        }
+        calendar.button {
+            color: #ECEFF4;
+        }
+        calendar.highlight {
+            color: #EBCB8B;
+        }
+        calendar:selected {
+            background: #88C0D0;
+            color: #2E3440;
+            border-radius: 8px;
+        }
+        '''
+        provider = Gtk.CssProvider()
+        provider.load_from_data(css)
+        screen = Gdk.Screen.get_default()
+        Gtk.StyleContext.add_provider_for_screen(
+            screen,
+            provider,
+            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        )
+
+    def center_on_active_monitor(self):
+        screen = self.get_screen()
+        display = Gdk.Display.get_default()
+        seat = display.get_default_seat() if display else None
+        pointer = seat.get_pointer() if seat else None
+
+        if screen is None or pointer is None:
+            self.set_position(Gtk.WindowPosition.CENTER)
+            return
+
+        x, y = pointer.get_position()[1:]
+        monitor_idx = screen.get_monitor_at_point(x, y)
+        geom = screen.get_monitor_geometry(monitor_idx)
+
+        width = 360
+        height = 320
+        pos_x = geom.x + (geom.width - width) // 2
+        pos_y = geom.y + 60
+        self.move(pos_x, pos_y)
+
+    def update_title(self):
+        year, month, _day = self.cal.get_date()
+        months = [
+            "Januar", "Februar", "März", "April", "Mai", "Juni",
+            "Juli", "August", "September", "Oktober", "November", "Dezember"
+        ]
+        self.title_lbl.set_text(f"{months[month]} {year}")
+
+    def on_month_changed(self, *_args):
+        self.update_title()
+
+    def on_prev(self, _button):
+        year, month, _day = self.cal.get_date()
+        month -= 1
+        if month < 0:
+            month = 11
+            year -= 1
+        self.cal.select_month(month, year)
+
+    def on_next(self, _button):
+        year, month, _day = self.cal.get_date()
+        month += 1
+        if month > 11:
+            month = 0
+            year += 1
+        self.cal.select_month(month, year)
+
+    def on_today(self, _button):
+        today = date.today()
+        self.cal.select_month(today.month - 1, today.year)
+        self.cal.select_day(today.day)
+        self.update_title()
+
+    def on_focus_out(self, *_args):
+        self.close()
+        return False
+
+    def on_key_press(self, _widget, event):
+        if event.keyval == Gdk.KEY_Escape:
+            self.close()
+            return True
+        return False
+
+    def on_destroy(self, *_args):
+        PIDFILE.unlink(missing_ok=True)
+        Gtk.main_quit()
+
+win = CalendarPopup()
+Gtk.main()

@@ -48,7 +48,28 @@
     },
     "clock": {
         "format": "   {:%a %d.%m. %H:%M}",
-        "tooltip-format": "<big>{:%A, %d. %B %Y}</big>\n<tt>{calendar}</tt>"
+        "tooltip-format": "<span size='larger'><b>{:%A, %d. %B %Y}</b></span>
+
+<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "iso8601": true,
+            "format": {
+                "months": "<span color='#88C0D0'><b>{}</b></span>",
+                "weekdays": "<span color='#81A1C1'><b>{}</b></span>",
+                "weeks": "<span color='#5E81AC'><b>KW {}</b></span>",
+                "days": "<span color='#D8DEE9'>{}</span>",
+                "today": "<span color='#EBCB8B'><b><u>{}</u></b></span>"
+            }
+        },
+        "on-click": "$HOME/.local/bin/calendar-popup",
+        "actions": {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
     },
     "idle_inhibitor": {
         "format": "{icon}",

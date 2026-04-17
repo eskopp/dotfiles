@@ -1,0 +1,31 @@
+## Nord-inspired nano config
+## Target: ~/.config/nano/nanorc
+
+set autoindent
+set constantshow
+set historylog
+set indicator
+set linenumbers
+set mouse
+set positionlog
+set smarthome
+set softwrap
+set tabsize 4
+
+## Nord UI colors
+set titlecolor bold,#ECEFF4,#2E3440
+set statuscolor bold,#ECEFF4,#3B4252
+set errorcolor bold,#ECEFF4,#BF616A
+set promptcolor bold,#ECEFF4,#434C5E
+set minicolor bold,#E5E9F0,#2E3440
+set keycolor #88C0D0,#2E3440
+set functioncolor #8FBCBB,#2E3440
+set numbercolor #81A1C1,#2E3440
+set selectedcolor #ECEFF4,#5E81AC
+set spotlightcolor black,#EBCB8B
+set scrollercolor #88C0D0,#434C5E
+set stripecolor #434C5E,#2E3440
+set guidestripe 80
+
+## Load distro-provided syntax files
+include "/usr/share/nano/*.nanorc"

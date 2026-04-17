@@ -30,6 +30,7 @@ install_required_packages() {
     xdg-desktop-portal-hyprland \
     xdg-desktop-portal-gtk \
     waybar \
+    python-gobject \
     foot \
     foot-terminfo \
     dunst \
@@ -58,6 +59,7 @@ install_required_packages() {
     zoxide \
     tmux \
     neovim \
+  nano \
     ripgrep \
     emacs-wayland \
     python

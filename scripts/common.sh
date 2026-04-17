@@ -126,6 +126,7 @@ backup_stow_targets() {
     "${HOME}/.config/foot"
     "${HOME}/.config/hypr"
     "${HOME}/.config/imv"
+    "${HOME}/.config/nano"
     "${HOME}/.config/nvim"
     "${HOME}/.config/rofi"
     "${HOME}/.config/waybar"
@@ -169,7 +170,7 @@ stow_packages() {
   local home_packages=()
   local local_packages=()
 
-  for pkg in btop dunst emacs fastfetch foot hypr imv nvim rofi waybar; do
+  for pkg in btop dunst emacs fastfetch foot hypr imv nano nvim rofi waybar; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 
@@ -189,7 +190,7 @@ unstow_packages() {
   local home_packages=()
   local local_packages=()
 
-  for pkg in btop dunst emacs fastfetch foot hypr imv nvim rofi waybar; do
+  for pkg in btop dunst emacs fastfetch foot hypr imv nano nvim rofi waybar; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 
