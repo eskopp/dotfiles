@@ -1,15 +1,13 @@
-(setq package-enable-at-startup nil)
-
+;; Sehr früh laden, bevor der Startup-Screen gebaut wird
+(setq inhibit-startup-screen t
+      inhibit-startup-message t
+      inhibit-startup-echo-area-message user-login-name
+      inhibit-startup-buffer-menu t
+      initial-scratch-message nil
+      vc-follow-symlinks t)
+;; dotfiles-startup-early
 (setq inhibit-startup-screen t
       inhibit-startup-message t
       inhibit-startup-buffer-menu t
-      use-dialog-box nil
-      ring-bell-function 'ignore
-      frame-resize-pixelwise t)
-
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
-(blink-cursor-mode -1)
-
-(add-to-list 'default-frame-alist '(internal-border-width . 12))
+      initial-scratch-message nil
+      vc-follow-symlinks t)

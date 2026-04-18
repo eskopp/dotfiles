@@ -165,3 +165,231 @@
 (column-number-mode 1)
 (global-hl-line-mode 1)
 
+
+;; Dotfiles Nord polish
+(setq inhibit-startup-screen t)
+(setq initial-scratch-message nil)
+(setq nord-uniform-mode-lines t)
+(setq nord-region-highlight "frost")
+
+(column-number-mode 1)
+(global-display-line-numbers-mode 1)
+(global-hl-line-mode 1)
+
+
+;; --- Dotfiles startup fix ---
+(setq inhibit-startup-screen t
+      inhibit-startup-message t
+      inhibit-startup-buffer-menu t
+      initial-scratch-message nil
+      vc-follow-symlinks t)
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (when (get-buffer "*GNU Emacs*")
+              (kill-buffer "*GNU Emacs*"))
+            (delete-other-windows)))
+
+;; Dotfiles startup cleanup
+(setq vc-follow-symlinks t
+      inhibit-startup-screen t
+      inhibit-startup-message t
+      inhibit-startup-buffer-menu t
+      initial-scratch-message nil)
+
+(defun esk/cleanup-startup-buffer ()
+  (when (get-buffer "*GNU Emacs*")
+    (kill-buffer "*GNU Emacs*")
+    (delete-other-windows)))
+
+(add-hook 'find-file-hook #'esk/cleanup-startup-buffer)
+
+;; Late startup cleanup
+(defun esk/late-startup-cleanup ()
+  (run-with-idle-timer
+   0 nil
+   (lambda ()
+     (let ((buf (get-buffer "*GNU Emacs*")))
+       (when buf
+         (dolist (win (get-buffer-window-list buf nil t))
+           (quit-window nil win))
+         (kill-buffer buf)))
+     (when (> (count-windows) 1)
+       (delete-other-windows)))))
+
+(add-hook 'window-setup-hook #'esk/late-startup-cleanup)
+
+;; Force single window startup
+(setq inhibit-startup-screen t
+      inhibit-startup-message t
+      inhibit-startup-buffer-menu t
+      initial-scratch-message nil
+      vc-follow-symlinks t)
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (delete-other-windows)))
+
+;; --- Nord README look ---
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(dolist (pkg '(nord-theme powerline))
+  (unless (package-installed-p pkg)
+    (package-install pkg)))
+
+(setq vc-follow-symlinks t
+      inhibit-startup-screen t
+      inhibit-startup-message t
+      inhibit-startup-buffer-menu t
+      initial-scratch-message nil
+      nord-region-highlight "frost"
+      nord-uniform-mode-lines t)
+
+;; Opaque instead of transparent
+(add-to-list 'default-frame-alist '(alpha-background . 100))
+(add-to-list 'default-frame-alist '(alpha . (100 . 100)))
+
+(load-theme 'nord t)
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+(global-display-line-numbers-mode 1)
+(global-hl-line-mode 1)
+(column-number-mode 1)
+
+(set-face-attribute 'default nil :family "JetBrainsMono Nerd Font" :height 140)
+
+(require 'powerline)
+(powerline-default-theme)
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (when (> (count-windows) 1)
+              (delete-other-windows))
+            (when (get-buffer "*GNU Emacs*")
+              (kill-buffer "*GNU Emacs*"))))
+
+;; one-window-after-file
+(setq vc-follow-symlinks t
+      inhibit-startup-screen t
+      inhibit-startup-message t
+      inhibit-startup-buffer-menu t
+      initial-scratch-message nil)
+
+(defun esk/one-window-after-file ()
+  (when buffer-file-name
+    (when (get-buffer "*GNU Emacs*")
+      (kill-buffer "*GNU Emacs*"))
+    (delete-other-windows)
+    (remove-hook 'find-file-hook #'esk/one-window-after-file)))
+
+(add-hook 'find-file-hook #'esk/one-window-after-file)
+;; dotfiles-kill-gnu-emacs-buffer
+(add-hook
+ 'window-setup-hook
+ (lambda ()
+   (run-with-timer
+    0.3 nil
+    (lambda ()
+      (let ((buf (get-buffer "*GNU Emacs*")))
+        (when buf
+          (dolist (win (get-buffer-window-list buf nil t))
+            (quit-window nil win))
+          (kill-buffer buf)))
+      (when (> (count-windows) 1)
+        (delete-other-windows))))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;; --- Pretty start page ---
+(defface esk-start-title
+  '((t (:inherit default :weight bold :height 2.2)))
+  "Face for the start page title.")
+
+(defface esk-start-subtitle
+  '((t (:inherit font-lock-comment-face :height 1.25)))
+  "Face for the start page subtitle.")
+
+(defface esk-start-key
+  '((t (:inherit font-lock-keyword-face :weight bold)))
+  "Face for shortcut keys on the start page.")
+
+(defface esk-start-desc
+  '((t (:inherit default)))
+  "Face for descriptions on the start page.")
+
+(defface esk-start-muted
+  '((t (:inherit shadow)))
+  "Face for muted text on the start page.")
+
+(defun esk/start-page-center-line (text &optional face)
+  (let* ((width (window-width))
+         (pad (max 0 (/ (- width (string-width text)) 2))))
+    (insert (make-string pad ?\s))
+    (insert (if face (propertize text 'face face) text))
+    (insert "\n")))
+
+(defun esk/start-page-has-file-buffer-p ()
+  (seq-some (lambda (buf)
+              (buffer-local-value 'buffer-file-name buf))
+            (buffer-list)))
+
+(defun esk/render-start-page ()
+  (interactive)
+  (let ((buf (get-buffer-create "*start*")))
+    (with-current-buffer buf
+      (let ((inhibit-read-only t))
+        (erase-buffer)
+        (fundamental-mode)
+        (setq-local cursor-type nil)
+        (setq-local mode-line-format mode-line-format)
+        (setq-local line-spacing 0.18)
+        (display-line-numbers-mode -1)
+        (hl-line-mode -1)
+        (visual-line-mode 1)
+
+        (insert "\n")
+        (esk/start-page-center-line "Erik's Emacs" 'esk-start-title)
+        (esk/start-page-center-line "Nord + Vertico + Consult + Corfu" 'esk-start-subtitle)
+        (insert "\n")
+
+        (dolist (row '(("C-x C-f" "Open file")
+                       ("C-x b"   "Switch buffer")
+                       ("C-s"     "Search in buffer")
+                       ("C-c f"   "Find file")
+                       ("C-c g"   "Ripgrep in project")))
+          (esk/start-page-center-line
+           (concat
+            (propertize (format "%-10s" (car row)) 'face 'esk-start-key)
+            (propertize (concat "  " (cadr row)) 'face 'esk-start-desc))))
+
+        (insert "\n")
+        (esk/start-page-center-line "config: ~/.emacs.d/init.el" 'esk-start-muted)
+        (esk/start-page-center-line "quit:   C-x C-c" 'esk-start-muted)
+        (goto-char (point-min))
+        (read-only-mode 1))))
+  (switch-to-buffer "*start*"))
+
+(add-hook
+ 'emacs-startup-hook
+ (lambda ()
+   (unless (esk/start-page-has-file-buffer-p)
+     (esk/render-start-page))))
+;; --- End pretty start page ---
