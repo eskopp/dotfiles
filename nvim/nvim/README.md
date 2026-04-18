@@ -169,3 +169,39 @@ stow --no-folding --restow --dir ~/git/dotfiles --target "$HOME/.config" nvim
 - The current terminal setup uses **FiraCode Nerd Font Mono** in Foot.
 - Telescope search relies on `ripgrep`.
 - Plugins are managed through `lazy.nvim`.
+
+## Git Integration
+
+This setup includes Git support directly inside Neovim.
+
+### Plugins
+
+- `gitsigns.nvim` for inline Git hunks, blame, and diff actions
+- `neogit` for a Git interface inside Neovim
+- `diffview.nvim` as an additional dependency for Git diffs
+- `plenary.nvim` as a required dependency for Neogit
+
+### Keybinds
+
+#### Gitsigns
+
+    ]h            go to next hunk
+    [h            go to previous hunk
+    <leader>hs    stage hunk
+    <leader>hr    reset hunk
+    <leader>hp    preview hunk
+    <leader>hb    blame current line
+    <leader>hd    diff current file
+    <leader>tb    toggle current line blame
+
+#### Neogit
+
+    <leader>gg    open Neogit
+
+### Install
+
+After adding the plugin file, run:
+
+    cd ~/git/dotfiles
+    stow -R nvim
+    nvim --headless "+Lazy! sync" +qa
