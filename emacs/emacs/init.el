@@ -323,8 +323,8 @@
 (require 'seq)
 
 (defconst esk/start-page--month-names
-  ["Januar" "Februar" "März" "April" "Mai" "Juni"
-   "Juli" "August" "September" "Oktober" "November" "Dezember"])
+  ["January" "February" "March" "April" "May" "June"
+   "July" "August" "September" "October" "November" "December"])
 
 (defconst esk/start-page--calendar-width 20)
 
@@ -432,7 +432,7 @@
          (curr-lines (esk/start-page--calendar-month-lines month year today))
          (next-lines (esk/start-page--calendar-month-lines (car next) (cadr next)))
          (count (max (length prev-lines) (length curr-lines) (length next-lines))))
-    (esk/start-page--insert "Kalender" 'esk-start-section)
+    (esk/start-page--insert "Calendar" 'esk-start-section)
     (dotimes (i count)
       (insert "  "
               (esk/start-page--pad-right (or (nth i prev-lines) "") esk/start-page--calendar-width)
@@ -475,20 +475,20 @@
         (esk/start-page--insert "")
 
         (esk/start-page--insert "Navigation" 'esk-start-section)
-        (esk/start-page--row "C-x C-f" "Datei öffnen")
-        (esk/start-page--row "C-x b"   "Buffer wechseln")
-        (esk/start-page--row "C-s"     "Im Buffer suchen")
-        (esk/start-page--row "C-c f"   "Datei finden")
-        (esk/start-page--row "C-c g"   "Ripgrep im Projekt")
+        (esk/start-page--row "C-x C-f" "Open file")
+        (esk/start-page--row "C-x b"   "Switch buffer")
+        (esk/start-page--row "C-s"     "Search in buffer")
+        (esk/start-page--row "C-c f"   "Find file")
+        (esk/start-page--row "C-c g"   "Ripgrep in project")
         (esk/start-page--insert "")
 
         (esk/start-page--insert-calendar)
 
         (esk/start-page--insert "Config" 'esk-start-section)
-        (esk/start-page--row "~/.emacs.d" "aktive Emacs-Konfiguration")
-        (esk/start-page--row "C-x C-c"   "Emacs beenden")
+        (esk/start-page--row "~/.emacs.d" "active Emacs configuration")
+        (esk/start-page--row "C-x C-c"   "Quit Emacs")
         (esk/start-page--insert "")
-        (esk/start-page--insert "Tipp: In echter Code-Datei sieht Nord nochmal besser aus." 'esk-start-muted)
+        (esk/start-page--insert "Tip: Nord looks even better in a real code file." 'esk-start-muted)
 
         (goto-char (point-min))
         (forward-line 1)
