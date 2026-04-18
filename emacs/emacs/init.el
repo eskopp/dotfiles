@@ -1,19 +1,25 @@
-(require 'package)
+;; Load bundled Nord theme relative to this init.el
+(let ((theme-dir (expand-file-name
+                  "themes/"
+                  (file-name-directory (or load-file-name user-init-file)))))
+  (add-to-list 'custom-theme-load-path theme-dir))
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
-
-(unless package-archive-contents
-  (package-refresh-contents))
-
-(unless (package-installed-p 'nord-theme)
-  (package-install 'nord-theme))
+(setq nord-region-highlight "frost")
+(setq nord-uniform-mode-lines t)
 
 (load-theme 'nord t)
 
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
 (global-hl-line-mode 1)
+(show-paren-mode 1)
+(electric-pair-mode 1)
+(column-number-mode 1)
+
+(setq visible-bell t)
+(setq ring-bell-function 'ignore)
+(setq make-backup-files nil)
+(setq auto-save-default nil)
 
 (set-face-attribute 'default nil :height 120)
+
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+(add-hook 'text-mode-hook #'display-line-numbers-mode)
