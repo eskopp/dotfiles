@@ -1,63 +1,72 @@
 # Emacs
 
-Minimal Emacs setup for this dotfiles repository with a local bundled Nord theme.
+A clean Emacs setup for my dotfiles, built around the Nord theme with a lightweight completion and search workflow.
 
 ## Features
 
-- Nord theme bundled directly in the repo
-- XDG-style config layout via GNU Stow
-- Minimal UI without menu bar, tool bar, or scroll bar
-- Relative line numbers in useful buffers
-- Highlighted current line
-- Matching parentheses and automatic pair insertion
-- Optional Hyprland window opacity support
+- Nord theme
+- Vertico for minibuffer completion
+- Consult for searching and navigation
+- Corfu for in-buffer completion
+- Custom start page
+- Transparent frame styling
+- Simple file and project workflow
 
-## Repository Layout
+## Structure
 
-- `emacs/emacs/init.el` — main Emacs configuration
-- `emacs/emacs/early-init.el` — early startup configuration
-- `emacs/emacs/themes/nord-theme.el` — bundled Nord theme
-- `emacs/.stow-local-ignore` — prevents non-runtime files from being deployed
-- `emacs/upstream-nord/` — upstream Nord reference files kept in the repo
+- `emacs/init.el` – main Emacs configuration
+- `emacs/early-init.el` – early startup settings
+- `emacs/themes/` – local theme files
 
-## Install Location
+## Included tools
 
-After running Stow, the active files are available at:
+### Nord
+Provides the overall color theme and UI styling.
 
-- `~/.config/emacs/init.el`
-- `~/.config/emacs/early-init.el`
-- `~/.config/emacs/themes/nord-theme.el`
+### Vertico
+Adds a compact vertical completion UI in the minibuffer.
 
-## Installation
+### Consult
+Adds useful commands for searching, buffer switching, file lookup, and project grep.
 
-From the dotfiles repository root:
+### Corfu
+Provides popup completion inside buffers.
 
-    stow -Rv -t ~/.config emacs
+## Common keybindings
 
-## Start Emacs
+- `C-x C-f` – open file
+- `C-x b` – switch buffer
+- `C-s` – search in current buffer
+- `C-x d` – open Dired
+- `C-x C-c` – quit Emacs
 
-Start the graphical version:
+## Startup page
 
-    emacs
+The setup includes a custom startup page instead of the default GNU Emacs welcome screen.
 
-Start without the splash screen:
-
-    emacs --no-splash
-
-Start inside the terminal:
-
-    emacs -nw
+It is designed to:
+- look cleaner than the default screen
+- match the Nord styling
+- provide a small overview of useful commands
+- optionally show extra widgets like a calendar
 
 ## Notes
 
-The Nord theme is loaded from the local `themes/` directory instead of being installed from MELPA.
+This setup uses the local dotfiles configuration rather than relying only on package defaults.
 
-This makes the setup more reproducible and avoids relying on external theme downloads during installation.
+If Emacs does not load the expected config, make sure the active config points to this dotfiles setup.
 
-## Hyprland Opacity
+## Install
 
-If Hyprland is used, Emacs window opacity can be controlled through the Hyprland config.
+Typical setup with symlinks:
 
-Example rule:
+- `~/.emacs.d/init.el` -> `dotfiles/emacs/emacs/init.el`
+- `~/.emacs.d/early-init.el` -> `dotfiles/emacs/emacs/early-init.el`
 
-    windowrule = match:class ^(emacs)$, opacity 0.80 override 0.80 override 1.0 override
+## Goal
+
+The goal of this setup is not to build a huge Emacs distribution, but to keep Emacs:
+- clean
+- readable
+- fast enough
+- pleasant to use every day
