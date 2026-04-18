@@ -319,37 +319,135 @@
  )
 
 ;; --- Pretty start page ---
+(require 'calendar)
+(require 'seq)
+
+(defconst esk/start-page--month-names
+  ["Januar" "Februar" "März" "April" "Mai" "Juni"
+   "Juli" "August" "September" "Oktober" "November" "Dezember"])
+
+(defconst esk/start-page--calendar-width 20)
+
 (defface esk-start-title
-  '((t (:inherit default :weight bold :height 2.2)))
-  "Face for the start page title.")
+  '((t (:inherit default :weight bold :height 1.45 :foreground "#ECEFF4")))
+  "Title face for the start page.")
 
 (defface esk-start-subtitle
-  '((t (:inherit font-lock-comment-face :height 1.25)))
-  "Face for the start page subtitle.")
+  '((t (:inherit shadow :height 1.0 :foreground "#81A1C1")))
+  "Subtitle face for the start page.")
+
+(defface esk-start-section
+  '((t (:inherit default :weight bold :foreground "#88C0D0")))
+  "Section title face.")
 
 (defface esk-start-key
-  '((t (:inherit font-lock-keyword-face :weight bold)))
-  "Face for shortcut keys on the start page.")
+  '((t (:inherit default :weight bold :foreground "#8FBCBB")))
+  "Shortcut key face.")
 
 (defface esk-start-desc
-  '((t (:inherit default)))
-  "Face for descriptions on the start page.")
+  '((t (:inherit default :foreground "#D8DEE9")))
+  "Shortcut description face.")
 
 (defface esk-start-muted
-  '((t (:inherit shadow)))
-  "Face for muted text on the start page.")
+  '((t (:inherit shadow :foreground "#7B88A1")))
+  "Muted helper text.")
 
-(defun esk/start-page-center-line (text &optional face)
-  (let* ((width (window-width))
-         (pad (max 0 (/ (- width (string-width text)) 2))))
-    (insert (make-string pad ?\s))
-    (insert (if face (propertize text 'face face) text))
+(defface esk-start-rule
+  '((t (:inherit shadow :foreground "#4C566A")))
+  "Separator line face.")
+
+(defface esk-start-calendar-today
+  '((t (:inherit default :weight bold :foreground "#2E3440" :background "#88C0D0")))
+  "Face for today's date.")
+
+(defun esk/start-page--insert (text &optional face)
+  (insert (if face (propertize text 'face face) text) "\n"))
+
+(defun esk/start-page--row (key desc)
+  (insert "  ")
+  (insert (propertize (format "%-10s" key) 'face 'esk-start-key))
+  (insert " ")
+  (insert (propertize desc 'face 'esk-start-desc))
+  (insert "\n"))
+
+(defun esk/start-page--pad-right (text width)
+  (concat text (make-string (max 0 (- width (string-width text))) ? )))
+
+(defun esk/start-page--center (text width &optional face)
+  (let* ((raw text)
+         (shown (if face (propertize text 'face face) text))
+         (left (max 0 (/ (- width (string-width raw)) 2)))
+         (right (max 0 (- width left (string-width raw)))))
+    (concat (make-string left ? ) shown (make-string right ? ))))
+
+(defun esk/start-page--month-year-offset (month year delta)
+  (let* ((total (+ (* year 12) (1- month) delta))
+         (new-year (/ total 12))
+         (new-month (1+ (mod total 12))))
+    (list new-month new-year)))
+
+(defun esk/start-page--calendar-month-lines (month year &optional highlight-day)
+  (let* ((width esk/start-page--calendar-width)
+         (title (esk/start-page--center
+                 (format "%s %d" (aref esk/start-page--month-names (1- month)) year)
+                 width
+                 'esk-start-section))
+         (weekdays (esk/start-page--pad-right
+                    (propertize "Mo Di Mi Do Fr Sa So" 'face 'esk-start-muted)
+                    width))
+         (days-in-month (calendar-last-day-of-month month year))
+         (first-dow (calendar-day-of-week (list month 1 year)))
+         (offset (mod (- first-dow 1) 7))
+         (rows (list title weekdays))
+         (day 1))
+    (dotimes (_week 6)
+      (let ((line ""))
+        (dotimes (col 7)
+          (let ((cell-index (+ (* _week 7) col)))
+            (setq line
+                  (concat
+                   line
+                   (cond
+                    ((< cell-index offset) "  ")
+                    ((> day days-in-month) "  ")
+                    (t
+                     (prog1
+                         (let ((cell (format "%2d" day)))
+                           (if (and highlight-day (= day highlight-day))
+                               (propertize cell 'face 'esk-start-calendar-today)
+                             cell))
+                       (setq day (1+ day)))))
+                   (if (< col 6) " " "")))))
+        (setq rows (append rows (list (esk/start-page--pad-right line width))))))
+    rows))
+
+(defun esk/start-page--insert-calendar ()
+  (let* ((now (decode-time (current-time)))
+         (today (nth 3 now))
+         (month (nth 4 now))
+         (year (nth 5 now))
+         (prev (esk/start-page--month-year-offset month year -1))
+         (next (esk/start-page--month-year-offset month year 1))
+         (prev-lines (esk/start-page--calendar-month-lines (car prev) (cadr prev)))
+         (curr-lines (esk/start-page--calendar-month-lines month year today))
+         (next-lines (esk/start-page--calendar-month-lines (car next) (cadr next)))
+         (count (max (length prev-lines) (length curr-lines) (length next-lines))))
+    (esk/start-page--insert "Kalender" 'esk-start-section)
+    (dotimes (i count)
+      (insert "  "
+              (esk/start-page--pad-right (or (nth i prev-lines) "") esk/start-page--calendar-width)
+              "   "
+              (esk/start-page--pad-right (or (nth i curr-lines) "") esk/start-page--calendar-width)
+              "   "
+              (esk/start-page--pad-right (or (nth i next-lines) "") esk/start-page--calendar-width)
+              "\n"))
     (insert "\n")))
 
 (defun esk/start-page-has-file-buffer-p ()
-  (seq-some (lambda (buf)
-              (buffer-local-value 'buffer-file-name buf))
-            (buffer-list)))
+  (seq-some
+   (lambda (buf)
+     (buffer-local-value 'buffer-file-name buf))
+   (buffer-list)))
 
 (defun esk/render-start-page ()
   (interactive)
@@ -357,39 +455,53 @@
     (with-current-buffer buf
       (let ((inhibit-read-only t))
         (erase-buffer)
-        (fundamental-mode)
+        (special-mode)
         (setq-local cursor-type nil)
-        (setq-local mode-line-format mode-line-format)
-        (setq-local line-spacing 0.18)
+        (setq-local mode-line-format nil)
+        (setq-local header-line-format nil)
+        (setq-local line-spacing 0.02)
+        (setq-local truncate-lines t)
+        (setq-local global-hl-line-mode nil)
+        (setq-local show-trailing-whitespace nil)
+        (face-remap-add-relative 'hl-line '(:background unspecified))
         (display-line-numbers-mode -1)
         (hl-line-mode -1)
-        (visual-line-mode 1)
+        (visual-line-mode -1)
 
-        (insert "\n")
-        (esk/start-page-center-line "Erik's Emacs" 'esk-start-title)
-        (esk/start-page-center-line "Nord + Vertico + Consult + Corfu" 'esk-start-subtitle)
-        (insert "\n")
+        (esk/start-page--insert "")
+        (esk/start-page--insert "Emacs" 'esk-start-title)
+        (esk/start-page--insert "Nord • Vertico • Consult • Corfu" 'esk-start-subtitle)
+        (esk/start-page--insert "────────────────────────────────────────────────────────" 'esk-start-rule)
+        (esk/start-page--insert "")
 
-        (dolist (row '(("C-x C-f" "Open file")
-                       ("C-x b"   "Switch buffer")
-                       ("C-s"     "Search in buffer")
-                       ("C-c f"   "Find file")
-                       ("C-c g"   "Ripgrep in project")))
-          (esk/start-page-center-line
-           (concat
-            (propertize (format "%-10s" (car row)) 'face 'esk-start-key)
-            (propertize (concat "  " (cadr row)) 'face 'esk-start-desc))))
+        (esk/start-page--insert "Navigation" 'esk-start-section)
+        (esk/start-page--row "C-x C-f" "Datei öffnen")
+        (esk/start-page--row "C-x b"   "Buffer wechseln")
+        (esk/start-page--row "C-s"     "Im Buffer suchen")
+        (esk/start-page--row "C-c f"   "Datei finden")
+        (esk/start-page--row "C-c g"   "Ripgrep im Projekt")
+        (esk/start-page--insert "")
 
-        (insert "\n")
-        (esk/start-page-center-line "config: ~/.emacs.d/init.el" 'esk-start-muted)
-        (esk/start-page-center-line "quit:   C-x C-c" 'esk-start-muted)
+        (esk/start-page--insert-calendar)
+
+        (esk/start-page--insert "Config" 'esk-start-section)
+        (esk/start-page--row "~/.emacs.d" "aktive Emacs-Konfiguration")
+        (esk/start-page--row "C-x C-c"   "Emacs beenden")
+        (esk/start-page--insert "")
+        (esk/start-page--insert "Tipp: In echter Code-Datei sieht Nord nochmal besser aus." 'esk-start-muted)
+
         (goto-char (point-min))
+        (forward-line 1)
         (read-only-mode 1))))
-  (switch-to-buffer "*start*"))
+  (switch-to-buffer "*start*")
+  (set-window-margins (selected-window) 2 2))
 
 (add-hook
  'emacs-startup-hook
  (lambda ()
    (unless (esk/start-page-has-file-buffer-p)
+     (delete-other-windows)
      (esk/render-start-page))))
 ;; --- End pretty start page ---
+
+
