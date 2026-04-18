@@ -46,6 +46,10 @@ main() {
     "https://github.com/marlonrichert/zsh-autocomplete" \
     "${zsh_custom}/plugins/zsh-autocomplete"
 
+  clone_or_update \
+    "https://github.com/zsh-users/zsh-autosuggestions" \
+    "${zsh_custom}/plugins/zsh-autosuggestions"
+
   zsh_bin="$(command -v zsh)"
   if [[ "${SHELL:-}" != "${zsh_bin}" ]]; then
     info "Setting Zsh as default shell"
