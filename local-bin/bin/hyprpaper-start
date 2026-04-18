@@ -1,4 +1,17 @@
 #!/usr/bin/env bash
-pkill hyprpaper 2>/dev/null || true
-hyprpaper >/tmp/hyprpaper.log 2>&1 &
-sleep 1
+set -euo pipefail
+
+LOCK_DIR="${XDG_RUNTIME_DIR:-/tmp}"
+LOCK_FILE="$LOCK_DIR/hyprpaper-start.lock"
+LOG_DIR="${XDG_CACHE_HOME:-$HOME/.cache}"
+mkdir -p "$LOG_DIR"
+
+exec 9>"$LOCK_FILE"
+flock -n 9 || exit 0
+
+pkill -x hyprpaper 2>/dev/null || true
+
+while true; do
+  hyprpaper >>"$LOG_DIR/hyprpaper.log" 2>&1
+  sleep 1
+done
