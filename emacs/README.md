@@ -2,6 +2,8 @@
 
 A clean Emacs setup for my dotfiles, built around the Nord theme with a lightweight completion and search workflow.
 
+![emacs_landing.jpg](emacs_landing.jpg)
+
 ## Features
 
 - Nord theme
