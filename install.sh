@@ -59,10 +59,19 @@ install_required_packages() {
     zoxide \
     tmux \
     neovim \
-  nano \
+    nano \
     ripgrep \
     emacs-wayland \
-    python
+    python \
+    yazi \
+    file \
+    ffmpeg \
+    7zip \
+    poppler \
+    fd \
+    fzf \
+    resvg \
+    imagemagick
 }
 
 
