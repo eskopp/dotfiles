@@ -32,6 +32,7 @@ install_required_packages() {
     waybar \
     python-gobject \
     foot \
+    alacritty \
     foot-terminfo \
     dunst \
     rofi \
