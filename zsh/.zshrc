@@ -70,6 +70,8 @@ fi
 
 
 # zsh-autocomplete
+# Disable async mode to avoid /proc/self/fd errors with bad file descriptors
+zstyle ':autocomplete:*' async off
 if [ -r "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]; then
     source "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 elif [ -r /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]; then
