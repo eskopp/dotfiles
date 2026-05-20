@@ -59,10 +59,8 @@ install_required_packages() {
     curl \
     zoxide \
     tmux \
-    neovim \
     nano \
     ripgrep \
-    emacs-wayland \
     python \
     yazi \
     file \
@@ -90,10 +88,6 @@ main() {
   prepare_stow_tree
   backup_stow_targets
   stow_packages
-
-  info "Syncing Neovim plugins"
-  nvim --headless "+Lazy! sync" +qa
-
 
   info "Enabling NetworkManager"
   sudo systemctl enable --now NetworkManager
