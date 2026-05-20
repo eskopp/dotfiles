@@ -15,3 +15,5 @@ case ":$PATH:" in
   *":$HOME/.local/bin:"*) ;;
   *) export PATH="$HOME/.local/bin:$PATH" ;;
 esac
+
+[[ -r "$HOME/.config/shell/dev-env.sh" ]] && source "$HOME/.config/shell/dev-env.sh"

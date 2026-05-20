@@ -92,3 +92,5 @@ fi
  
 
 alias code='code --no-sandbox'
+
+[[ -r "$HOME/.config/shell/dev-env.sh" ]] && source "$HOME/.config/shell/dev-env.sh"
