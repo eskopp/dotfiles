@@ -78,13 +78,13 @@ elif [ -r /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh ];
     source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 fi
 
-# zsh-autosuggestions (sync mode prevents fd leaks from async workers)
-ZSH_AUTOSUGGEST_USE_ASYNC=false
+# zsh-autosuggestions
 if [ -r "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
     source "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 elif [ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
+unset ZSH_AUTOSUGGEST_USE_ASYNC
 
 # Optional syntax highlighting
 if [ -r /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
