@@ -69,16 +69,17 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 
-# zsh-autocomplete
-# Disable async mode to avoid /proc/self/fd errors with bad file descriptors
+# zsh-autocomplete (async off prevents /proc/self/fd exhaustion in long sessions)
 zstyle ':autocomplete:*' async off
+zstyle ':autocomplete:*' delay 0.1
 if [ -r "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ]; then
     source "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 elif [ -r /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]; then
     source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 fi
 
-# zsh-autosuggestions
+# zsh-autosuggestions (sync mode prevents fd leaks from async workers)
+ZSH_AUTOSUGGEST_USE_ASYNC=false
 if [ -r "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
     source "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 elif [ -r /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
