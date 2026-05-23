@@ -94,3 +94,7 @@ fi
 alias code='code --no-sandbox'
 
 [[ -r "$HOME/.config/shell/dev-env.sh" ]] && source "$HOME/.config/shell/dev-env.sh"
+
+alias vpn-tu='sudo openconnect --protocol=anyconnect --authgroup="mfa-full" --user="josk9243" --no-external-auth --no-xmlpost --no-dtls --script /etc/vpnc/vpnc-script vpn2x.tu-ilmenau.de'
+alias vpn-off='sudo pkill -SIGINT openconnect'
+alias vpn-status='ip addr show tun0 2>/dev/null || echo "tun0 ist nicht aktiv"; ip route get 141.24.1.1 2>/dev/null || true'
