@@ -10,8 +10,8 @@
     fg-muted:       #D8DEE9;
     fg-subtle:      #4C566A;
 
-    accent:         #88C0D0;
-    accent-strong:  #81A1C1;
+    accent:         #F69D50;
+    accent-strong:  #D08770;
 
     good:           #A3BE8C;
     warn:           #EBCB8B;
