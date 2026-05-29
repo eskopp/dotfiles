@@ -33,6 +33,8 @@ install_required_packages() {
     python-gobject \
     foot \
     alacritty \
+    kitty \
+    gnome-terminal \
     foot-terminfo \
     dunst \
     rofi \
@@ -88,6 +90,8 @@ main() {
   prepare_stow_tree
   backup_stow_targets
   stow_packages
+
+  bash "${REPO_DIR}/scripts/install_gnome_terminal.sh"
 
   info "Enabling NetworkManager"
   sudo systemctl enable --now NetworkManager

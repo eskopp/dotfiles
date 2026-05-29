@@ -1,0 +1,27 @@
+[legacy]
+default-size-columns=120
+default-size-rows=32
+theme-variant='dark'
+
+[legacy/profiles:]
+default='b1dcc9dd-5262-4d8d-a863-c897e6d979b9'
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9']
+
+[legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+background-color='#2E3440'
+background-transparency-percent=20
+bold-color='#D8DEE9'
+bold-color-same-as-fg=true
+bold-is-bright=false
+cursor-blink-mode='off'
+cursor-shape='block'
+default-show-menubar=false
+font='FiraCode Nerd Font Mono 11'
+foreground-color='#D8DEE9'
+palette=['#3B4252', '#BF616A', '#A3BE8C', '#D08770', '#5E81AC', '#B48EAD', '#88C0D0', '#E5E9F0', '#4C566A', '#BF616A', '#A3BE8C', '#EBCB8B', '#81A1C1', '#B48EAD', '#8FBCBB', '#ECEFF4']
+scrollback-lines=10000
+scrollback-unlimited=false
+use-system-font=false
+use-theme-colors=false
+use-transparent-background=true
+visible-name='Frostfire Nord'

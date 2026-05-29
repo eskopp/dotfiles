@@ -124,6 +124,7 @@ backup_stow_targets() {
     "${HOME}/.config/emacs"
     "${HOME}/.config/fastfetch"
     "${HOME}/.config/foot"
+    "${HOME}/.config/kitty"
     "${HOME}/.config/hypr"
     "${HOME}/.config/imv"
     "${HOME}/.config/nano"
@@ -170,7 +171,7 @@ stow_packages() {
   local home_packages=()
   local local_packages=()
 
-  for pkg in alacritty btop dunst fastfetch foot hypr imv nano rofi waybar yazi; do
+  for pkg in alacritty btop dunst fastfetch foot hypr imv kitty nano rofi waybar yazi; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 
@@ -190,7 +191,7 @@ unstow_packages() {
   local home_packages=()
   local local_packages=()
 
-  for pkg in alacritty btop dunst fastfetch foot hypr imv nano rofi waybar yazi; do
+  for pkg in alacritty btop dunst fastfetch foot hypr imv kitty nano rofi waybar yazi; do
     [[ -d "${REPO_DIR}/${pkg}" ]] && config_packages+=("${pkg}")
   done
 
