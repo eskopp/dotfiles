@@ -119,6 +119,7 @@ backup_target_if_needed() {
 
 backup_stow_targets() {
   local targets=(
+    "${HOME}/.config/alacritty"
     "${HOME}/.config/dunst/dunstrc"
     "${HOME}/.config/btop"
     "${HOME}/.config/emacs"

@@ -12,8 +12,8 @@
   "display": {
     "separator": "  ",
     "color": {
-      "keys": "blue",
-      "title": "cyan"
+      "keys": "yellow",
+      "title": "yellow"
     },
     "key": {
       "width": 12

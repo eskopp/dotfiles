@@ -14,6 +14,7 @@ remove_empty_dirs() {
     "${HOME}/.config/dunst"
     "${HOME}/.config/fastfetch"
     "${HOME}/.config/foot"
+    "${HOME}/.config/kitty"
     "${HOME}/.config/nvim"
     "${HOME}/.config/emacs"
     "${HOME}/.config/Code - OSS/User"
