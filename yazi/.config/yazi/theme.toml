@@ -4,14 +4,14 @@
 overall = { bg = "#24283B" }
 
 [mgr]
-cwd            = { fg = "#FF9E64", bold = true }
+cwd            = { fg = "#7AA2F7", bold = true }
 find_keyword   = { fg = "#E0AF68", bold = true, underline = true }
 find_position  = { fg = "#BB9AF7", bold = true }
 symlink_target = { fg = "#7AA2F7", italic = true }
 
 marker_copied   = { fg = "#9ECE6A", bg = "#9ECE6A" }
 marker_cut      = { fg = "#F7768E", bg = "#F7768E" }
-marker_marked   = { fg = "#FF9E64", bg = "#FF9E64" }
+marker_marked   = { fg = "#7AA2F7", bg = "#7AA2F7" }
 marker_selected = { fg = "#E0AF68", bg = "#E0AF68" }
 marker_symbol   = "|"
 
@@ -29,13 +29,13 @@ preview = { fg = "#7AA2F7" }
 padding = { open = "", close = "" }
 
 [tabs]
-active    = { fg = "#24283B", bg = "#FF9E64", bold = true }
+active    = { fg = "#24283B", bg = "#7AA2F7", bold = true }
 inactive  = { fg = "#A9B1D6", bg = "#292E42" }
 sep_inner = { open = "", close = "" }
 sep_outer = { open = "", close = "" }
 
 [mode]
-normal_main = { fg = "#24283B", bg = "#FF9E64", bold = true }
+normal_main = { fg = "#24283B", bg = "#7AA2F7", bold = true }
 normal_alt  = { fg = "#A9B1D6", bg = "#292E42" }
 
 select_main = { fg = "#24283B", bg = "#9ECE6A", bold = true }
@@ -54,13 +54,13 @@ perm_write      = { fg = "#E0AF68" }
 perm_exec       = { fg = "#F7768E" }
 perm_sep        = { fg = "#3B4261" }
 progress_label  = { fg = "#C0CAF5", bold = true }
-progress_normal = { fg = "#FF9E64", bg = "#1F2335" }
+progress_normal = { fg = "#7AA2F7", bg = "#1F2335" }
 progress_error  = { fg = "#F7768E", bg = "#1F2335" }
 
 [which]
 cols            = 3
 mask            = { bg = "#24283B" }
-cand            = { fg = "#FF9E64", bold = true }
+cand            = { fg = "#7AA2F7", bold = true }
 rest            = { fg = "#A9B1D6" }
 desc            = { fg = "#7AA2F7" }
 separator       = "  "
@@ -68,7 +68,7 @@ separator_style = { fg = "#3B4261" }
 
 [confirm]
 border     = { fg = "#3B4261" }
-title      = { fg = "#FF9E64", bold = true }
+title      = { fg = "#7AA2F7", bold = true }
 body       = { fg = "#A9B1D6" }
 list       = { fg = "#7AA2F7" }
 btn_yes    = { fg = "#24283B", bg = "#9ECE6A", bold = true }
@@ -77,29 +77,29 @@ btn_labels = ["Yes", "No"]
 
 [spot]
 border   = { fg = "#3B4261" }
-title    = { fg = "#FF9E64", bold = true }
+title    = { fg = "#7AA2F7", bold = true }
 tbl_col  = { bg = "#292E42" }
 tbl_cell = { fg = "#C0CAF5", bg = "#1F2335" }
 
 [notify]
-title_info  = { fg = "#FF9E64" }
+title_info  = { fg = "#7AA2F7" }
 title_warn  = { fg = "#E0AF68" }
 title_error = { fg = "#F7768E", bold = true }
 
 [pick]
 border   = { fg = "#3B4261" }
-active   = { fg = "#24283B", bg = "#FF9E64", bold = true }
+active   = { fg = "#24283B", bg = "#7AA2F7", bold = true }
 inactive = { fg = "#A9B1D6" }
 
 [input]
 border   = { fg = "#3B4261" }
-title    = { fg = "#FF9E64", bold = true }
+title    = { fg = "#7AA2F7", bold = true }
 value    = { fg = "#C0CAF5" }
-selected = { fg = "#24283B", bg = "#FF9E64", bold = true }
+selected = { fg = "#24283B", bg = "#7AA2F7", bold = true }
 
 [cmp]
 border       = { fg = "#3B4261" }
-active       = { fg = "#24283B", bg = "#FF9E64", bold = true }
+active       = { fg = "#24283B", bg = "#7AA2F7", bold = true }
 inactive     = { fg = "#A9B1D6" }
 icon_file    = "f"
 icon_folder  = "d"
@@ -107,11 +107,11 @@ icon_command = ">"
 
 [tasks]
 border  = { fg = "#3B4261" }
-title   = { fg = "#FF9E64", bold = true }
-hovered = { fg = "#24283B", bg = "#FF9E64", bold = true }
+title   = { fg = "#7AA2F7", bold = true }
+hovered = { fg = "#24283B", bg = "#7AA2F7", bold = true }
 
 [help]
-on      = { fg = "#FF9E64", bold = true }
+on      = { fg = "#7AA2F7", bold = true }
 run     = { fg = "#9ECE6A" }
 desc    = { fg = "#A9B1D6" }
 hovered = { bg = "#292E42" }
@@ -123,6 +123,6 @@ rules = [
   { mime = "{audio,video}/*", fg = "#BB9AF7" },
   { mime = "application/*",   fg = "#7AA2F7" },
   { mime = "inode/empty",     fg = "#3B4261" },
-  { url = "*/",               fg = "#FF9E64", bold = true },
+  { url = "*/",               fg = "#7AA2F7", bold = true },
   { url = "*", is = "orphan", fg = "#F7768E" },
 ]

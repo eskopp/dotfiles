@@ -93,10 +93,10 @@ fi
  
 
 # ── Tokyo Night Storm Colors ──────────────────────────────────────────────────
-# directories=orange  symlinks=blue  executables=green
-# archives=purple     images=yellow  audio/video=cyan
+# directories=blue  symlinks=blue  executables=green
+# archives=purple   images=yellow  audio/video=cyan
 export LS_COLORS="\
-di=38;2;255;158;100;1:\
+di=38;2;122;162;247;1:\
 ln=38;2;122;162;247:\
 ex=38;2;158;206;106;1:\
 fi=38;2;192;202;245:\
@@ -106,8 +106,8 @@ bd=38;2;247;118;142;1:\
 cd=38;2;247;118;142:\
 or=38;2;247;118;142;1;4:\
 mi=38;2;86;95;137:\
-ow=38;2;255;158;100:\
-tw=38;2;255;158;100;4:\
+ow=38;2;122;162;247:\
+tw=38;2;122;162;247;4:\
 st=38;2;125;207;255;1:\
 *.tar=38;2;187;154;247:*.tgz=38;2;187;154;247:*.zip=38;2;187;154;247:\
 *.gz=38;2;187;154;247:*.bz2=38;2;187;154;247:*.xz=38;2;187;154;247:\
@@ -132,7 +132,7 @@ alias ll='ls -lh --color=auto'
 alias la='ls -lah --color=auto'
 
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-zstyle ':completion:*:*:*:*:descriptions' format '%F{#FF9E64}%d%f'
+zstyle ':completion:*:*:*:*:descriptions' format '%F{#7AA2F7}%d%f'
 zstyle ':completion:*:messages'           format '%F{#7AA2F7}%d%f'
 zstyle ':completion:*:warnings'           format '%F{#F7768E}Nichts gefunden: %d%f'
 

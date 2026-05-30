@@ -13,7 +13,7 @@ frisk_precmd() {
   fi
   FRISK_PROMPT_READY=1
 
-  PROMPT="%F{#FF9E64}%/%f $(git_prompt_info)$(bzr_prompt_info)%F{#7AA2F7}[%n@%m]%f %F{#565F89}[%T]%f
+  PROMPT="%F{#7AA2F7}%/%f $(git_prompt_info)$(bzr_prompt_info)%F{#7AA2F7}[%n@%m]%f %F{#565F89}[%T]%f
 %F{#A9B1D6}>%f "
   PROMPT2="%F{#A9B1D6}%_> %f"
 }
