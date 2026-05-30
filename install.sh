@@ -33,7 +33,6 @@ install_required_packages() {
     python-gobject \
     foot \
     alacritty \
-    kitty \
     gnome-terminal \
     foot-terminfo \
     dunst \
