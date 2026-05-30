@@ -1,25 +1,25 @@
 * {
     font: "Fira Sans 11";
 
-    bg:             #2E3440;
-    bg-alt:         #3B4252;
-    surface:        #3B4252;
-    surface-2:      #434C5E;
+    bg:             #24283B;
+    bg-alt:         #1F2335;
+    surface:        #292E42;
+    surface-2:      #3B4261;
 
-    fg:             #ECEFF4;
-    fg-muted:       #D8DEE9;
-    fg-subtle:      #4C566A;
+    fg:             #C0CAF5;
+    fg-muted:       #A9B1D6;
+    fg-subtle:      #565F89;
 
-    accent:         #F69D50;
-    accent-strong:  #D08770;
+    accent:         #FF9E64;
+    accent-strong:  #E0AF68;
 
-    good:           #A3BE8C;
-    warn:           #EBCB8B;
-    bad:            #BF616A;
+    good:           #9ECE6A;
+    warn:           #E0AF68;
+    bad:            #F7768E;
 
-    border:         #4C566A;
-    selected-fg:    #2E3440;
-    urgent-fg:      #ECEFF4;
+    border:         #3B4261;
+    selected-fg:    #24283B;
+    urgent-fg:      #C0CAF5;
 }
 
 window {

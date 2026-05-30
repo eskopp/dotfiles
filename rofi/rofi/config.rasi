@@ -9,4 +9,4 @@ configuration {
     hide-scrollbar: true;
 }
 
-@theme "~/.config/rofi/nord-theme.rasi"
+@theme "~/.config/rofi/tokyo-night-theme.rasi"

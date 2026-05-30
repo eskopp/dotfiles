@@ -1,23 +1,23 @@
-@define-color wb_bg_start #2E3440;
-@define-color wb_bg_mid   #2E3440;
-@define-color wb_bg_end   #2E3440;
+@define-color wb_bg_start #24283B;
+@define-color wb_bg_mid   #24283B;
+@define-color wb_bg_end   #24283B;
 
-@define-color wb_fg       #ECEFF4;
-@define-color wb_muted    #D8DEE9;
-@define-color wb_border   #4C566A;
-@define-color wb_surface  #3B4252;
+@define-color wb_fg       #C0CAF5;
+@define-color wb_muted    #A9B1D6;
+@define-color wb_border   #3B4261;
+@define-color wb_surface  #292E42;
 
-@define-color wb_accent       #F69D50;
-@define-color wb_accent_text  #2E3440;
+@define-color wb_accent       #FF9E64;
+@define-color wb_accent_text  #24283B;
 
-@define-color wb_good         #A3BE8C;
-@define-color wb_good_text    #2E3440;
+@define-color wb_good         #9ECE6A;
+@define-color wb_good_text    #24283B;
 
-@define-color wb_warn         #EBCB8B;
-@define-color wb_warn_text    #2E3440;
+@define-color wb_warn         #E0AF68;
+@define-color wb_warn_text    #24283B;
 
-@define-color wb_bad          #BF616A;
-@define-color wb_bad_text     #ECEFF4;
+@define-color wb_bad          #F7768E;
+@define-color wb_bad_text     #C0CAF5;
 
 * {
     font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
