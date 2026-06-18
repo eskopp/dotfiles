@@ -1,4 +1,7 @@
 # ~/.zprofile
+if [[ -z "$DISPLAY" && -z "$WAYLAND_DISPLAY" && "$XDG_VTNR" == "1" ]]; then
+    exec uwsm start hyprland.desktop
+fi
 
 # XDG base directories
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"

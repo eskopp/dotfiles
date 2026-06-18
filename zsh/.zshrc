@@ -145,3 +145,25 @@ alias code='code --no-sandbox'
 alias vpn-tu='sudo openconnect --protocol=anyconnect --authgroup="mfa-full" --user="josk9243" --no-external-auth --no-xmlpost --no-dtls --script /etc/vpnc/vpnc-script vpn2x.tu-ilmenau.de'
 alias vpn-off='sudo pkill -SIGINT openconnect'
 alias vpn-status='ip addr show tun0 2>/dev/null || echo "tun0 ist nicht aktiv"; ip route get 141.24.1.1 2>/dev/null || true'
+alias calibre='QT_QPA_PLATFORM=xcb calibre'
+export GPG_TTY=$(tty)
+
+# --- Dev paths ---
+
+# zsh: PATH ohne doppelte Einträge
+typeset -U path PATH
+
+# pipx / Python user tools
+path=("$HOME/.local/bin" $path)
+
+# Rust / Cargo
+path=("$HOME/.cargo/bin" $path)
+
+# Go binaries
+export GOPATH="$HOME/go"
+path=("$GOPATH/bin" $path)
+
+# Java
+export JAVA_HOME="/usr/lib/jvm/default"
+
+export PATH
