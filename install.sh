@@ -87,6 +87,7 @@ main() {
   bash "${REPO_DIR}/scripts/install_zsh.sh"
 
   prepare_stow_tree
+  cleanup_stale_dotfiles_symlinks
   backup_stow_targets
   stow_packages
 

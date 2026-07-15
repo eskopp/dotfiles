@@ -98,6 +98,35 @@ is_repo_managed_symlink() {
   esac
 }
 
+cleanup_stale_dotfiles_symlinks() {
+  # backup_stow_targets() only knows a fixed list of top-level targets, so any
+  # individually-nested symlink stow creates with --no-folding (e.g. a single
+  # file inside a subdirectory) is invisible to it. If the repo ever moves,
+  # those specific symlinks go dangling and stow refuses to touch them since
+  # it doesn't recognize them as its own, aborting the whole restow. Sweep for
+  # any dangling symlink that clearly used to point into a dotfiles checkout
+  # and remove it before stow/backup ever run.
+  local roots=(
+    "${HOME}/.config"
+    "${HOME}/.local"
+    "${HOME}/.oh-my-zsh"
+  )
+  local root link raw
+
+  for root in "${roots[@]}"; do
+    [[ -d "${root}" ]] || continue
+    while IFS= read -r -d '' link; do
+      raw="$(readlink "${link}")"
+      case "${raw}" in
+        *dotfiles/*)
+          rm -f "${link}"
+          info "Removed stale dangling symlink: ${link} -> ${raw}"
+          ;;
+      esac
+    done < <(find "${root}" -xtype l -print0 2>/dev/null)
+  done
+}
+
 backup_target_if_needed() {
   local target="$1"
   local rel backup_path
