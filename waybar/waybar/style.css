@@ -20,7 +20,7 @@
 @define-color wb_bad_text     #C0CAF5;
 
 * {
-    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-family: "FiraCode Nerd Font", "Font Awesome 7 Free Solid", "Font Awesome 7 Free", "Font Awesome 6 Free", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
     font-size: 12px;
     min-height: 0;
 }

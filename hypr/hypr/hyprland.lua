@@ -20,7 +20,7 @@ hl.monitor({ output = "eDP-1", mode = "2880x1800@60", position = "0x0", scale = 
 -- Placed to the right of the laptop display
 -- eDP-1: 2880 / 1.5 = 1920 logical width, so use 1920x0
 -- DP-6 is a standard 1080p display, scale 1.25 as a comfortable middle ground
-hl.monitor({ output = "DP-6", mode = "1920x1080@60", position = "1920x0", scale = 1.25 })
+hl.monitor({ output = "DP-6", mode = "1920x1080@60", position = "1920x0", scale = 1 })
 
 
 ---------------------
@@ -342,3 +342,4 @@ hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("emacs --no-splash"))
 
 hl.device({ name = "ugreen-receiver--mouse", natural_scroll = false })
 hl.device({ name = "hid-1bcf:08a0-mouse",    natural_scroll = false })
+hl.device({ name = "pixart-pixart-2.4g-device-mouse", natural_scroll = false })
