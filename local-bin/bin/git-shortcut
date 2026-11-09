@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+GIT_ROOT="/data/git"
+
+usage() {
+  echo "Usage: git-shortcut [path]" >&2
+  echo "Creates a symlink ${GIT_ROOT}/<name> -> <path> (defaults to the current directory)." >&2
+}
+
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  usage
+  exit 0
+fi
+
+target="$(cd "${1:-.}" && pwd)"
+
+[[ -d "${target}" ]] || { echo "error: ${target} is not a directory" >&2; exit 1; }
+
+case "${target}" in
+  "${GIT_ROOT}"/*|"${GIT_ROOT}")
+    ;;
+  *)
+    echo "error: ${target} is not inside ${GIT_ROOT}" >&2
+    exit 1
+    ;;
+esac
+
+name="$(basename "${target}")"
+link="${GIT_ROOT}/${name}"
+
+if [[ "${link}" == "${target}" ]]; then
+  echo "error: ${target} is already directly under ${GIT_ROOT}" >&2
+  exit 1
+fi
+
+if [[ -e "${link}" || -L "${link}" ]]; then
+  echo "error: ${link} already exists" >&2
+  exit 1
+fi
+
+ln -s "${target}" "${link}"
+echo "${link} -> ${target}"
