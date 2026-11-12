@@ -181,6 +181,12 @@ hl.config({
         -- handling on Intel Arrow Lake-U (see hyprlandCrashReport2613.txt)
         no_hardware_cursors = true,
     },
+
+    render = {
+        -- Do not switch the monitor to HDR/wide gamut when a fullscreen
+        -- client asks for it (Brave/VS Code turned the screen grey on DP-6)
+        cm_auto_hdr = 0,
+    },
 })
 
 -- Custom easing curve
